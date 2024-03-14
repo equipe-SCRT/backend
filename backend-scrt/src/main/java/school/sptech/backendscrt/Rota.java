@@ -9,6 +9,7 @@ public class Rota {
     private String nomeRota;
     private LocalDate dataCriacao = LocalDate.now();
     private List<Endereco> enderecos = new ArrayList<>();
+    private List<Cesta> cestas = new ArrayList<>();
 
     public int getIdRota() {
         return idRota;
@@ -42,7 +43,19 @@ public class Rota {
         this.enderecos = enderecos;
     }
 
+    public List<Cesta> getCestas() {
+        return cestas;
+    }
+
+    public void setCestas(List<Cesta> cestas) {
+        this.cestas = cestas;
+    }
+
     public void adicionarEndereco(Endereco endereco) {
         enderecos.add(endereco);
+    }
+
+    public void adicionarCesta(Cesta cesta) {
+        cestas.add(cesta);
     }
 }
