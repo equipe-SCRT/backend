@@ -15,6 +15,20 @@ public class Produto {
     private String marca;
     List<TipoProduto> tipoProdutoList = new ArrayList<>();
 
+    public Produto(){}
+
+    public Produto(int idProduto, String nome, double preco, LocalDate dataValidade, double peso, String codigoBarras, LocalDate dataAdicionado, String marca, List<TipoProduto> tipoProdutoList) {
+        this.idProduto = idProduto;
+        this.nome = nome;
+        this.preco = preco;
+        this.dataValidade = dataValidade;
+        this.peso = peso;
+        this.codigoBarras = codigoBarras;
+        this.dataAdicionado = dataAdicionado;
+        this.marca = marca;
+        this.tipoProdutoList = tipoProdutoList;
+    }
+
     public int getIdProduto() {
         return idProduto;
     }
