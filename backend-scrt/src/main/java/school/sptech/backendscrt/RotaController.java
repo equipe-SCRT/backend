@@ -1,5 +1,6 @@
 package school.sptech.backendscrt;
 
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -9,6 +10,7 @@ import java.util.Objects;
 
 @RestController
 @RequestMapping("/rotas")
+@Tag(name = "Rota")
 public class RotaController {
 
     List<Rota> rotas = new ArrayList<>();
