@@ -1,5 +1,6 @@
 package school.sptech.backendscrt;
 
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.apache.coyote.Response;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -8,6 +9,7 @@ import java.util.List;
 import java.util.Objects;
 
 @RestController
+@Tag(name = "Estoque")
 @RequestMapping("/estoque")
 public class EstoqueController {
 

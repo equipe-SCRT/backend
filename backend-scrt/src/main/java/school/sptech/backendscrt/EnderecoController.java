@@ -1,5 +1,6 @@
 package school.sptech.backendscrt;
 
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.apache.coyote.Response;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -10,6 +11,7 @@ import java.util.Objects;
 
 @RestController
 @RequestMapping("/enderecos")
+@Tag(name = "Endereco")
 public class EnderecoController {
 
     List<Endereco> enderecos = new ArrayList<>();
