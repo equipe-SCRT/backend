@@ -1,4 +1,4 @@
-package school.sptech.backendscrt;
+package school.sptech.backendscrt.Model;
 
 import java.util.ArrayList;
 import java.util.List;

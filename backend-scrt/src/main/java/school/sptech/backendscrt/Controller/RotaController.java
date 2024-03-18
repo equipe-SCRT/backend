@@ -1,8 +1,10 @@
-package school.sptech.backendscrt;
+package school.sptech.backendscrt.Controller;
 
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import school.sptech.backendscrt.Model.Endereco;
+import school.sptech.backendscrt.Model.Rota;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -1,4 +1,4 @@
-package school.sptech.backendscrt;
+package school.sptech.backendscrt.Model;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
