@@ -28,6 +28,9 @@ public class Ordenacao {
         Produto[] produtos2 = {
                 produto1, produto2, produto3, produto4, produto5, produto6
         };
+        Produto[] produtos3 = {
+                produto1, produto2, produto3, produto4, produto5, produto6
+        };
 
         System.out.println("Lista Desordenada");
         Arrays.stream(produtos).forEach(produto -> {
@@ -47,6 +50,16 @@ public class Ordenacao {
         System.out.println("Selection Sort");
         selectionSort(produtos2);
         Arrays.stream(produtos2).forEach(produto -> {
+            System.out.println(produto.getNomeProduto());
+        });
+
+        System.out.println("----------------------");
+
+        System.out.println("Insertion Sort");
+
+
+        insertionSort(produtos3);
+        Arrays.stream(produtos3).forEach(produto -> {
             System.out.println(produto.getNomeProduto());
         });
 
@@ -78,4 +91,16 @@ public class Ordenacao {
         }
     }
 
+    public static void insertionSort(Produto[] array) {
+        int n = array.length;
+        for (int j = 1; j < n; j++) {
+            Produto key = array[j];
+            int i = j-1;
+            while ( (i > -1) && ( array [i].getDataValidade().isAfter(key.getDataValidade()) ) ) {
+                array [i+1] = array [i];
+                i--;
+            }
+            array[i+1] = key;
+        }
+    }
 }
