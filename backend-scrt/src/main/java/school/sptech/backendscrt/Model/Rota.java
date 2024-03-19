@@ -1,15 +1,12 @@
 package school.sptech.backendscrt.Model;
 
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
 public class Rota {
     private int idRota;
     private String nomeRota;
-    private LocalDate dataCriacao = LocalDate.now();
-    private List<Endereco> enderecos = new ArrayList<>();
-    private List<Cesta> cestas = new ArrayList<>();
+    private List<Rua> ruas = new ArrayList<>();
 
     public int getIdRota() {
         return idRota;
@@ -27,35 +24,17 @@ public class Rota {
         this.nomeRota = nomeRota;
     }
 
-    public LocalDate getDataCriacao() {
-        return dataCriacao;
+    public List<Rua> getRuas() {
+        return ruas;
     }
 
-    public void setDataCriacao(LocalDate dataCriacao) {
-        this.dataCriacao = dataCriacao;
+    public void setRuas(List<Rua> ruas) {
+        this.ruas = ruas;
     }
 
-    public List<Endereco> getEnderecos() {
-        return enderecos;
-    }
+    public void adicionarRua(Rua rua) {
+        ruas.add(rua);
+  }
 
-    public void setEnderecos(List<Endereco> enderecos) {
-        this.enderecos = enderecos;
-    }
-
-    public List<Cesta> getCestas() {
-        return cestas;
-    }
-
-    public void setCestas(List<Cesta> cestas) {
-        this.cestas = cestas;
-    }
-
-    public void adicionarEndereco(Endereco endereco) {
-        enderecos.add(endereco);
-    }
-
-    public void adicionarCesta(Cesta cesta) {
-        cestas.add(cesta);
-    }
+    
 }

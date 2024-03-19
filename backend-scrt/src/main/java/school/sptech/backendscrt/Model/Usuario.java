@@ -1,15 +1,12 @@
 package school.sptech.backendscrt.Model;
 
-import java.util.ArrayList;
-import java.util.List;
 
 public class Usuario {
     private int idUsuario;
     private String nome;
     private String email;
     private String senha;
-    private String cpf;
-    List<TipoUsuario> tipoUsuarioList = new ArrayList<>();
+    private int fkTipoUsuario;
 
     public int getIdUsuario() {
         return idUsuario;
@@ -43,24 +40,11 @@ public class Usuario {
         this.senha = senha;
     }
 
-    public String getCpf() {
-        return cpf;
+    public int getFkTipoUsuario() {
+        return fkTipoUsuario;
     }
 
-    public void setCpf(String cpf) {
-        this.cpf = cpf;
+    public void setFkTipoUsuario(int fkTipoUsuario) {
+        this.fkTipoUsuario = fkTipoUsuario;
     }
-
-    public List<TipoUsuario> getTipoUsuarioList() {
-        return tipoUsuarioList;
-    }
-
-    public void setTipoUsuarioList(int valor) {
-        if (valor == 0) {
-            tipoUsuarioList.add(TipoUsuario.VOLUNTARIO);
-        } else if (valor == 1) {
-            tipoUsuarioList.add(TipoUsuario.ADMINISTRADOR);
-        }
-    }
-
 }

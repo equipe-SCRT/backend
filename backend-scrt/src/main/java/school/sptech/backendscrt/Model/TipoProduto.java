@@ -1,12 +1,22 @@
 package school.sptech.backendscrt.Model;
 
-public enum TipoProduto {
-    PERECIVEL(0),
-    NAO_PERECIVEL(1),
-    ALIMENTICIO(2);
+public class TipoProduto {
+    private int idTipoProduto;
+    private String nometipoProduto;
 
-    public int idProduto;
-    TipoProduto(int idProduto){
-        this.idProduto = idProduto;
+    public int getIdTipoProduto() {
+        return idTipoProduto;
+    }
+
+    public void setIdTipoProduto(int idTipoProduto) {
+        this.idTipoProduto = idTipoProduto;
+    }
+
+    public String getNometipoProduto() {
+        return nometipoProduto;
+    }
+
+    public void setNometipoProduto(String nometipoProduto) {
+        this.nometipoProduto = nometipoProduto;
     }
 }

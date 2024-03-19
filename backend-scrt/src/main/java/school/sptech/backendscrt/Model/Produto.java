@@ -1,32 +1,20 @@
 package school.sptech.backendscrt.Model;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.*;
 
 public class Produto {
     private int idProduto;
-    private String nome;
-    private double preco;
+    private String nomeProduto;
     private LocalDate dataValidade;
-    private double peso;
-    private String codigoBarras;
-    private LocalDate dataAdicionado;
-    private String marca;
-    List<TipoProduto> tipoProdutoList = new ArrayList<>();
+    private double preco;
+    private int tipoProduto;
+    private int fkOrigem;
 
-    public Produto(){}
-
-    public Produto(int idProduto, String nome, double preco, LocalDate dataValidade, double peso, String codigoBarras, LocalDate dataAdicionado, String marca, List<TipoProduto> tipoProdutoList) {
+    public Produto(int idProduto, String nomeProduto, LocalDate dataValidade, double preco) {
         this.idProduto = idProduto;
-        this.nome = nome;
-        this.preco = preco;
+        this.nomeProduto = nomeProduto;
         this.dataValidade = dataValidade;
-        this.peso = peso;
-        this.codigoBarras = codigoBarras;
-        this.dataAdicionado = dataAdicionado;
-        this.marca = marca;
-        this.tipoProdutoList = tipoProdutoList;
+        this.preco = preco;
     }
 
     public int getIdProduto() {
@@ -37,20 +25,12 @@ public class Produto {
         this.idProduto = idProduto;
     }
 
-    public String getNome() {
-        return nome;
+    public String getNomeProduto() {
+        return nomeProduto;
     }
 
-    public void setNome(String nome) {
-        this.nome = nome;
-    }
-
-    public double getPreco() {
-        return preco;
-    }
-
-    public void setPreco(double preco) {
-        this.preco = preco;
+    public void setNomeProduto(String nomeProduto) {
+        this.nomeProduto = nomeProduto;
     }
 
     public LocalDate getDataValidade() {
@@ -61,48 +41,27 @@ public class Produto {
         this.dataValidade = dataValidade;
     }
 
-    public double getPeso() {
-        return peso;
+    public double getPreco() {
+        return preco;
     }
 
-    public void setPeso(double peso) {
-        this.peso = peso;
+    public void setPreco(double preco) {
+        this.preco = preco;
     }
 
-    public String getCodigoBarras() {
-        return codigoBarras;
+    public int getTipoProduto() {
+        return tipoProduto;
     }
 
-    public void setCodigoBarras(String codigoBarras) {
-        this.codigoBarras = codigoBarras;
+    public void setTipoProduto(int tipoProduto) {
+        this.tipoProduto = tipoProduto;
     }
 
-    public LocalDate getDataAdicionado() {
-        return dataAdicionado;
+    public int getFkOrigem() {
+        return fkOrigem;
     }
 
-    public void setDataAdicionado(LocalDate dataAdicionado) {
-        this.dataAdicionado = dataAdicionado;
-    }
-
-    public String getMarca() {
-        return marca;
-    }
-
-    public void setMarca(String marca) {
-        this.marca = marca;
-    }
-
-    public List<TipoProduto> getTipoProdutoList() {
-        return tipoProdutoList;
-    }
-
-    public void setTipoProdutoList(int valor) {
-        if (valor == 0)
-            tipoProdutoList.add(TipoProduto.PERECIVEL);
-        else if (valor == 1)
-            tipoProdutoList.add(TipoProduto.NAO_PERECIVEL);
-        else if (valor == 2)
-            tipoProdutoList.add(TipoProduto.ALIMENTICIO);
+    public void setFkOrigem(int fkOrigem) {
+        this.fkOrigem = fkOrigem;
     }
 }
