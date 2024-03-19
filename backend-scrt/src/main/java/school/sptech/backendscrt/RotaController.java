@@ -41,6 +41,15 @@ public class RotaController {
         return ResponseEntity.status(400).build();
     }
 
+    @PostMapping("/{indice}")
+    public ResponseEntity<Rota> adicionarCesta(@RequestBody Cesta cesta, @PathVariable int indice) {
+        if (isInList(indice)) {
+            rotas.get(indice).adicionarCesta(cesta);
+            return ResponseEntity.status(201).body(rotas.get(indice));
+        }
+        return ResponseEntity.status(400).build();
+    }
+
     @PutMapping("/{indice}")
     public ResponseEntity<Rota> atualizar(@RequestBody Rota rota, @PathVariable int indice) {
         if (isInList(indice)) {

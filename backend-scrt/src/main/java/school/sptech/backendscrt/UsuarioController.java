@@ -25,7 +25,6 @@ public class UsuarioController {
 
     @PostMapping
     public ResponseEntity<Usuario> adicionar(@RequestBody Usuario usuario) {
-        // todo tofix - !Objects.isNull(usuario) o que é isso
         if (!Objects.isNull(usuario)){
             usuarios.add(usuario);
             return ResponseEntity.status(201).body(usuario);
