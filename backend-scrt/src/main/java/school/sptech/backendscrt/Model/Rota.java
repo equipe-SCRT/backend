@@ -34,5 +34,7 @@ public class Rota {
 
     public void adicionarRua(Rua rua) {
         ruas.add(rua);
-    }
+  }
+
+    
 }
