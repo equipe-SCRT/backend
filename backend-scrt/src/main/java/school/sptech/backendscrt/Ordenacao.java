@@ -1,6 +1,8 @@
 package school.sptech.backendscrt;
 
-import org.springframework.cglib.core.Local;
+
+import school.sptech.backendscrt.Model.Produto;
+import school.sptech.backendscrt.Model.TipoProduto;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -14,7 +16,7 @@ public class Ordenacao {
 
         Produto produto1 = new Produto(1, "Arroz", 5.90, LocalDate.of(2024, 12, 30), 0.5, "2812817389313", LocalDate.now(), "MarcaA", tipoProdutoList);
 
-        Produto produto2 = new Produto(2, "Sabonete", 2.49, LocalDate.of(2025, 6, 30), 0.2, "9876543210987", LocalDate.now(), "MarcaB", tipoProdutoList);
+        Produto produto2 = new Produto(2, "Molho de Tomate", 2.49, LocalDate.of(2025, 6, 30), 0.2, "9876543210987", LocalDate.now(), "MarcaB", tipoProdutoList);
 
         Produto produto3 = new Produto(3, "Macarrão", 3.20, LocalDate.of(2024, 10, 20), 0.4, "1234567890123", LocalDate.now(), "MarcaC", tipoProdutoList);
 
