@@ -2,29 +2,24 @@ package school.sptech.backendscrt;
 
 
 import school.sptech.backendscrt.Model.Produto;
-import school.sptech.backendscrt.Model.TipoProduto;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
 
 public class Ordenacao {
     public static void main(String[] args) {
-        List<TipoProduto> tipoProdutoList = new ArrayList<>();
-        tipoProdutoList.add(TipoProduto.PERECIVEL);
 
-        Produto produto1 = new Produto(1, "Arroz", 5.90, LocalDate.of(2024, 12, 30), 0.5, "2812817389313", LocalDate.now(), "MarcaA", tipoProdutoList);
+        Produto produto1 = new Produto(1, "Arroz", LocalDate.of(2024, 12, 30), 5.90);
 
-        Produto produto2 = new Produto(2, "Molho de Tomate", 2.49, LocalDate.of(2025, 6, 30), 0.2, "9876543210987", LocalDate.now(), "MarcaB", tipoProdutoList);
+        Produto produto2 = new Produto(2, "Molho de Tomate", LocalDate.of(2025, 6, 30), 2.49);
 
-        Produto produto3 = new Produto(3, "Macarrão", 3.20, LocalDate.of(2024, 10, 20), 0.4, "1234567890123", LocalDate.now(), "MarcaC", tipoProdutoList);
+        Produto produto3 = new Produto(3, "Macarrão", LocalDate.of(2024, 10, 20), 3.20);
 
-        Produto produto4 = new Produto(4, "Óleo de Soja", 6.80, LocalDate.of(2025, 5, 10), 1.0, "9876543210987", LocalDate.now(), "MarcaD", tipoProdutoList);
+        Produto produto4 = new Produto(4, "Óleo de Soja", LocalDate.of(2025, 5, 10), 6.80);
 
-        Produto produto5 = new Produto(5, "Café", 9.75, LocalDate.of(2024, 9, 8), 0.3, "5678901234567", LocalDate.now(), "MarcaE", tipoProdutoList);
+        Produto produto5 = new Produto(5, "Café", LocalDate.of(2024, 9, 8), 9.75);
 
-        Produto produto6 = new Produto(6, "Feijão", 4.50, LocalDate.of(2024, 11, 15), 0.8, "8712345678901", LocalDate.now(), "MarcaB", tipoProdutoList);
+        Produto produto6 = new Produto(6, "Feijão", LocalDate.of(2024, 11, 15), 4.50);
 
         Produto[] produtos = {
                 produto1, produto2, produto3, produto4, produto5, produto6
@@ -36,7 +31,7 @@ public class Ordenacao {
 
         System.out.println("Lista Desordenada");
         Arrays.stream(produtos).forEach(produto -> {
-            System.out.println(produto.getNome());
+            System.out.println(produto.getNomeProduto());
         });
 
         System.out.println("----------------------");
@@ -44,7 +39,7 @@ public class Ordenacao {
         System.out.println("Bubble Sort");
         bubbleSort(produtos);
         Arrays.stream(produtos).forEach(produto -> {
-            System.out.println(produto.getNome());
+            System.out.println(produto.getNomeProduto());
         });
 
         System.out.println("----------------------");
@@ -52,7 +47,7 @@ public class Ordenacao {
         System.out.println("Selection Sort");
         selectionSort(produtos2);
         Arrays.stream(produtos2).forEach(produto -> {
-            System.out.println(produto.getNome());
+            System.out.println(produto.getNomeProduto());
         });
 
     }

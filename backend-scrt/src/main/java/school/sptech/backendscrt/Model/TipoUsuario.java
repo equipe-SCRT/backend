@@ -1,12 +1,22 @@
 package school.sptech.backendscrt.Model;
 
-public enum TipoUsuario {
+public class TipoUsuario {
+    private int idTipoUsuario;
+    private String nomeTipoUsuario;
 
-    VOLUNTARIO(0),
-    ADMINISTRADOR(1);
+    public int getIdTipoUsuario() {
+        return idTipoUsuario;
+    }
 
-    public int idUsuario;
-    TipoUsuario(int idUsuario) {
-        this.idUsuario = idUsuario;
+    public void setIdTipoUsuario(int idTipoUsuario) {
+        this.idTipoUsuario = idTipoUsuario;
+    }
+
+    public String getNomeTipoUsuario() {
+        return nomeTipoUsuario;
+    }
+
+    public void setNomeTipoUsuario(String nomeTipoUsuario) {
+        this.nomeTipoUsuario = nomeTipoUsuario;
     }
 }
