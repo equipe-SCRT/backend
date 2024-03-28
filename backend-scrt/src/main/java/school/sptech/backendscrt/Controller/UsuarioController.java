@@ -1,7 +1,9 @@
-package school.sptech.backendscrt;
+package school.sptech.backendscrt.Controller;
 
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import school.sptech.backendscrt.Model.Usuario;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -9,6 +11,7 @@ import java.util.Objects;
 
 @RestController
 @RequestMapping("/usuarios")
+@Tag(name = "Usuario")
 public class UsuarioController {
 
     List<Usuario> usuarios = new ArrayList<>();
@@ -23,7 +26,6 @@ public class UsuarioController {
 
     @PostMapping
     public ResponseEntity<Usuario> adicionar(@RequestBody Usuario usuario) {
-        // todo tofix - !Objects.isNull(usuario) o que é isso
         if (!Objects.isNull(usuario)){
             usuarios.add(usuario);
             return ResponseEntity.status(201).body(usuario);

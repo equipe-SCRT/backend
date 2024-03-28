@@ -1,13 +1,12 @@
-package school.sptech.backendscrt;
+package school.sptech.backendscrt.Model;
 
 public class Endereco {
-
     private int idEndereco;
     private String logradouro;
     private String bairro;
     private String numero;
     private String cep;
-    private String complemento;
+    private int fkRua;
 
     public int getIdEndereco() {
         return idEndereco;
@@ -49,11 +48,11 @@ public class Endereco {
         this.cep = cep;
     }
 
-    public String getComplemento() {
-        return complemento;
+    public int getFkRua() {
+        return fkRua;
     }
 
-    public void setComplemento(String complemento) {
-        this.complemento = complemento;
+    public void setFkRua(int fkRua) {
+        this.fkRua = fkRua;
     }
 }
