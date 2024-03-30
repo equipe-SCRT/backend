@@ -1,14 +1,16 @@
-package school.sptech.backendscrt;
+package school.sptech.backendscrt.Controller;
 
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.function.EntityResponse;
+import school.sptech.backendscrt.Model.Produto;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
 @RestController()
+@Tag(name = "Produto")
 @RequestMapping("/produtos")
 /*
     Author: @edu-correa
