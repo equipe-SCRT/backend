@@ -13,13 +13,13 @@ public class HistoricoRotaCriacaoDto {
     @NotNull
     @PositiveOrZero
     private int qtdColaboradores;
-    @FutureOrPresent
+    @PastOrPresent
     @NotNull
     private LocalDate dataRota;
-    @FutureOrPresent
+    @PastOrPresent
     @NotNull
     private LocalTime horaInicio;
-    @FutureOrPresent
+    @PastOrPresent
     @NotNull
     private LocalTime horaFim;
     @PositiveOrZero
