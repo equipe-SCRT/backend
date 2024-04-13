@@ -1,9 +1,9 @@
-package school.sptech.backendscrt.api.controller.historicoMudanca;
+package school.sptech.backendscrt.api.controller.historicomudanca;
 
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import school.sptech.backendscrt.domain.usuarioMudanca.HistoricoMudanca;
+import school.sptech.backendscrt.domain.historicomudanca.HistoricoMudanca;
 
 import java.util.ArrayList;
 import java.util.List;

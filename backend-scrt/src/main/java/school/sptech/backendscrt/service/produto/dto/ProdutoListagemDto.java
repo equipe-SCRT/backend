@@ -1,14 +1,6 @@
-package school.sptech.backendscrt.domain.produto;
+package school.sptech.backendscrt.service.produto.dto;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-
-@Entity
-public class Produto {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+public class ProdutoListagemDto {
     private int id;
     private String nome;
     private int fkTipoProduto;

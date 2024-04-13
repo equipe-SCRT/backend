@@ -1,20 +1,12 @@
-package school.sptech.backendscrt.domain.campanha;
+package school.sptech.backendscrt.service.campanha.dto;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import org.hibernate.annotations.CreationTimestamp;
 
 import java.time.LocalDate;
-@Entity
-public class Campanha {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+
+public class CampanhaListagemDto {
     private int id;
     private String nome;
     private String local;
-    @CreationTimestamp
     private LocalDate dataCampanha;
     private int qtdArrecadada;
 

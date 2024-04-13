@@ -1,30 +1,27 @@
-package school.sptech.backendscrt.domain.campanha;
+package school.sptech.backendscrt.service.campanha.dto;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import org.hibernate.annotations.CreationTimestamp;
+import io.swagger.v3.oas.annotations.media.Schema;
+import jakarta.validation.constraints.*;
 
 import java.time.LocalDate;
-@Entity
-public class Campanha {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+
+public class CampanhaCriacaoDto {
+    @NotBlank
+    @Size(min = 5, max = 100)
+    @Schema(description = "Nome da Campanha", example = "Escola Viva")
     private String nome;
+    @NotBlank
+    @Size(min = 5, max = 100)
+    @Schema(description = "Local da Campanha", example = "Escola Viva")
     private String local;
-    @CreationTimestamp
+    @FutureOrPresent
+    @NotBlank
+    @Schema(description = "Data da campanha", example = "2024-05-21")
     private LocalDate dataCampanha;
+    @NotNull
+    @PositiveOrZero
+    @Schema(description = "Quantidade de produtos arrecadada da campanha", example = "70")
     private int qtdArrecadada;
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
 
     public String getNome() {
         return nome;
