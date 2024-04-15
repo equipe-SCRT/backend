@@ -7,6 +7,7 @@ import jakarta.persistence.Id;
 import org.hibernate.annotations.CreationTimestamp;
 
 import java.time.LocalDate;
+
 @Entity
 public class HistoricoMudanca {
     @Id

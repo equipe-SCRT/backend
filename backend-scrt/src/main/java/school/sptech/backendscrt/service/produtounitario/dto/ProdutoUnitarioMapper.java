@@ -1,5 +1,6 @@
 package school.sptech.backendscrt.service.produtounitario.dto;
 
+import school.sptech.backendscrt.domain.produto.Produto;
 import school.sptech.backendscrt.domain.produtounitario.ProdutoUnitario;
 
 import java.util.List;
