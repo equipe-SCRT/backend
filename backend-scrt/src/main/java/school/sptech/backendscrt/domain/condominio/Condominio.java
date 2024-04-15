@@ -20,11 +20,11 @@ public class Condominio {
         this.idCondominio = idCondominio;
     }
 
-    public String getNomeComdominio() {
+    public String getNomeCondominio() {
         return nomeComdominio;
     }
 
-    public void setNomeComdominio(String nomeComdominio) {
+    public void setNomeCondominio(String nomeComdominio) {
         this.nomeComdominio = nomeComdominio;
     }
 
