@@ -1,7 +1,7 @@
 package school.sptech.backendscrt;
 
 
-import school.sptech.backendscrt.Model.Produto;
+import school.sptech.backendscrt.domain.produto.Produto;
 
 import java.time.LocalDate;
 import java.util.Arrays;
