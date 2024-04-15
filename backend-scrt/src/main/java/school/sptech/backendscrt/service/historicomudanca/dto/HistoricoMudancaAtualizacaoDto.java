@@ -8,7 +8,7 @@ import jakarta.validation.constraints.PositiveOrZero;
 
 import java.time.LocalDate;
 
-public class HistoricoMudancaCriacaoDto {
+public class HistoricoMudancaAtualizacaoDto {
     @FutureOrPresent
     @NotBlank
     @Schema(description = "Data e hora que a mudança foi realizada", example = "2024-05-21")
