@@ -35,6 +35,7 @@ public class CampanhaService {
         campanhaOpt.get().setLocal(campanhaAtualizacaoDto.getLocal());
         campanhaOpt.get().setDataCampanha(campanhaAtualizacaoDto.getDataCampanha());
         campanhaOpt.get().setQtdArrecadada(campanhaAtualizacaoDto.getQtdArrecadada());
+        campanhaOpt.get().setMeta(campanhaAtualizacaoDto.getMeta());
 
         Campanha campanhaSalva = campanhaRepository.save(campanhaOpt.get());
         CampanhaMapper.toDto(campanhaSalva);

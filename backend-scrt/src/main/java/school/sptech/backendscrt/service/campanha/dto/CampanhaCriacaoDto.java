@@ -22,6 +22,10 @@ public class CampanhaCriacaoDto {
     @PositiveOrZero
     @Schema(description = "Quantidade de produtos arrecadada da campanha", example = "70")
     private int qtdArrecadada;
+    @NotNull
+    @Positive
+    @Schema(description = "Meta de arrecadação da campanha", example = "80")
+    private int meta;
 
     public String getNome() {
         return nome;
@@ -53,5 +57,13 @@ public class CampanhaCriacaoDto {
 
     public void setQtdArrecadada(int qtdArrecadada) {
         this.qtdArrecadada = qtdArrecadada;
+    }
+
+    public int getMeta() {
+        return meta;
+    }
+
+    public void setMeta(int meta) {
+        this.meta = meta;
     }
 }

@@ -7,6 +7,7 @@ import jakarta.persistence.Id;
 import org.hibernate.annotations.CreationTimestamp;
 
 import java.time.LocalDate;
+
 @Entity
 public class Campanha {
     @Id
@@ -17,6 +18,7 @@ public class Campanha {
     @CreationTimestamp
     private LocalDate dataCampanha;
     private int qtdArrecadada;
+    private int meta;
 
     public int getId() {
         return id;
@@ -56,5 +58,13 @@ public class Campanha {
 
     public void setQtdArrecadada(int qtdArrecadada) {
         this.qtdArrecadada = qtdArrecadada;
+    }
+
+    public int getMeta() {
+        return meta;
+    }
+
+    public void setMeta(int meta) {
+        this.meta = meta;
     }
 }
