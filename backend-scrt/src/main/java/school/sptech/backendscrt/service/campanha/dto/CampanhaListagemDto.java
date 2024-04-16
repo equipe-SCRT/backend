@@ -9,6 +9,7 @@ public class CampanhaListagemDto {
     private String local;
     private LocalDate dataCampanha;
     private int qtdArrecadada;
+    private int meta;
 
     public int getId() {
         return id;
@@ -48,5 +49,13 @@ public class CampanhaListagemDto {
 
     public void setQtdArrecadada(int qtdArrecadada) {
         this.qtdArrecadada = qtdArrecadada;
+    }
+
+    public int getMeta() {
+        return meta;
+    }
+
+    public void setMeta(int meta) {
+        this.meta = meta;
     }
 }

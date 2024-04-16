@@ -14,6 +14,7 @@ public class CampanhaMapper {
         dto.setLocal(entity.getLocal());
         dto.setDataCampanha(entity.getDataCampanha());
         dto.setQtdArrecadada(entity.getQtdArrecadada());
+        dto.setMeta(entity.getMeta());
 
         return dto;
     }
@@ -26,6 +27,7 @@ public class CampanhaMapper {
         entity.setLocal(dto.getLocal());
         entity.setDataCampanha(dto.getDataCampanha());
         entity.setQtdArrecadada(dto.getQtdArrecadada());
+        entity.setMeta(dto.getMeta());
 
         return entity;
     }
