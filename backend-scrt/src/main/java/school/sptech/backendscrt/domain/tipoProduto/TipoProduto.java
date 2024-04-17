@@ -8,22 +8,22 @@ import jakarta.persistence.Id;
 public class TipoProduto {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int idTipoProduto;
-    private String nometipoProduto;
+    private Integer id;
+    private String nome;
 
-    public int getIdTipoProduto() {
-        return idTipoProduto;
+    public Integer getId() {
+        return id;
     }
 
-    public void setIdTipoProduto(int idTipoProduto) {
-        this.idTipoProduto = idTipoProduto;
+    public void setId(Integer id) {
+        this.id = id;
     }
 
-    public String getNometipoProduto() {
-        return nometipoProduto;
+    public String getNome() {
+        return nome;
     }
 
-    public void setNometipoProduto(String nometipoProduto) {
-        this.nometipoProduto = nometipoProduto;
+    public void setNome(String nome) {
+        this.nome = nome;
     }
 }

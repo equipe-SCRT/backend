@@ -1,14 +1,6 @@
-package school.sptech.backendscrt.domain.tipoCesta;
+package school.sptech.backendscrt.service.tipocesta.dto;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-
-@Entity
-public class TipoCesta {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+public class TipoCestaListagemDto {
     private Integer id;
     private String nome;
 

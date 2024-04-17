@@ -1,3 +1,4 @@
+/*
 package school.sptech.backendscrt;
 
 
@@ -104,3 +105,4 @@ public class Ordenacao {
         }
     }
 }
+*/

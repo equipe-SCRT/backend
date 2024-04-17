@@ -1,13 +1,6 @@
-package school.sptech.backendscrt.domain.origem;
+package school.sptech.backendscrt.service.origem.dto;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-@Entity
-public class Origem {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+public class OrigemListagemDto {
     private Integer id;
     private int autaDeSousaRua;
     private int itapora;

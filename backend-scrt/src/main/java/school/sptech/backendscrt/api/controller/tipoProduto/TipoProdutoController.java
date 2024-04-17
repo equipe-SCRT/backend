@@ -1,9 +1,15 @@
 package school.sptech.backendscrt.api.controller.tipoProduto;
 
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import school.sptech.backendscrt.domain.tipoProduto.TipoProduto;
+import school.sptech.backendscrt.service.tipoproduto.TipoProdutoService;
+import school.sptech.backendscrt.service.tipoproduto.dto.TipoProdutoAtualizacaoDto;
+import school.sptech.backendscrt.service.tipoproduto.dto.TipoProdutoCriacaoDto;
+import school.sptech.backendscrt.service.tipoproduto.dto.TipoProdutoListagemDto;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,44 +20,36 @@ import java.util.Objects;
 @Tag(name = "TipoProduto")
 public class TipoProdutoController {
 
-    List<TipoProduto> tiposProdutos = new ArrayList<>();
-
-    @GetMapping
-    public ResponseEntity<List<TipoProduto>> consultar() {
-        if (tiposProdutos.isEmpty()) {
-            return ResponseEntity.status(204).build();
-        }
-        return ResponseEntity.status(200).body(tiposProdutos);
-    }
+    @Autowired
+    private TipoProdutoService tipoProdutoService;
 
     @PostMapping
-    public ResponseEntity<TipoProduto> adicionar(@RequestBody TipoProduto tipoProduto) {
-        if (!Objects.isNull(tipoProduto)) {
-            tiposProdutos.add(tipoProduto);
-            return ResponseEntity.status(201).body(tipoProduto);
-        }
-        return ResponseEntity.status(400).build();
+    public ResponseEntity<Void> adicionar(@RequestBody @Valid TipoProdutoCriacaoDto tipoProduto) {
+        this.tipoProdutoService.criar(tipoProduto);
+        return ResponseEntity.status(201).build();
     }
 
-    @PutMapping("/{indice}")
-    public ResponseEntity<TipoProduto> atualizar(@RequestBody TipoProduto tipoProduto, @PathVariable int indice) {
-        if (isInList(indice)) {
-            tiposProdutos.set(indice, tipoProduto);
-            return ResponseEntity.status(200).body(tipoProduto);
-        }
-        return ResponseEntity.status(404).build();
+    @GetMapping
+    public ResponseEntity<List<TipoProdutoListagemDto>> consultar() {
+        List<TipoProdutoListagemDto> dto = this.tipoProdutoService.listar();
+        return ResponseEntity.status(200).body(dto);
     }
 
-    @DeleteMapping("/{indice}")
-    public ResponseEntity<Void> deletar(@PathVariable int indice) {
-        if (isInList(indice)) {
-            tiposProdutos.remove(indice);
-            return ResponseEntity.status(204).build();
-        }
-        return ResponseEntity.status(404).build();
+    @GetMapping("/{id}")
+    public ResponseEntity<TipoProdutoListagemDto> consultar(@PathVariable int id) {
+        TipoProdutoListagemDto dto = this.tipoProdutoService.porId(id);
+        return ResponseEntity.status(200).body(dto);
     }
 
-    private boolean isInList(int indice){
-        return indice >= 0 && indice < tiposProdutos.size();
+    @PutMapping("/{id}")
+    public ResponseEntity<TipoProdutoListagemDto> atualizar(@RequestBody @Valid TipoProdutoAtualizacaoDto tipoProdutoAtualizado, @PathVariable int id) {
+        TipoProdutoListagemDto dto = this.tipoProdutoService.atualizar(tipoProdutoAtualizado, id);
+        return ResponseEntity.status(200).body(dto);
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deletar(@PathVariable int id) {
+        this.tipoProdutoService.deletar(id);
+        return ResponseEntity.status(204).build();
     }
 }

@@ -1,67 +1,59 @@
 package school.sptech.backendscrt.api.controller.tipoCesta;
 
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import school.sptech.backendscrt.domain.produto.Produto;
 import school.sptech.backendscrt.domain.tipoCesta.TipoCesta;
+import school.sptech.backendscrt.service.tipocesta.TipoCestaService;
+import school.sptech.backendscrt.service.tipocesta.dto.TipoCestaAtualizacaoDto;
+import school.sptech.backendscrt.service.tipocesta.dto.TipoCestaCriacaoDto;
+import school.sptech.backendscrt.service.tipocesta.dto.TipoCestaListagemDto;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/tipos-cestas")
 @Tag(name = "TipoCesta")
 public class TipoCestaController {
 
-    List<TipoCesta> tiposCestas = new ArrayList<>();
-
-    @GetMapping
-    public ResponseEntity<List<TipoCesta>> consultar() {
-        if (tiposCestas.isEmpty()) {
-            return ResponseEntity.status(204).build();
-        }
-        return ResponseEntity.status(200).body(tiposCestas);
-    }
+    @Autowired
+    private TipoCestaService tipoCestaService;
 
     @PostMapping
-    public ResponseEntity<TipoCesta> adicionar(@RequestBody TipoCesta tipoCesta) {
-        if (!Objects.isNull(tipoCesta)) {
-            tiposCestas.add(tipoCesta);
-            return ResponseEntity.status(201).body(tipoCesta);
-        }
-        return ResponseEntity.status(400).build();
+    public ResponseEntity<Void> adicionar(@RequestBody TipoCestaCriacaoDto tipoCesta) {
+        this.tipoCestaService.criar(tipoCesta);
+        return ResponseEntity.status(201).build();
     }
 
-    @PostMapping("/{indice}")
-    public ResponseEntity<TipoCesta> adicionarProduto(@RequestBody Produto produto, @PathVariable int indice) {
-        if (isInList(indice)) {
-            tiposCestas.get(indice).adicionarProduto(produto);
-            return ResponseEntity.status(201).body(tiposCestas.get(indice));
-        }
-        return ResponseEntity.status(400).build();
+    @GetMapping
+    public ResponseEntity<List<TipoCestaListagemDto>> consultar() {
+        List<TipoCestaListagemDto> dto = this.tipoCestaService.listar();
+        return ResponseEntity.status(200).body(dto);
     }
 
-    @PutMapping("/{indice}")
-    public ResponseEntity<TipoCesta> atualizar(@RequestBody TipoCesta tipoCesta, @PathVariable int indice) {
-        if (isInList(indice)) {
-            tiposCestas.set(indice, tipoCesta);
-            return ResponseEntity.status(200).body(tipoCesta);
-        }
-        return ResponseEntity.status(404).build();
+    @GetMapping("/{id}")
+    public ResponseEntity<TipoCestaListagemDto> porId(@PathVariable int id) {
+        TipoCestaListagemDto dto = this.tipoCestaService.porId(id);
+        return ResponseEntity.status(200).body(dto);
     }
 
-    @DeleteMapping("/{indice}")
-    public ResponseEntity<Void> deletar(@PathVariable int indice) {
-        if (isInList(indice)) {
-            tiposCestas.remove(indice);
-            return ResponseEntity.status(204).build();
-        }
-        return ResponseEntity.status(404).build();
+
+    @PutMapping("/{id}")
+    public ResponseEntity<TipoCestaListagemDto> atualizar(@RequestBody @Valid TipoCestaAtualizacaoDto tipoCestaAtualizada, @PathVariable int id) {
+        TipoCestaListagemDto dto = this.tipoCestaService.atualizar(tipoCestaAtualizada, id);
+        return ResponseEntity.status(200).body(dto);
     }
 
-    private boolean isInList(int indice){
-        return indice >= 0 && indice < tiposCestas.size();
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deletar(@PathVariable int id) {
+        this.tipoCestaService.deletar(id);
+        return ResponseEntity.status(204).build();
     }
+
 }

@@ -1,26 +1,21 @@
-package school.sptech.backendscrt.domain.origem;
+package school.sptech.backendscrt.service.origem.dto;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-@Entity
-public class Origem {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.PositiveOrZero;
+
+public class OrigemAtualizacaoDto {
+    @NotNull
+    @PositiveOrZero
     private int autaDeSousaRua;
+    @NotNull
+    @PositiveOrZero
     private int itapora;
+    @NotNull
+    @PositiveOrZero
     private int fkCondominio;
+    @NotNull
+    @PositiveOrZero
     private int fkCampanha;
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
 
     public int getAutaDeSousaRua() {
         return autaDeSousaRua;

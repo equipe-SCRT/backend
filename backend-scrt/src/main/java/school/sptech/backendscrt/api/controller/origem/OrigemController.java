@@ -1,57 +1,52 @@
 package school.sptech.backendscrt.api.controller.origem;
 
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import school.sptech.backendscrt.domain.origem.Origem;
+import school.sptech.backendscrt.service.origem.OrigemService;
+import school.sptech.backendscrt.service.origem.dto.OrigemAtualizacaoDto;
+import school.sptech.backendscrt.service.origem.dto.OrigemCriacaoDto;
+import school.sptech.backendscrt.service.origem.dto.OrigemListagemDto;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 @RestController
 @RequestMapping("/origens")
 @Tag(name = "Origem")
 public class OrigemController {
 
-    List<Origem> origens = new ArrayList<>();
+    @Autowired
+    private OrigemService origemService;
+
+    @PostMapping
+    public ResponseEntity<Void> adicionar(@RequestBody @Valid OrigemCriacaoDto origem) {
+        this.origemService.criar(origem);
+        return ResponseEntity.status(201).build();
+    }
 
     @GetMapping
-    public ResponseEntity<List<Origem>> consultar() {
-        if (origens.isEmpty()) {
-            return ResponseEntity.status(204).build();
-        }
+    public ResponseEntity<List<OrigemListagemDto>> consultar() {
+        List<OrigemListagemDto> origens = this.origemService.listar();
         return ResponseEntity.status(200).body(origens);
     }
 
-    @PostMapping
-    public ResponseEntity<Origem> adicionar(@RequestBody Origem origem) {
-        if (!Objects.isNull(origem)) {
-            origens.add(origem);
-            return ResponseEntity.status(201).body(origem);
-        }
-        return ResponseEntity.status(400).build();
+    @GetMapping("/{id}")
+    public ResponseEntity<OrigemListagemDto> porId(@PathVariable int id){
+        OrigemListagemDto origem = this.origemService.porId(id);
+        return ResponseEntity.status(200).body(origem);
     }
 
-    @PutMapping("/{indice}")
-    public ResponseEntity<Origem> atualizar(@RequestBody Origem origem, @PathVariable int indice) {
-        if (isInList(indice)) {
-            origens.set(indice, origem);
-            return ResponseEntity.status(200).body(origem);
-        }
-        return ResponseEntity.status(404).build();
+    @PutMapping("/{id}")
+    public ResponseEntity<OrigemListagemDto> atualizar(@RequestBody @Valid OrigemAtualizacaoDto origemAtualizado, @PathVariable int id) {
+        OrigemListagemDto origem = this.origemService.atualizar(origemAtualizado, id);
+        return ResponseEntity.status(200).body(origem);
     }
 
-    @DeleteMapping("/{indice}")
-    public ResponseEntity<Void> deletar(@PathVariable int indice) {
-        if (isInList(indice)) {
-            origens.remove(indice);
-            return ResponseEntity.status(204).build();
-        }
-        return ResponseEntity.status(404).build();
-    }
-
-    private boolean isInList(int indice){
-        return indice >= 0 && indice < origens.size();
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deletar(@PathVariable int id) {
+        this.origemService.deletar(id);
+        return ResponseEntity.status(204).build();
     }
 }
