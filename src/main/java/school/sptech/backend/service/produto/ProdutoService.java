@@ -1,7 +1,10 @@
 package school.sptech.backend.service.produto;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 import school.sptech.backend.domain.produto.Produto;
 import school.sptech.backend.domain.produto.repository.ProdutoRepository;
 import school.sptech.backend.service.produto.dto.ProdutoAtualizacaoDto;
@@ -27,7 +30,7 @@ public class ProdutoService {
         final List<Produto> produtos = this.produtoRepository.findAll();
 
         if (produtos.isEmpty()){
-            return null;
+            throw new ResponseStatusException(HttpStatus.NO_CONTENT);
         }
 
         final List<ProdutoListagemDto> dto = ProdutoMapper.toDto(produtos);
@@ -39,7 +42,7 @@ public class ProdutoService {
         final Optional<Produto> produtoOpt = this.produtoRepository.findById(id);
 
         if (produtoOpt.isEmpty()){
-            return null;
+            throw new ResponseStatusException(HttpStatus.NO_CONTENT);
         }
 
         final ProdutoListagemDto dto = ProdutoMapper.toDto(produtoOpt.get());
@@ -51,7 +54,7 @@ public class ProdutoService {
         final Optional<Produto> produtoOpt = this.produtoRepository.findById(id);
 
         if (produtoOpt.isEmpty()){
-            return null;
+            throw new ResponseStatusException(HttpStatus.NO_CONTENT);
         }
 
         final Produto produto = ProdutoMapper.atualizacaoDto(produtoOpt.get(), produtoAtualizado);
@@ -66,8 +69,10 @@ public class ProdutoService {
     public void deletar(int id){
         final Optional<Produto> produtoOpt = this.produtoRepository.findById(id);
 
-        if (produtoOpt.isPresent()){
-            this.produtoRepository.deleteById(id);
+        if (produtoOpt.isEmpty()){
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
         }
+
+        this.produtoRepository.deleteById(id);
     }
 }

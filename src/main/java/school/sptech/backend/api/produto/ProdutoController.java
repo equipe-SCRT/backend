@@ -26,7 +26,7 @@ public class ProdutoController {
     @GetMapping
     public ResponseEntity<List<ProdutoListagemDto>> listar(){
         List<ProdutoListagemDto> dto = this.produtoService.listar();
-        return ResponseEntity.status(200).body(dto);
+        return ResponseEntity.ok(dto);
     }
 
     @GetMapping("/{id}")
