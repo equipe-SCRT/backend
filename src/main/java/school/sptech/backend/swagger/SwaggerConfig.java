@@ -1,4 +1,4 @@
-package school.sptech.backendscrt.Swagger;
+package school.sptech.backend.swagger;
 
 import io.swagger.v3.oas.models.Components;
 import io.swagger.v3.oas.models.OpenAPI;
