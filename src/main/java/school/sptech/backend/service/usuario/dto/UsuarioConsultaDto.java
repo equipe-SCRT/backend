@@ -1,4 +1,4 @@
-package school.sptech.backend.domain.usuario.dto;
+package school.sptech.backend.service.usuario.dto;
 
 import org.antlr.v4.runtime.misc.NotNull;
 
