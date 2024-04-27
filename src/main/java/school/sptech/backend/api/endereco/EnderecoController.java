@@ -15,12 +15,21 @@ import school.sptech.backend.domain.endereco.repository.EnderecoRepository;
 public class EnderecoController {
     private final EnderecoRepository enderecoRepository;
 
-
     @GetMapping("/{cep}")
     public ResponseEntity<EnderecoViaCep> cep(@PathVariable String cep) throws JsonProcessingException {
+        cep = cep.replace("-", "");
+        if (cep.length() != 8)
+            return ResponseEntity.badRequest().build();
+
         RestTemplate restTemplate = new RestTemplate();
         ObjectMapper objectMapper = new ObjectMapper();
-        var result = restTemplate.getForObject(String.format("https://viacep.com.br/ws/%s/json/", cep), String.class);
+        String url = "https://viacep.com.br/ws/" + cep + "/json/";
+        var result = restTemplate.getForObject(url, String.class);
+        if (result.toString().equalsIgnoreCase("{\n" +
+                "  \"erro\": true\n" +
+                "}")) {
+            return ResponseEntity.notFound().build();
+        }
         EnderecoViaCep endereco = objectMapper.readValue(result, EnderecoViaCep.class);
         return ResponseEntity.status(200).body(endereco);
     }
