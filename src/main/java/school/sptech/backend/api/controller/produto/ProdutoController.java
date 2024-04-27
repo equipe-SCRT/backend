@@ -1,4 +1,4 @@
-package school.sptech.backend.api.produto;
+package school.sptech.backend.api.controller.produto;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;

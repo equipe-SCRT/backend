@@ -9,8 +9,7 @@ import org.antlr.v4.runtime.misc.NotNull;
 @Entity
 public class Usuario {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer idUsuario;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)private Long idUsuario;
     @NotNull
     private String nome;
     @NotNull
@@ -20,11 +19,11 @@ public class Usuario {
     @NotNull
     private Integer tipoUsuario;
 
-    public Integer getIdUsuario() {
+    public Long getIdUsuario() {
         return idUsuario;
     }
 
-    public void setIdUsuario(Integer idUsuario) {
+    public void setIdUsuario(Long idUsuario) {
         this.idUsuario = idUsuario;
     }
 
