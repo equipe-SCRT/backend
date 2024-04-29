@@ -18,6 +18,7 @@ public class EnderecoViaCep {
     private String gia;
     private String ddd;
     private String siafi;
+    private int numero;
 
 
 }
