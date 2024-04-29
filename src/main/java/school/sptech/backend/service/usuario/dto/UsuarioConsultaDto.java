@@ -7,6 +7,7 @@ public class UsuarioConsultaDto {
     private String email;
 
     private Integer tipoUsuario;
+    private Boolean logado;
 
     public String getNome() {
         return nome;
@@ -30,5 +31,13 @@ public class UsuarioConsultaDto {
 
     public void setTipoUsuario(Integer tipoUsuario) {
         this.tipoUsuario = tipoUsuario;
+    }
+
+    public Boolean getLogado() {
+        return logado;
+    }
+
+    public void setLogado(Boolean logado) {
+        this.logado = logado;
     }
 }

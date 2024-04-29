@@ -1,9 +1,8 @@
 package school.sptech.backend.service.usuario.dto;
 
-
 import jakarta.validation.constraints.*;
 
-public class UsuarioCriacaoDto {
+public class UsuarioAtualizacaoDto {
     @NotNull
     @NotBlank
     @Size(min = 8)
@@ -20,7 +19,6 @@ public class UsuarioCriacaoDto {
     @NotBlank
     @PositiveOrZero
     private Integer tipoUsuario;
-
 
     public String getNome() {
         return nome;
