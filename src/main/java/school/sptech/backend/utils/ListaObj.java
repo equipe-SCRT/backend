@@ -15,6 +15,9 @@ public class ListaObj <T> {
         nroElem = 0;
     }
 
+    public void setVetor(T[] vetor) {
+        this.vetor = vetor;
+    }
 
     public void adiciona(T elemento) {
         if (nroElem >= vetor.length) {
