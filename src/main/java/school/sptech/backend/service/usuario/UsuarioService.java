@@ -8,6 +8,7 @@ import school.sptech.backend.service.usuario.dto.UsuarioCriacaoDto;
 import school.sptech.backend.domain.usuario.entity.Usuario;
 import school.sptech.backend.domain.usuario.mapper.UsuarioMapper;
 import school.sptech.backend.domain.usuario.repository.UsuarioRepository;
+import school.sptech.backend.service.usuario.dto.UsuarioLoginConsultaDto;
 
 import java.util.List;
 import java.util.Optional;
@@ -76,5 +77,24 @@ public class UsuarioService {
         usuarioRepository.deleteById(id);
 
         return true;
+    }
+
+    public UsuarioConsultaDto existeUsuario(UsuarioLoginConsultaDto usuarioLoginConsultaDto) {
+        String email  = usuarioLoginConsultaDto.getEmail();
+        String senha = usuarioLoginConsultaDto.getSenha();
+        List<Usuario> user = usuarioRepository.findByEmailEqualsIgnoreCaseAndSenhaEquals(
+                email, senha);
+
+        if (user.isEmpty()) return null;
+
+        Usuario usuario = user.get(0);
+        usuario.setLogado(true);
+
+        usuarioRepository.save(usuario);
+
+        UsuarioConsultaDto dto = UsuarioMapper.toDto(usuario);
+
+        return dto;
+
     }
 }
