@@ -15,6 +15,7 @@ public class UsuarioMapper {
         usuarioConsultaDto.setNome(usuario.getNome());
         usuarioConsultaDto.setEmail(usuario.getEmail());
         usuarioConsultaDto.setLogado(usuario.getLogado());
+        usuarioConsultaDto.setIdUsuario(usuario.getIdUsuario());
         return usuarioConsultaDto;
     }
     public static Usuario toEntity(UsuarioCriacaoDto usuarioCriacaoDto){
@@ -35,6 +36,7 @@ public class UsuarioMapper {
             usuarioConsultaDto.setNome(usuario.getNome());
             usuarioConsultaDto.setEmail(usuario.getEmail());
             usuarioConsultaDto.setLogado(usuario.getLogado());
+            usuarioConsultaDto.setIdUsuario(usuario.getIdUsuario());
             usuariosConsultaDto.add(usuarioConsultaDto);
         }
         return usuariosConsultaDto;

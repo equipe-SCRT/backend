@@ -3,6 +3,7 @@ package school.sptech.backend.service.usuario.dto;
 import org.antlr.v4.runtime.misc.NotNull;
 
 public class UsuarioConsultaDto {
+    private Integer idUsuario;
     private String nome;
     private String email;
 
@@ -39,5 +40,13 @@ public class UsuarioConsultaDto {
 
     public void setLogado(Boolean logado) {
         this.logado = logado;
+    }
+
+    public Integer getIdUsuario() {
+        return idUsuario;
+    }
+
+    public void setIdUsuario(Integer idUsuario) {
+        this.idUsuario = idUsuario;
     }
 }
