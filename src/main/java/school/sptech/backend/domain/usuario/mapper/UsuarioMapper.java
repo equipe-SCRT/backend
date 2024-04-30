@@ -1,5 +1,6 @@
 package school.sptech.backend.domain.usuario.mapper;
 
+import school.sptech.backend.service.usuario.dto.UsuarioAtualizacaoDto;
 import school.sptech.backend.service.usuario.dto.UsuarioConsultaDto;
 import school.sptech.backend.service.usuario.dto.UsuarioCriacaoDto;
 import school.sptech.backend.domain.usuario.entity.Usuario;
@@ -13,6 +14,7 @@ public class UsuarioMapper {
         usuarioConsultaDto.setTipoUsuario(usuario.getTipoUsuario());
         usuarioConsultaDto.setNome(usuario.getNome());
         usuarioConsultaDto.setEmail(usuario.getEmail());
+        usuarioConsultaDto.setLogado(usuario.getLogado());
         return usuarioConsultaDto;
     }
     public static Usuario toEntity(UsuarioCriacaoDto usuarioCriacaoDto){
@@ -32,11 +34,20 @@ public class UsuarioMapper {
             usuarioConsultaDto.setTipoUsuario(usuario.getTipoUsuario());
             usuarioConsultaDto.setNome(usuario.getNome());
             usuarioConsultaDto.setEmail(usuario.getEmail());
+            usuarioConsultaDto.setLogado(usuario.getLogado());
             usuariosConsultaDto.add(usuarioConsultaDto);
         }
         return usuariosConsultaDto;
     }
 
+    public static Usuario toEntity(UsuarioAtualizacaoDto usuarioCriacaoDto){
+        Usuario usuario = new Usuario();
+        usuario.setTipoUsuario(usuarioCriacaoDto.getTipoUsuario());
+        usuario.setNome(usuarioCriacaoDto.getNome());
+        usuario.setEmail(usuarioCriacaoDto.getEmail());
+        usuario.setSenha(usuario.getSenha());
+        return usuario;
+    }
 
 
 }

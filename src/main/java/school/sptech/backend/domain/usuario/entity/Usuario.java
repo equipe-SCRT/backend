@@ -11,13 +11,10 @@ public class Usuario {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer idUsuario;
-    @NotNull
     private String nome;
-    @NotNull
     private String email;
-    @NotNull
     private String senha;
-    @NotNull
+    private Boolean logado;
     private Integer tipoUsuario;
 
     public Integer getIdUsuario() {
@@ -58,5 +55,13 @@ public class Usuario {
 
     public void setTipoUsuario(Integer tipoUsuario) {
         this.tipoUsuario = tipoUsuario;
+    }
+
+    public Boolean getLogado() {
+        return logado;
+    }
+
+    public void setLogado(Boolean logado) {
+        this.logado = logado;
     }
 }
