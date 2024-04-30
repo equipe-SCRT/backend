@@ -3,14 +3,17 @@ package school.sptech.backend.api.usuario;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import school.sptech.backend.domain.usuario.entity.Usuario;
 import school.sptech.backend.service.usuario.dto.UsuarioAtualizacaoDto;
 import school.sptech.backend.service.usuario.dto.UsuarioConsultaDto;
 import school.sptech.backend.service.usuario.dto.UsuarioCriacaoDto;
 import school.sptech.backend.service.usuario.UsuarioService;
+import school.sptech.backend.service.usuario.dto.UsuarioLoginConsultaDto;
 
 import java.util.List;
 
 @RestController
+@CrossOrigin
 @RequestMapping("/usuarios")
 public class UsuarioController {
     @Autowired
@@ -60,6 +63,16 @@ public class UsuarioController {
     public ResponseEntity<UsuarioConsultaDto> deslogar(@PathVariable int id){
         UsuarioConsultaDto usuarioConsultaDto = usuarioService.deactiveUsuariosById(id);
         if (usuarioConsultaDto == null) return ResponseEntity.notFound().build();
+        return ResponseEntity.ok(usuarioConsultaDto);
+    }
+
+    @PostMapping("/login")
+    public ResponseEntity<UsuarioConsultaDto> login(@RequestBody UsuarioLoginConsultaDto usuarioLoginConsultaDto){
+        UsuarioConsultaDto usuarioConsultaDto = usuarioService.existeUsuario(usuarioLoginConsultaDto);
+
+        if (usuarioConsultaDto == null){
+            return ResponseEntity.status(204).build();
+        }
         return ResponseEntity.ok(usuarioConsultaDto);
     }
 }

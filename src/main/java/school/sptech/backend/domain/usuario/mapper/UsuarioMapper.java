@@ -22,7 +22,7 @@ public class UsuarioMapper {
         usuario.setTipoUsuario(usuarioCriacaoDto.getTipoUsuario());
         usuario.setNome(usuarioCriacaoDto.getNome());
         usuario.setEmail(usuarioCriacaoDto.getEmail());
-        usuario.setSenha(usuario.getSenha());
+        usuario.setSenha(usuarioCriacaoDto.getSenha());
         return usuario;
     }
 
