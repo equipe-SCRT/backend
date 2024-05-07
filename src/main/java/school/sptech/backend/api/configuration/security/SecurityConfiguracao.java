@@ -24,7 +24,7 @@ import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import school.sptech.backend.api.configuration.security.jwt.GerenciadorTokenJwt;
-import school.sptech.backend.service.usuario.autenticacao.AutenticacaoService;
+import school.sptech.backend.service.mergeusuario.autenticacao.AutenticacaoService;
 
 import java.util.Arrays;
 import java.util.List;
