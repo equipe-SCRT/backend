@@ -1,6 +1,7 @@
 package school.sptech.backend.api.configuration.security;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpHeaders;
@@ -36,6 +37,7 @@ public class SecurityConfiguracao {
     @Autowired
     private AutenticacaoService autenticacaoService;
 
+    @Qualifier("autenticacaoEntryPoint")
     @Autowired
     private AutenticacaoEntryPoint autenticacaoJwtEntryPoint;
 

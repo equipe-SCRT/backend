@@ -1,8 +1,6 @@
 package school.sptech.backend.service.usuario.dto;
 
-import org.antlr.v4.runtime.misc.NotNull;
-
-public class UsuarioConsultaDto {
+public class UsuarioConsultaDtoJwt {
     private String nome;
     private String email;
 

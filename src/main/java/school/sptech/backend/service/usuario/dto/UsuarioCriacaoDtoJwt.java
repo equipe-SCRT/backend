@@ -5,7 +5,7 @@ import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 
-public class UsuarioCriacaoDto {
+public class UsuarioCriacaoDtoJwt {
     @NotNull
     @NotBlank
     @Schema(description = "Nome do usuário", example = "Fulvia Cristina")

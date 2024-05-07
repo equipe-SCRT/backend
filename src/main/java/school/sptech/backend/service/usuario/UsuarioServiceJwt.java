@@ -1,7 +1,6 @@
 package school.sptech.backend.service.usuario;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -12,18 +11,18 @@ import org.springframework.web.server.ResponseStatusException;
 import school.sptech.backend.api.configuration.security.jwt.GerenciadorTokenJwt;
 import school.sptech.backend.service.usuario.autenticacao.dto.UsuarioLoginDto;
 import school.sptech.backend.service.usuario.autenticacao.dto.UsuarioTokenDto;
-import school.sptech.backend.service.usuario.dto.UsuarioConsultaDto;
-import school.sptech.backend.service.usuario.dto.UsuarioCriacaoDto;
-import school.sptech.backend.domain.usuario.entity.Usuario;
-import school.sptech.backend.domain.usuario.mapper.UsuarioMapper;
-import school.sptech.backend.domain.usuario.repository.UsuarioRepository;
+import school.sptech.backend.service.usuario.dto.UsuarioConsultaDtoJwt;
+import school.sptech.backend.service.usuario.dto.UsuarioCriacaoDtoJwt;
+import school.sptech.backend.domain.usuario.entity.UsuarioJwt;
+import school.sptech.backend.domain.usuario.mapper.UsuarioMapperJwt;
+import school.sptech.backend.domain.usuario.repository.UsuarioRepositoryJwt;
 
 import java.util.List;
 
 @Service
-public class UsuarioService {
+public class UsuarioServiceJwt {
     @Autowired
-    private UsuarioRepository usuarioRepository;
+    private UsuarioRepositoryJwt usuarioRepository;
 
     @Autowired
     private PasswordEncoder passwordEncoder;
@@ -34,9 +33,9 @@ public class UsuarioService {
     @Autowired
     private AuthenticationManager authenticationManager;
 
-    public void criar(UsuarioCriacaoDto usuarioCriacaoDto){
+    public void criar(UsuarioCriacaoDtoJwt usuarioCriacaoDto){
 
-        final Usuario novoUsuario = UsuarioMapper.of(usuarioCriacaoDto);
+        final UsuarioJwt novoUsuario = UsuarioMapperJwt.of(usuarioCriacaoDto);
         String senhaCriptografada = passwordEncoder.encode(novoUsuario.getSenha());
         novoUsuario.setSenha(senhaCriptografada);
 
@@ -51,7 +50,7 @@ public class UsuarioService {
 
         final Authentication authentication = this.authenticationManager.authenticate(credentials);
 
-        Usuario usuarioAutenticado =
+        UsuarioJwt usuarioAutenticado =
                 usuarioRepository.findByEmail(usuarioLoginDto.getEmail())
                         .orElseThrow(
                                 () -> new ResponseStatusException(404, "Email do usuario nao cadastrado", null)
@@ -60,7 +59,7 @@ public class UsuarioService {
 
         final String token = gerenciadorTokenJwt.generateToken(authentication);
 
-        return UsuarioMapper.of(usuarioAutenticado, token);
+        return UsuarioMapperJwt.of(usuarioAutenticado, token);
     }
 
 //    public UsuarioConsultaDto adicionarUsuario(UsuarioCriacaoDto usuarioCriacaoDto){
@@ -73,10 +72,10 @@ public class UsuarioService {
 //        return usuarioConsultaDto;
 //    }
 
-    public List<UsuarioConsultaDto> getUsuarios() {
-        List<Usuario> all = usuarioRepository.findAll();
+    public List<UsuarioConsultaDtoJwt> getUsuarios() {
+        List<UsuarioJwt> all = usuarioRepository.findAll();
 
-        List<UsuarioConsultaDto> lista = UsuarioMapper.toDto(all);
+        List<UsuarioConsultaDtoJwt> lista = UsuarioMapperJwt.toDto(all);
 
         return lista;
     }

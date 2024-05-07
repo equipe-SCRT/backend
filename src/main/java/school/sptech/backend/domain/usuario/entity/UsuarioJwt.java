@@ -7,7 +7,7 @@ import jakarta.persistence.Id;
 import org.antlr.v4.runtime.misc.NotNull;
 
 @Entity
-public class Usuario {
+public class UsuarioJwt {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)private Long idUsuario;
     @NotNull

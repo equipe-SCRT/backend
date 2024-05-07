@@ -1,17 +1,17 @@
 package school.sptech.backend.domain.usuario.mapper;
 
 import school.sptech.backend.service.usuario.autenticacao.dto.UsuarioTokenDto;
-import school.sptech.backend.service.usuario.dto.UsuarioConsultaDto;
-import school.sptech.backend.service.usuario.dto.UsuarioCriacaoDto;
-import school.sptech.backend.domain.usuario.entity.Usuario;
+import school.sptech.backend.service.usuario.dto.UsuarioConsultaDtoJwt;
+import school.sptech.backend.service.usuario.dto.UsuarioCriacaoDtoJwt;
+import school.sptech.backend.domain.usuario.entity.UsuarioJwt;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class UsuarioMapper {
+public class UsuarioMapperJwt {
 
-    public static Usuario of(UsuarioCriacaoDto usuarioCriacaoDto){
-        Usuario usuario = new Usuario();
+    public static UsuarioJwt of(UsuarioCriacaoDtoJwt usuarioCriacaoDto){
+        UsuarioJwt usuario = new UsuarioJwt();
 
         usuario.setEmail(usuario.getEmail());
         usuario.setNome(usuario.getNome());
@@ -21,7 +21,7 @@ public class UsuarioMapper {
         return usuario;
     }
 
-    public static UsuarioTokenDto of(Usuario usuario, String token){
+    public static UsuarioTokenDto of(UsuarioJwt usuario, String token){
         UsuarioTokenDto usuarioTokenDto = new UsuarioTokenDto();
 
         usuarioTokenDto.setUserId(usuario.getIdUsuario());
@@ -31,15 +31,15 @@ public class UsuarioMapper {
 
         return  usuarioTokenDto;
     }
-    public static UsuarioConsultaDto toDto(Usuario usuario){
-        UsuarioConsultaDto usuarioConsultaDto = new UsuarioConsultaDto();
+    public static UsuarioConsultaDtoJwt toDto(UsuarioJwt usuario){
+        UsuarioConsultaDtoJwt usuarioConsultaDto = new UsuarioConsultaDtoJwt();
         usuarioConsultaDto.setTipoUsuario(usuario.getTipoUsuario());
         usuarioConsultaDto.setNome(usuario.getNome());
         usuarioConsultaDto.setEmail(usuario.getEmail());
         return usuarioConsultaDto;
     }
-    public static Usuario toEntity(UsuarioCriacaoDto usuarioCriacaoDto){
-        Usuario usuario = new Usuario();
+    public static UsuarioJwt toEntity(UsuarioCriacaoDtoJwt usuarioCriacaoDto){
+        UsuarioJwt usuario = new UsuarioJwt();
         usuario.setTipoUsuario(usuarioCriacaoDto.getTipoUsuario());
         usuario.setNome(usuarioCriacaoDto.getNome());
         usuario.setEmail(usuarioCriacaoDto.getEmail());
@@ -47,11 +47,11 @@ public class UsuarioMapper {
         return usuario;
     }
 
-    public static List<UsuarioConsultaDto> toDto(List<Usuario> usuarios){
-        List<UsuarioConsultaDto> usuariosConsultaDto = new ArrayList<>();
+    public static List<UsuarioConsultaDtoJwt> toDto(List<UsuarioJwt> usuarios){
+        List<UsuarioConsultaDtoJwt> usuariosConsultaDto = new ArrayList<>();
 
-        for (Usuario usuario : usuarios) {
-            UsuarioConsultaDto usuarioConsultaDto = new UsuarioConsultaDto();
+        for (UsuarioJwt usuario : usuarios) {
+            UsuarioConsultaDtoJwt usuarioConsultaDto = new UsuarioConsultaDtoJwt();
             usuarioConsultaDto.setTipoUsuario(usuario.getTipoUsuario());
             usuarioConsultaDto.setNome(usuario.getNome());
             usuarioConsultaDto.setEmail(usuario.getEmail());
