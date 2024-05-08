@@ -13,7 +13,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.web.filter.OncePerRequestFilter;
 import school.sptech.backend.api.configuration.security.jwt.GerenciadorTokenJwt;
-import school.sptech.backend.service.mergeusuario.autenticacao.AutenticacaoService;
+import school.sptech.backend.service.usuario.autenticacao.AutenticacaoService;
 
 import java.io.IOException;
 import java.util.Objects;
