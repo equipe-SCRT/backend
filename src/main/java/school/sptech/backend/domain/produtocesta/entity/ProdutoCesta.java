@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
+import school.sptech.backend.domain.produto.Produto;
 
 @Entity
 @Getter
@@ -13,7 +14,7 @@ public class ProdutoCesta {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer idProdutoCesta;
     @ManyToOne
-    private Integer idProduto;
+    private Produto Produto;
     @ManyToOne
-    private Integer idCesta;
+    private Integer Cesta;
 }

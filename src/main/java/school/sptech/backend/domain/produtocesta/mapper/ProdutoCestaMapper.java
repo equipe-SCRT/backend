@@ -9,25 +9,23 @@ import java.util.List;
 
 public class ProdutoCestaMapper {
 
-    public static List<ProdutoCestaEntityDto> toEntity(List<ProdutoCesta> produtoCestas, List<Produto> produtos){
+    public static List<ProdutoCestaEntityDto> toDto(List<ProdutoCesta> produtoCestas){
         List<ProdutoCestaEntityDto> produtoCestaEntityDtos = new ArrayList<>();
         for (int i = 0; i < produtoCestas.size(); i++) {
             ProdutoCestaEntityDto produtoCestaEntityDto = new ProdutoCestaEntityDto();
-            produtoCestaEntityDto.setFkTipoProduto(produtoCestas.get(i).getIdProduto());
-            produtoCestaEntityDto.setIdCesta(produtoCestas.get(i).getIdCesta());
-            produtoCestaEntityDto.setNome(produtos.get(i).getNome());
+            produtoCestaEntityDto.setIdCesta(produtoCestas.get(i).getCesta());
+            produtoCestaEntityDto.setIdProduto(produtoCestas.get(i).getProduto().getId());
 
             produtoCestaEntityDtos.add(produtoCestaEntityDto);
         }
         return produtoCestaEntityDtos;
     }
 
-    public static ProdutoCestaEntityDto toEntity(ProdutoCesta produtoCesta, Produto produto){
+    public static ProdutoCestaEntityDto toDto(ProdutoCesta produtoCesta){
 
         ProdutoCestaEntityDto produtoCestaEntityDto = new ProdutoCestaEntityDto();
-        produtoCestaEntityDto.setFkTipoProduto(produtoCesta.getIdProduto());
-        produtoCestaEntityDto.setIdCesta(produtoCesta.getIdCesta());
-        produtoCestaEntityDto.setNome(produto.getNome());
+        produtoCestaEntityDto.setIdCesta(produtoCesta.getCesta());
+        produtoCestaEntityDto.setIdProduto(produtoCesta.getProduto().getId());
 
 
         return produtoCestaEntityDto;
