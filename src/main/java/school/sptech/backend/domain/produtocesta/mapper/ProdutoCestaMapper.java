@@ -1,6 +1,5 @@
 package school.sptech.backend.domain.produtocesta.mapper;
 
-import school.sptech.backend.domain.produto.Produto;
 import school.sptech.backend.domain.produtocesta.entity.ProdutoCesta;
 import school.sptech.backend.service.produtocesta.dto.ProdutoCestaEntityDto;
 
@@ -9,7 +8,7 @@ import java.util.List;
 
 public class ProdutoCestaMapper {
 
-    public static List<ProdutoCestaEntityDto> toDto(List<ProdutoCesta> produtoCestas){
+    public static List<ProdutoCestaEntityDto> toDto(){
         List<ProdutoCestaEntityDto> produtoCestaEntityDtos = new ArrayList<>();
         for (int i = 0; i < produtoCestas.size(); i++) {
             ProdutoCestaEntityDto produtoCestaEntityDto = new ProdutoCestaEntityDto();
