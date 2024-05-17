@@ -1,4 +1,7 @@
 package school.sptech.backend.domain.campanha.repository;
 
-public interface CampanhaRepository {
+import org.springframework.data.jpa.repository.JpaRepository;
+import school.sptech.backend.domain.campanha.Campanha;
+
+public interface CampanhaRepository extends JpaRepository<Campanha, Integer> {
 }

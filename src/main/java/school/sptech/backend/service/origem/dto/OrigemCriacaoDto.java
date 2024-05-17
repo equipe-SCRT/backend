@@ -1,4 +1,4 @@
 package school.sptech.backend.service.origem.dto;
 
-public class OrigemCriacaoDto {
+public class OrigemCriacaoDto   {
 }
