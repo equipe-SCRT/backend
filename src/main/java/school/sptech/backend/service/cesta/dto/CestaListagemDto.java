@@ -7,7 +7,14 @@ import java.time.LocalDate;
 @Data
 public class CestaListagemDto {
     private Long id;
-    private String loteId;
+    private String lote;
     private LocalDate dataMontagem;
-    private Long tipoCestaId;
+
+    private TipoCestaDto tipoCesta;
+
+    @Data
+    public static class TipoCestaDto{
+        private Long id;
+        private String nome;
+    }
 }

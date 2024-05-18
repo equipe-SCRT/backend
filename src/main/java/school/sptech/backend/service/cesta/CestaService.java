@@ -4,8 +4,11 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import school.sptech.backend.domain.cesta.Cesta;
 import school.sptech.backend.domain.cesta.repository.CestaRepository;
-import school.sptech.backend.utils.exception.NaoEncontradoException;
+import school.sptech.backend.domain.tipocesta.TipoCesta;
+import school.sptech.backend.domain.tipocesta.repository.TipoCestaRepository;
+import school.sptech.backend.exception.NaoEncontradoException;
 import school.sptech.backend.service.cesta.dto.CestaMapper;
+import school.sptech.backend.service.tipocesta.TipoCestaService;
 
 import java.util.List;
 
@@ -14,6 +17,7 @@ import java.util.List;
 public class CestaService {
     private final CestaRepository cestaRepository;
     private final CestaMapper cestaMapper;
+    private final TipoCestaService tipoCestaService;
 
     public Cesta porId(Long id){
         return (cestaRepository.findById(id).orElseThrow(
@@ -25,7 +29,20 @@ public class CestaService {
         return cestaRepository.findAll();
     }
 
-    public Cesta salvar(Cesta cesta){
+    public Cesta salvar(Cesta cesta, Long tipoCestaId){
+        TipoCesta tipoCesta = tipoCestaService.porId(tipoCestaId);
+        cesta.setTipoCesta(tipoCesta);
         return cestaRepository.save(cesta);
     }
+
+    public Cesta atualizar(Long id, Cesta novo){
+        Cesta cesta = porId(id);
+        novo.setId(cesta.getId());
+        return cestaRepository.save(novo);
+    }
+
+    public void deletar(Long id){
+        cestaRepository.delete(porId(id));
+    }
+
 }

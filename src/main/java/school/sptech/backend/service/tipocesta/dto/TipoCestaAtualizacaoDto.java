@@ -4,7 +4,7 @@ import jakarta.validation.constraints.NotBlank;
 import lombok.Data;
 
 @Data
-public class TipoCestaCriacaoDto {
+public class TipoCestaAtualizacaoDto {
     @NotBlank
     private String nome;
 

@@ -4,10 +4,10 @@ import jakarta.validation.constraints.PastOrPresent;
 import lombok.Data;
 
 import java.time.LocalDate;
+
 @Data
-public class CestaCriacaoDto {
+public class CestaAtualizacaoDto {
     private String lote;
-    @PastOrPresent
     private LocalDate dataMontagem;
     private Long tipoCestaId;
 }

@@ -4,6 +4,7 @@ import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.factory.Mappers;
 import school.sptech.backend.domain.cesta.Cesta;
+import school.sptech.backend.domain.tipocesta.TipoCesta;
 
 import java.util.List;
 
@@ -11,7 +12,9 @@ import java.util.List;
 public interface CestaMapper {
     CestaMapper INSTANCE = Mappers.getMapper(CestaMapper.class);
 
-    CestaListagemDto cestaToDto(Cesta cesta);
-    List<CestaListagemDto> cestaToDto(List<Cesta> cestas);
-    Cesta dtoToCesta(CestaCriacaoDto dto);
+    CestaListagemDto toDto(Cesta entity);
+    List<CestaListagemDto> toDto(List<Cesta> entities);
+    Cesta toEntity(CestaCriacaoDto dto);
+    Cesta toEntity(CestaAtualizacaoDto dto);
+    Cesta toEntity(CestaTipoCestaIdDto dto);
 }
