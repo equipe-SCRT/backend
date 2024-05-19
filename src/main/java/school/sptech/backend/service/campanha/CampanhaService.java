@@ -1,5 +1,6 @@
 package school.sptech.backend.service.campanha;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -18,63 +19,47 @@ import school.sptech.backend.service.produto.dto.ProdutoMapper;
 import java.util.List;
 import java.util.Optional;
 
+
 @Service
+@RequiredArgsConstructor
 public class CampanhaService {
 
-    @Autowired
-    private CampanhaRepository campanhaRepository;
 
-    public void criar(CampanhaCriacaoDto campanhaCriacao) {
-        final Campanha novoCampanha = CampanhaMapper.toEntity(campanhaCriacao);
-        this.campanhaRepository.save(novoCampanha);
+    private final CampanhaRepository campanhaRepository;
+
+    public Campanha criar(Campanha campanhaCriacao) {
+        return this.campanhaRepository.save(campanhaCriacao);
     }
 
-    public List<CampanhaListagemDto> listar(){
+    public List<Campanha> listar(){
         final List<Campanha> campanhas = this.campanhaRepository.findAll();
 
         if (campanhas.isEmpty()){
             throw new ResponseStatusException(HttpStatus.NO_CONTENT);
         }
 
-        final List<CampanhaListagemDto> dto = CampanhaMapper.toDto(campanhas);
-
-        return dto;
+        return campanhas;
     }
 
-    public CampanhaListagemDto atualizar(CampanhaAtualizacaoDto campanhaAtualizacao, int id){
-        final Optional<Campanha> campanhaOpt = this.campanhaRepository.findById(id);
+    public Campanha atualizar(Campanha campanhaAtualizacao, int id){
 
-        if (campanhaOpt.isEmpty()){
-            throw new ResponseStatusException(HttpStatus.NO_CONTENT);
-        }
-
-        final Campanha campanha = CampanhaMapper.atualizacaoDto(campanhaOpt.get(), campanhaAtualizacao);
-
-        final CampanhaListagemDto dto = CampanhaMapper.toDto(campanha);
-
-        this.campanhaRepository.save(campanha);
-
-        return dto;
+        this.campanhaRepository.findById(id).orElseThrow(
+                () -> new ResponseStatusException(HttpStatus.NOT_FOUND)
+        );
+        campanhaAtualizacao.setId(id);
+        return this.campanhaRepository.save(campanhaAtualizacao);
     }
-    public CampanhaListagemDto porId(int id){
-        final Optional<Campanha> campanhaOptional = this.campanhaRepository.findById(id);
+    public Campanha porId(int id){
 
-        if (campanhaOptional.isEmpty()){
-            throw new ResponseStatusException(HttpStatus.NO_CONTENT);
-        }
-
-        final CampanhaListagemDto dto = CampanhaMapper.toDto(campanhaOptional.get());
-
-        return dto;
+        return this.campanhaRepository.findById(id).orElseThrow(
+                () -> new ResponseStatusException(HttpStatus.NOT_FOUND)
+        );
     }
 
     public void deletar(int id){
-        final Optional<Campanha> campanhaOpt = this.campanhaRepository.findById(id);
-
-        if (campanhaOpt.isEmpty()){
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
-        }
-
+        this.campanhaRepository.findById(id).orElseThrow(
+                () -> new ResponseStatusException(HttpStatus.NOT_FOUND)
+        );
         this.campanhaRepository.deleteById(id);
     }
 }
