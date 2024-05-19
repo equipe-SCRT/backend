@@ -2,7 +2,6 @@ package school.sptech.backend.api.rota;
 
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import school.sptech.backend.domain.rota.Rota;
@@ -24,18 +23,16 @@ public class RotaController {
     private final RotaMapper mapper;
 
     @PostMapping
-    public ResponseEntity<Void> criar(@RequestBody @Valid RotaCriacaoDto dto) {
-        Rota rotaCriada = service.criar(mapper.toEntity(dto));
-
+    public ResponseEntity<RotaListagemDto> criar(@RequestBody @Valid RotaCriacaoDto dto) {
+        Rota rotaCriada = this.service.criar(mapper.toEntity(dto));
         URI uri = URI.create("/rotas/" + rotaCriada.getId());
-
-        return ResponseEntity.created(uri).build();
+        return ResponseEntity.created(uri).body(mapper.toDto(rotaCriada));
     }
 
     @GetMapping
     public ResponseEntity<List<RotaListagemDto>> listar() {
-        List<Rota> dtos = this.service.listar();
-        return ResponseEntity.ok().body(mapper.toDto(dtos));
+        List<Rota> rotas = this.service.listar();
+        return ResponseEntity.ok().body(mapper.toDto(rotas));
     }
 
     @GetMapping("/{id}")
@@ -53,8 +50,8 @@ public class RotaController {
     @PutMapping("/{id}")
     public ResponseEntity<RotaListagemDto> atualizar(@RequestBody @Valid RotaAtualizacaoDto rotaAtualizada, @PathVariable int id) {
         Rota entity = mapper.atualizacaoDto(rotaAtualizada, id);
-        Rota rota = this.service.atualizar(entity, entity.getId());
-        return ResponseEntity.ok().body(mapper.toDto(rota));
+        RotaListagemDto dto = mapper.toDto(this.service.atualizar(entity, entity.getId()));
+        return ResponseEntity.ok().body(dto);
     }
 
     @DeleteMapping("/{id}")
