@@ -2,7 +2,6 @@ package school.sptech.backend.service.rota.dto;
 
 import org.mapstruct.InheritInverseConfiguration;
 import org.mapstruct.Mapper;
-import org.mapstruct.MappingTarget;
 import school.sptech.backend.domain.rota.Rota;
 
 import java.util.List;
@@ -17,5 +16,5 @@ public interface RotaMapper {
 
     List<RotaListagemDto> toDto(List<Rota> entities);
 
-    Rota atualizacaoDto(RotaAtualizacaoDto dto, @MappingTarget Rota entity);
+    Rota atualizacaoDto(RotaAtualizacaoDto dto, int id);
 }

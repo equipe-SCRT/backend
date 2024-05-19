@@ -1,91 +1,59 @@
 package school.sptech.backend.service.rota;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 import school.sptech.backend.domain.rota.Rota;
 import school.sptech.backend.domain.rota.repository.RotaRepository;
-import school.sptech.backend.service.rota.dto.RotaAtualizacaoDto;
-import school.sptech.backend.service.rota.dto.RotaCriacaoDto;
-import school.sptech.backend.service.rota.dto.RotaListagemDto;
-import school.sptech.backend.service.rota.dto.RotaMapper;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
+@RequiredArgsConstructor
 public class RotaService {
 
-    @Autowired
-    private RotaRepository repository;
+    private final RotaRepository repository;
 
-    @Autowired
-    private RotaMapper mapper;
-
-    public void criar(RotaCriacaoDto dto) {
-        final Rota novaRota = mapper.toEntity(dto);
-        this.repository.save(novaRota);
+    public Rota criar(Rota rota) {
+        return this.repository.save(rota);
     }
 
-    public List<RotaListagemDto> listar() {
+    public List<Rota> listar() {
         final List<Rota> rotas = this.repository.findAll();
 
         if (rotas.isEmpty()) {
             throw new ResponseStatusException(HttpStatus.NO_CONTENT);
         }
 
-        final List<RotaListagemDto> dto = mapper.toDto(rotas);
-
-        return dto;
+        return rotas;
     }
 
-    public RotaListagemDto porId(int id) {
-        final Optional<Rota> rotaOpt = repository.findById(id);
-
-        if (rotaOpt.isEmpty()) {
-            throw new ResponseStatusException(HttpStatus.NO_CONTENT);
-        }
-
-        final RotaListagemDto dto = mapper.toDto(rotaOpt.get());
-
-        return dto;
+    public Rota porId(int id) {
+        return this.repository.findById(id).orElseThrow(
+                () -> new ResponseStatusException(HttpStatus.NO_CONTENT)
+        );
     }
 
-    public RotaListagemDto porNome(String nome) {
-        final Optional<Rota> rotaOpt = repository.findByNomeIgnoreCase(nome);
-
-        if (rotaOpt.isEmpty()) {
-            throw new ResponseStatusException(HttpStatus.NO_CONTENT);
-        }
-
-        final RotaListagemDto dto = mapper.toDto(rotaOpt.get());
-
-        return dto;
+    public Rota porNome(String nome) {
+        return this.repository.findByNomeIgnoreCase(nome).orElseThrow(
+                () -> new ResponseStatusException(HttpStatus.NO_CONTENT)
+        );
     }
 
-    public RotaListagemDto atualizar(RotaAtualizacaoDto rotaAtualizada, int id) {
-        final Optional<Rota> rotaOpt = repository.findById(id);
+    public Rota atualizar(Rota rotaAtualizada, int id) {
+        this.repository.findById(id).orElseThrow(
+                () -> new ResponseStatusException(HttpStatus.NO_CONTENT)
+        );
 
-        if (rotaOpt.isEmpty()) {
-            throw new ResponseStatusException(HttpStatus.NO_CONTENT);
-        }
-
-        final Rota rota = mapper.atualizacaoDto(rotaAtualizada, rotaOpt.get());
-
-        final RotaListagemDto dto = mapper.toDto(rota);
-
-        this.repository.save(rota);
-
-        return dto;
+        rotaAtualizada.setId(id);
+        return this.repository.save(rotaAtualizada);
     }
 
     public void deletar(int id) {
-        final Optional<Rota> rotaOpt = repository.findById(id);
-
-        if (rotaOpt.isEmpty()) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
-        }
+        this.repository.findById(id).orElseThrow(
+                () -> new ResponseStatusException(HttpStatus.NOT_FOUND)
+        );
 
         this.repository.deleteById(id);
     }

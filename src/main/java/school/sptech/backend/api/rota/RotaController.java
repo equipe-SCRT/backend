@@ -5,11 +5,14 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import school.sptech.backend.domain.rota.Rota;
 import school.sptech.backend.service.rota.RotaService;
 import school.sptech.backend.service.rota.dto.RotaAtualizacaoDto;
 import school.sptech.backend.service.rota.dto.RotaCriacaoDto;
 import school.sptech.backend.service.rota.dto.RotaListagemDto;
+import school.sptech.backend.service.rota.dto.RotaMapper;
 
+import java.net.URI;
 import java.util.List;
 
 @RestController
@@ -17,38 +20,41 @@ import java.util.List;
 @RequiredArgsConstructor
 public class RotaController {
 
-    @Autowired
-    private RotaService service;
+    private final RotaService service;
+    private final RotaMapper mapper;
 
     @PostMapping
     public ResponseEntity<Void> criar(@RequestBody @Valid RotaCriacaoDto dto) {
-        this.service.criar(dto);
-        return ResponseEntity.created(null).build();
+        Rota rotaCriada = service.criar(mapper.toEntity(dto));
+
+        URI uri = URI.create("/rotas/" + rotaCriada.getId());
+
+        return ResponseEntity.created(uri).build();
     }
 
     @GetMapping
     public ResponseEntity<List<RotaListagemDto>> listar() {
-        List<RotaListagemDto> dtos = this.service.listar();
-        return ResponseEntity.ok().body(dtos);
+        List<Rota> dtos = this.service.listar();
+        return ResponseEntity.ok().body(mapper.toDto(dtos));
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<RotaListagemDto> porId(@PathVariable int id) {
-        RotaListagemDto dto = this.service.porId(id);
-        return ResponseEntity.ok().body(dto);
+        Rota entity = this.service.porId(id);
+        return ResponseEntity.ok().body(mapper.toDto(entity));
     }
 
     @GetMapping("/por-nome/{nome}")
     public ResponseEntity<RotaListagemDto> porNome(@PathVariable String nome) {
-        RotaListagemDto dto = this.service.porNome(nome);
-        return ResponseEntity.ok().body(dto);
+        Rota entity = this.service.porNome(nome);
+        return ResponseEntity.ok().body(mapper.toDto(entity));
     }
 
     @PutMapping("/{id}")
     public ResponseEntity<RotaListagemDto> atualizar(@RequestBody @Valid RotaAtualizacaoDto rotaAtualizada, @PathVariable int id) {
-        RotaListagemDto dto = this.service.atualizar(rotaAtualizada, id);
-        return ResponseEntity.ok().body(dto);
-
+        Rota entity = mapper.atualizacaoDto(rotaAtualizada, id);
+        Rota rota = this.service.atualizar(entity, entity.getId());
+        return ResponseEntity.ok().body(mapper.toDto(rota));
     }
 
     @DeleteMapping("/{id}")
