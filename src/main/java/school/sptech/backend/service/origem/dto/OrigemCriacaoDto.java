@@ -2,11 +2,11 @@ package school.sptech.backend.service.origem.dto;
 
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
+import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 
-@Setter
-@Getter
+@Data
 public class OrigemCriacaoDto   {
 
     @NotNull
@@ -16,8 +16,8 @@ public class OrigemCriacaoDto   {
     @Positive
     private Integer itapora;
     @Positive
-    private int fkCondominio;
+    private int condominioId;
     @Positive
-    private int fkCampanha;
+    private int campanhaId;
 
 }

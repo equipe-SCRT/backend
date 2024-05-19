@@ -3,8 +3,11 @@ package school.sptech.backend.domain.origem;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.ManyToOne;
 import lombok.Getter;
 import lombok.Setter;
+import school.sptech.backend.domain.campanha.Campanha;
+import school.sptech.backend.domain.condominio.Condominio;
 
 import java.util.Date;
 
@@ -17,6 +20,11 @@ public class Origem {
     private Integer id;
     private Integer auta_de_souza_rua;
     private Integer itapora;
-    private int fkCondominio;
-    private int fkCampanha;
+
+
+    @ManyToOne
+    private Condominio comdominio;
+
+    @ManyToOne
+    private Campanha campanha;
 }

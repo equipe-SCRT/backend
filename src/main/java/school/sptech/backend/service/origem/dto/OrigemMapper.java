@@ -1,5 +1,7 @@
 package school.sptech.backend.service.origem.dto;
 
+import org.mapstruct.InheritInverseConfiguration;
+import org.mapstruct.Mapper;
 import school.sptech.backend.domain.campanha.Campanha;
 import school.sptech.backend.domain.origem.Origem;
 import school.sptech.backend.service.campanha.dto.CampanhaAtualizacaoDto;
@@ -9,48 +11,15 @@ import school.sptech.backend.service.campanha.dto.CampanhaMapper;
 
 import java.util.List;
 
-public class OrigemMapper {
+@Mapper(componentModel = "spring")
+public interface OrigemMapper {
 
-    public static OrigemListagemDto toDto(Origem entity) {
-        if (entity == null) return null;
+    OrigemListagemDto toDto(Origem entity);
 
-        OrigemListagemDto dto = new OrigemListagemDto();
-        dto.setId(entity.getId());
-        dto.setAuta_de_souza_rua(entity.getAuta_de_souza_rua());
-        dto.setItapora(entity.getItapora());
-        dto.setFkCampanha(entity.getFkCampanha());
-        dto.setFkCondominio(entity.getFkCondominio());
+    @InheritInverseConfiguration
+    Origem toEntity(OrigemCriacaoDto dto);
 
-        return dto;
-    }
+    List<OrigemListagemDto> toDto(List<Origem> entities);
 
-    public static Origem toEntity(OrigemCriacaoDto dto){
-        if(dto == null) return null;
-
-        Origem entity = new Origem();
-        entity.setAuta_de_souza_rua(dto.getAuta_de_souza_rua());
-        entity.setItapora(dto.getItapora());
-        entity.setFkCampanha(dto.getFkCampanha());
-        entity.setFkCondominio(dto.getFkCondominio());
-
-        return entity;
-
-    }
-
-    public static List<OrigemListagemDto> toDto(List<Origem> entities) {
-
-        return entities.stream().map(OrigemMapper::toDto).toList();
-    }
-
-    public static Origem atualizacaoDto(Origem entity, OrigemAtualizacaoDto dto) {
-        if (entity == null) return null;
-
-        entity.setFkCondominio(dto.getFkCondominio());
-        entity.setItapora(dto.getItapora());
-        entity.setFkCondominio(dto.getFkCondominio());
-        entity.setFkCampanha(dto.getFkCampanha());
-        entity.setAuta_de_souza_rua(dto.getAuta_de_souza_rua());
-
-        return entity;
-    }
+    Origem atualizacaoDto(OrigemAtualizacaoDto dto, int id);
 }
