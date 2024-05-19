@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 import school.sptech.backend.domain.rota.Rota;
 import school.sptech.backend.domain.rota.repository.RotaRepository;
+import school.sptech.backend.exception.NaoEncontradoException;
 
 import java.util.List;
 
@@ -31,19 +32,19 @@ public class RotaService {
 
     public Rota porId(int id) {
         return this.repository.findById(id).orElseThrow(
-                () -> new ResponseStatusException(HttpStatus.NO_CONTENT)
+                () -> new NaoEncontradoException("Rota")
         );
     }
 
     public Rota porNome(String nome) {
         return this.repository.findByNomeIgnoreCase(nome).orElseThrow(
-                () -> new ResponseStatusException(HttpStatus.NO_CONTENT)
+                () -> new NaoEncontradoException("Rota")
         );
     }
 
     public Rota atualizar(Rota rotaAtualizada, int id) {
         this.repository.findById(id).orElseThrow(
-                () -> new ResponseStatusException(HttpStatus.NO_CONTENT)
+                () -> new NaoEncontradoException("Rota")
         );
 
         rotaAtualizada.setId(id);
@@ -52,7 +53,7 @@ public class RotaService {
 
     public void deletar(int id) {
         this.repository.findById(id).orElseThrow(
-                () -> new ResponseStatusException(HttpStatus.NOT_FOUND)
+                () -> new NaoEncontradoException("Rota")
         );
 
         this.repository.deleteById(id);
