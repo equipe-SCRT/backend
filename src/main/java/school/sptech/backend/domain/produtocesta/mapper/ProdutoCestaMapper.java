@@ -8,7 +8,7 @@ import java.util.List;
 
 public class ProdutoCestaMapper {
 
-    public static List<ProdutoCestaEntityDto> toDto(){
+    public static List<ProdutoCestaEntityDto> toDto(List<ProdutoCesta> produtoCestas){
         List<ProdutoCestaEntityDto> produtoCestaEntityDtos = new ArrayList<>();
         for (int i = 0; i < produtoCestas.size(); i++) {
             ProdutoCestaEntityDto produtoCestaEntityDto = new ProdutoCestaEntityDto();

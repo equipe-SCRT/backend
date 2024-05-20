@@ -28,7 +28,7 @@ public class ProdutoCestaController {
     @GetMapping
     public ResponseEntity<List<ProdutoCestaEntityDto>> getMap(){
         List<ProdutoCesta> produtoCestas = service.get();
-        List<ProdutoCestaEntityDto> dto = ProdutoCestaMapper.toDto();
+        List<ProdutoCestaEntityDto> dto = ProdutoCestaMapper.toDto(produtoCestas);
         if (dto.isEmpty()){
             return ResponseEntity.noContent().build();
         }
@@ -49,6 +49,8 @@ public class ProdutoCestaController {
 
     @PutMapping("/{id}")
     public ResponseEntity<ProdutoCestaEntityDto> updateMap(@Valid @RequestBody ProdutoCesta produtoCesta, @PathVariable int id){
-        return null;
+        ProdutoCesta updated = service.update(id, produtoCesta);
+        ProdutoCestaEntityDto dto = ProdutoCestaMapper.toDto(updated);
+        return ResponseEntity.status(200).body(dto);
     }
 }
