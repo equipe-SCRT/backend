@@ -2,7 +2,6 @@ package school.sptech.backend.service.condominio.dto;
 
 import org.mapstruct.InheritInverseConfiguration;
 import org.mapstruct.Mapper;
-import org.mapstruct.MappingTarget;
 import school.sptech.backend.domain.condominio.Condominio;
 
 import java.util.List;
@@ -17,5 +16,5 @@ public interface CondominioMapper {
 
     List<CondominioListagemDto> toDto(List<Condominio> entities);
 
-    Condominio atualizacaoDto(CondominioAtualizacaoDto dto, @MappingTarget Condominio entity);
+    Condominio atualizacaoDto(CondominioAtualizacaoDto dto, int id);
 }

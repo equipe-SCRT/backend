@@ -7,5 +7,5 @@ import java.util.Optional;
 
 public interface CondominioRepository extends JpaRepository<Condominio, Integer> {
 
-    Optional<Condominio> findByNome(String nome);
+    Optional<Condominio> findByNomeIgnoreCase(String nome);
 }
