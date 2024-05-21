@@ -1,78 +1,43 @@
 package school.sptech.backend.service.produto;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import org.springframework.web.server.ResponseStatusException;
 import school.sptech.backend.domain.produto.Produto;
 import school.sptech.backend.domain.produto.repository.ProdutoRepository;
-import school.sptech.backend.service.produto.dto.ProdutoAtualizacaoDto;
-import school.sptech.backend.service.produto.dto.ProdutoCriacaoDto;
-import school.sptech.backend.service.produto.dto.ProdutoListagemDto;
-import school.sptech.backend.service.produto.dto.ProdutoMapper;
+import school.sptech.backend.exception.NaoEncontradoException;
+import school.sptech.backend.service.tipoproduto.TipoProdutoService;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
+@RequiredArgsConstructor
 public class ProdutoService {
 
-    @Autowired
-    private ProdutoRepository produtoRepository;
+    private final ProdutoRepository repository;
 
-    public void criar(ProdutoCriacaoDto produtoCriacao){
-        final Produto novoProduto = ProdutoMapper.toEntity(produtoCriacao);
-        this.produtoRepository.save(novoProduto);
+    private final TipoProdutoService tipoProdutoService;
+
+    public Produto criar(Produto novoProduto, Integer tipoProdutoId){
+        novoProduto.setTipoProduto(tipoProdutoService.porId(tipoProdutoId));
+        return repository.save(novoProduto);
     }
 
-    public List<ProdutoListagemDto> listar(){
-        final List<Produto> produtos = this.produtoRepository.findAll();
-
-        if (produtos.isEmpty()){
-            throw new ResponseStatusException(HttpStatus.NO_CONTENT);
-        }
-
-        final List<ProdutoListagemDto> dto = ProdutoMapper.toDto(produtos);
-
-        return dto;
+    public List<Produto> listar(){
+        return repository.findAll();
     }
 
-    public ProdutoListagemDto porId(int id){
-        final Optional<Produto> produtoOpt = this.produtoRepository.findById(id);
-
-        if (produtoOpt.isEmpty()){
-            throw new ResponseStatusException(HttpStatus.NO_CONTENT);
-        }
-
-        final ProdutoListagemDto dto = ProdutoMapper.toDto(produtoOpt.get());
-
-        return dto;
+    public Produto porId(int id){
+        return repository.findById(id).orElseThrow(()-> new NaoEncontradoException("Produto"));
     }
 
-    public ProdutoListagemDto atualizar(ProdutoAtualizacaoDto produtoAtualizado, int id){
-        final Optional<Produto> produtoOpt = this.produtoRepository.findById(id);
-
-        if (produtoOpt.isEmpty()){
-            throw new ResponseStatusException(HttpStatus.NO_CONTENT);
-        }
-
-        final Produto produto = ProdutoMapper.atualizacaoDto(produtoOpt.get(), produtoAtualizado);
-
-        final ProdutoListagemDto dto = ProdutoMapper.toDto(produto);
-
-        this.produtoRepository.save(produto);
-
-        return dto;
+    public Produto atualizar(Produto produtoAtualizado, Integer id){
+        porId(id);
+        produtoAtualizado.setId(id);
+        return repository.save(produtoAtualizado);
     }
 
     public void deletar(int id){
-        final Optional<Produto> produtoOpt = this.produtoRepository.findById(id);
-
-        if (produtoOpt.isEmpty()){
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
-        }
-
-        this.produtoRepository.deleteById(id);
+        porId(id);
+        repository.deleteById(id);
     }
 }
