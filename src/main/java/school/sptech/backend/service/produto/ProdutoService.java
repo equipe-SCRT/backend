@@ -26,7 +26,7 @@ public class ProdutoService {
         return repository.findAll();
     }
 
-    public Produto porId(int id){
+    public Produto porId(Integer id){
         return repository.findById(id).orElseThrow(()-> new NaoEncontradoException("Produto"));
     }
 
@@ -36,7 +36,7 @@ public class ProdutoService {
         return repository.save(produtoAtualizado);
     }
 
-    public void deletar(int id){
+    public void deletar(Integer id){
         porId(id);
         repository.deleteById(id);
     }

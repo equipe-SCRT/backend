@@ -11,7 +11,7 @@ public interface TipoProdutoMapper {
     TipoProdutoListagemDto toDto(TipoProduto entity);
 
     @InheritInverseConfiguration
-    TipoProduto entity(TipoProdutoCriacaoDto dto);
+    TipoProduto toEntity(TipoProdutoCriacaoDto dto);
 
     List<TipoProdutoListagemDto> toDto(List<TipoProduto> entities);
 

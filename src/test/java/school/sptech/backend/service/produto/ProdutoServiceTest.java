@@ -81,7 +81,7 @@ class ProdutoServiceTest {
     }
 
     @Test
-    @DisplayName("Caso não houver produto por id,, lançe uma exception")
+    @DisplayName("Caso não houver produto por id, lançe uma exception")
     void cenarioProdutoInexistente(){
         // GIVEN
         Integer id = 10;
@@ -92,7 +92,7 @@ class ProdutoServiceTest {
         // THEN/ASSERT
         NaoEncontradoException exception = assertThrows(NaoEncontradoException.class, () -> produtoService.porId(id));
 
-        assertEquals("Produto não encontrado!", exception.getLocalizedMessage());
+        assertEquals("Produto não encontrado(a)", exception.getLocalizedMessage());
 
     }
 }

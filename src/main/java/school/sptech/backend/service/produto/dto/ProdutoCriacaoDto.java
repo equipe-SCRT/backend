@@ -11,7 +11,8 @@ public class ProdutoCriacaoDto {
     @NotBlank
     @Size(min = 3, max = 15)
     private String nome;
+
     @NotNull
     @Positive
-    private int tipoProdutoId;
+    private Integer tipoProdutoId;
 }

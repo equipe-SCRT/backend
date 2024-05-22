@@ -1,6 +1,7 @@
 package school.sptech.backend.service.produto.dto;
 
 import lombok.Data;
+import org.mapstruct.Builder;
 
 @Data
 public class ProdutoListagemDto {
