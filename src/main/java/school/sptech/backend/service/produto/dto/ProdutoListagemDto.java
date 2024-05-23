@@ -1,31 +1,17 @@
 package school.sptech.backend.service.produto.dto;
 
+import lombok.Data;
+import org.mapstruct.Builder;
+
+@Data
 public class ProdutoListagemDto {
     private Integer id;
     private String nome;
-    private int fkTipoProduto;
+    private TipoProduto tipoProduto;
 
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public String getNome() {
-        return nome;
-    }
-
-    public void setNome(String nome) {
-        this.nome = nome;
-    }
-
-    public int getFkTipoProduto() {
-        return fkTipoProduto;
-    }
-
-    public void setFkTipoProduto(int fkTipoProduto) {
-        this.fkTipoProduto = fkTipoProduto;
+    @Data
+    public static class TipoProduto {
+        private Integer id;
+        private String nome;
     }
 }
