@@ -93,14 +93,17 @@
 
 		<dependency>
 			<groupId>org.mapstruct</groupId>
-			<artifactId>mapstruct-processor</artifactId>
-			<version>1.5.5.Final</version>
+			<artifactId>mapstruct</artifactId>
+			<version>1.6.0.Beta2</version>
 		</dependency>
+
 		<dependency>
 			<groupId>org.mapstruct</groupId>
-			<artifactId>mapstruct</artifactId>
-			<version>1.5.5.Final</version>
+			<artifactId>mapstruct-processor</artifactId>
+			<version>1.6.0.Beta2</version>
+			<scope>provided</scope>
 		</dependency>
+		
 	</dependencies>
 
 	<build>
