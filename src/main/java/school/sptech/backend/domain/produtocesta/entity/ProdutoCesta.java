@@ -15,6 +15,5 @@ public class ProdutoCesta {
     private Integer idProdutoCesta;
     @ManyToOne
     private Produto Produto;
-    @ManyToOne
     private Integer Cesta;
 }
