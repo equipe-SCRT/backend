@@ -1,92 +1,59 @@
 package school.sptech.backend.service.condominio;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 import school.sptech.backend.domain.condominio.Condominio;
 import school.sptech.backend.domain.condominio.repository.CondominioRepository;
-import school.sptech.backend.service.condominio.dto.CondominioAtualizacaoDto;
-import school.sptech.backend.service.condominio.dto.CondominioCriacaoDto;
-import school.sptech.backend.service.condominio.dto.CondominioListagemDto;
-import school.sptech.backend.service.condominio.dto.CondominioMapper;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
+@RequiredArgsConstructor
 public class CondominioService {
 
-    @Autowired
-    private CondominioRepository repository;
+    private final CondominioRepository repository;
 
-    @Autowired
-    private CondominioMapper mapper;
-
-    public void criar(CondominioCriacaoDto dto) {
-        final Condominio novoCondominio = mapper.toEntity(dto);
-        this.repository.save(novoCondominio);
+    public Condominio criar(Condominio condominio) {
+        return this.repository.save(condominio);
     }
 
-    public List<CondominioListagemDto> listar() {
+    public List<Condominio> listar() {
         final List<Condominio> condominios = this.repository.findAll();
 
         if (condominios.isEmpty()) {
             throw new ResponseStatusException(HttpStatus.NO_CONTENT);
         }
 
-        final List<CondominioListagemDto> dto = mapper.toDto(condominios);
-
-        return dto;
+        return condominios;
     }
 
-    public CondominioListagemDto porId(int id) {
-        final Optional<Condominio> condominioOpt = repository.findById(id);
-
-        if (condominioOpt.isEmpty()) {
-            throw new ResponseStatusException(HttpStatus.NO_CONTENT);
-        }
-
-        final CondominioListagemDto dto = mapper.toDto(condominioOpt.get());
-
-        return dto;
+    public Condominio porId(int id) {
+        return this.repository.findById(id).orElseThrow(
+                () -> new ResponseStatusException(HttpStatus.NOT_FOUND)
+        );
     }
 
-    public CondominioListagemDto porNome(String nome) {
-        final Optional<Condominio> condominioOpt = repository.findByNome(nome);
-
-        if (condominioOpt.isEmpty()) {
-            throw new ResponseStatusException(HttpStatus.NO_CONTENT);
-        }
-
-        final CondominioListagemDto dto = mapper.toDto(condominioOpt.get());
-
-        return dto;
+    public Condominio porNome(String nome) {
+        return this.repository.findByNomeIgnoreCase(nome).orElseThrow(
+                () -> new ResponseStatusException(HttpStatus.NOT_FOUND)
+        );
     }
 
-    public CondominioListagemDto atualizar(CondominioAtualizacaoDto condominioAtualizado, int id) {
-        final Optional<Condominio> condominioOpt = repository.findById(id);
+    public Condominio atualizar(Condominio condominioAtualizado, int id) {
+        this.repository.findById(id).orElseThrow(
+                () -> new ResponseStatusException(HttpStatus.NOT_FOUND)
+        );
 
-        if (condominioOpt.isEmpty()) {
-            throw new ResponseStatusException(HttpStatus.NO_CONTENT);
-        }
-
-        final Condominio condominio = mapper.atualizacaoDto(condominioAtualizado, condominioOpt.get());
-
-        final CondominioListagemDto dto = mapper.toDto(condominio);
-
-        this.repository.save(condominio);
-
-        return dto;
+        condominioAtualizado.setId(id);
+        return this.repository.save(condominioAtualizado);
     }
 
     public void deletar(int id) {
-        final Optional<Condominio> condominioOpt = repository.findById(id);
-
-        if (condominioOpt.isEmpty()) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
-        }
+        this.repository.findById(id).orElseThrow(
+                () -> new ResponseStatusException(HttpStatus.NOT_FOUND)
+        );
 
         this.repository.deleteById(id);
     }

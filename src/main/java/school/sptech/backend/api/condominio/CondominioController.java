@@ -2,14 +2,16 @@ package school.sptech.backend.api.condominio;
 
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import school.sptech.backend.domain.condominio.Condominio;
 import school.sptech.backend.service.condominio.CondominioService;
 import school.sptech.backend.service.condominio.dto.CondominioAtualizacaoDto;
 import school.sptech.backend.service.condominio.dto.CondominioCriacaoDto;
 import school.sptech.backend.service.condominio.dto.CondominioListagemDto;
+import school.sptech.backend.service.condominio.dto.CondominioMapper;
 
+import java.net.URI;
 import java.util.List;
 
 @RestController
@@ -17,36 +19,38 @@ import java.util.List;
 @RequiredArgsConstructor
 public class CondominioController {
 
-    @Autowired
     private final CondominioService service;
+    private final CondominioMapper mapper;
 
     @PostMapping
-    public ResponseEntity<Void> criar(@RequestBody @Valid CondominioCriacaoDto dto) {
-        this.service.criar(dto);
-        return ResponseEntity.created(null).build();
+    public ResponseEntity<CondominioListagemDto> criar(@RequestBody @Valid CondominioCriacaoDto dto) {
+        Condominio condominioCriado = this.service.criar(mapper.toEntity(dto));
+        URI uri = URI.create("/condominios/" + condominioCriado.getId());
+        return ResponseEntity.created(uri).body(mapper.toDto(condominioCriado));
     }
 
     @GetMapping
     public ResponseEntity<List<CondominioListagemDto>> listar() {
-        List<CondominioListagemDto> dtos = this.service.listar();
-        return ResponseEntity.ok().body(dtos);
+        List<Condominio> condominios = this.service.listar();
+        return ResponseEntity.ok().body(mapper.toDto(condominios));
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<CondominioListagemDto> porId(@PathVariable int id) {
-        CondominioListagemDto dto = this.service.porId(id);
-        return ResponseEntity.ok().body(dto);
+        Condominio entity = this.service.porId(id);
+        return ResponseEntity.ok().body(mapper.toDto(entity));
     }
 
     @GetMapping("/por-nome/{nome}")
     public ResponseEntity<CondominioListagemDto> porNome(@PathVariable String nome) {
-        CondominioListagemDto dto = this.service.porNome(nome);
-        return ResponseEntity.ok().body(dto);
+        Condominio entity = this.service.porNome(nome);
+        return ResponseEntity.ok().body(mapper.toDto(entity));
     }
 
     @PutMapping("/{id}")
     public ResponseEntity<CondominioListagemDto> atualizar(@RequestBody @Valid CondominioAtualizacaoDto condominioAtualizado, @PathVariable int id) {
-        CondominioListagemDto dto = this.service.atualizar(condominioAtualizado, id);
+        Condominio entity = mapper.atualizacaoDto(condominioAtualizado, id);
+        CondominioListagemDto dto = mapper.toDto(this.service.atualizar(entity, entity.getId()));
         return ResponseEntity.ok().body(dto);
 
     }
