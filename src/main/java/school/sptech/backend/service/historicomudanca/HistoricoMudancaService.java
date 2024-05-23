@@ -8,6 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
+import jakarta.validation.Valid;
 import school.sptech.backend.domain.historicomudanca.HistoricoMudanca;
 import school.sptech.backend.domain.historicomudanca.repository.HistoricoMudancaRepository;
 import school.sptech.backend.domain.usuario.entity.Usuario;
@@ -25,19 +26,18 @@ public class HistoricoMudancaService {
     private HistoricoMudancaRepository repository;
     private UsuarioRepository usuarioRepository;
 
-    public void criar(HistoricoMudancaCriacaoDto HistoricoMudancaCriacao){
-        final HistoricoMudanca novoHistorico = HistoricoMudancaMapper.toEntity(HistoricoMudancaCriacao);
+    public void criar(HistoricoMudanca novoHistorico){
         repository.save(novoHistorico);
     }
 
-    public List<HistoricoMudancaListagemDto> listar(){
+    public List<HistoricoMudanca> listar(){
         final List<HistoricoMudanca> historicos = repository.findAll();
 
        if (historicos.isEmpty()) {
           throw new ResponseStatusException(HttpStatus.NO_CONTENT);
        }
 
-       return HistoricoMudancaMapper.toDto(historicos);
+       return historicos;
     }
 
     public HistoricoMudanca porId(int id){
@@ -46,18 +46,17 @@ public class HistoricoMudancaService {
         );
     }
 
-    public HistoricoMudancaListagemDto atualizar(HistoricoMudancaAtualizacaoDto historico, long fk_usuario){
+    public HistoricoMudanca atualizar(HistoricoMudanca historico, Long id){
 
-        Optional<Usuario> usuario = usuarioRepository.findById(fk_usuario);
+        Optional<Usuario> usuario = usuarioRepository.findById(id);
 
         HistoricoMudanca historicoAtualizado = new HistoricoMudanca();
-
         historicoAtualizado.setId_historico_mudanca(historico.getId_historico_mudanca());
         historicoAtualizado.setData_hora(historico.getData_hora());
         historicoAtualizado.setUsuario(usuario.get());
         repository.save(historicoAtualizado);
 
-        return HistoricoMudancaMapper.toDto(historicoAtualizado);
+        return historicoAtualizado;
 
     }
 

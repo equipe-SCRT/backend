@@ -21,6 +21,6 @@ public class HistoricoMudancaAtualizacaoDto {
     
     @NotNull
     @Positive
-    private int fk_usuario;
+    private long fk_usuario;
     
 }
