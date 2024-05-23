@@ -24,9 +24,9 @@ public class ProdutoController {
     private final ProdutoMapper mapper;
 
     @PostMapping
-    public ResponseEntity<ProdutoListagemDto> criar(@RequestBody ProdutoCriacaoDto novoProduto){
+    public ResponseEntity<ProdutoListagemDto> criar(@RequestBody @Valid ProdutoCriacaoDto novoProduto){
         Produto produtoCriado = mapper.toEntity(novoProduto);
-        Produto resposta = service.criar(produtoCriado, produtoCriado.getId());
+        Produto resposta = service.criar(produtoCriado, novoProduto.getTipoProdutoId());
         ProdutoListagemDto dto = mapper.toDto(resposta);
 
         URI uri = URI.create("/produtos/" + dto.getId());

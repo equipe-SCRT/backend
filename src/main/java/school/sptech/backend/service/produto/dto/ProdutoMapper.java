@@ -10,9 +10,6 @@ import java.util.List;
 public interface ProdutoMapper {
     ProdutoListagemDto toDto(Produto entity);
 
-
-
-    @InheritInverseConfiguration
     Produto toEntity(ProdutoCriacaoDto dto);
 
     List<ProdutoListagemDto> toDto(List<Produto> entities);
