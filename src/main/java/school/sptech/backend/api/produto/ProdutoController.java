@@ -51,7 +51,7 @@ public class ProdutoController {
     public ResponseEntity<ProdutoListagemDto> porId(@PathVariable Integer id){
         Produto produto = service.porId(id);
         ProdutoListagemDto dto = mapper.toDto(produto);
-        return ResponseEntity.status(200).body(dto);
+        return ResponseEntity.ok(dto);
     }
 
     @PutMapping("/{id}")
@@ -59,7 +59,7 @@ public class ProdutoController {
         Produto produto = mapper.atualizacaoDto(produtoAtualizado, id);
         Produto resposta = service.atualizar(produto, produto.getId());
         ProdutoListagemDto dto = mapper.toDto(resposta);
-        return ResponseEntity.status(200).body(dto);
+        return ResponseEntity.ok(dto);
     }
 
     @DeleteMapping("/{id}")
