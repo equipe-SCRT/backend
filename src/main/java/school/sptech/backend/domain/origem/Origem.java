@@ -1,9 +1,6 @@
 package school.sptech.backend.domain.origem;
 
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.ManyToOne;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 import school.sptech.backend.domain.campanha.Campanha;
@@ -11,6 +8,7 @@ import school.sptech.backend.domain.condominio.Condominio;
 
 import java.util.Date;
 
+@Entity
 @Getter
 @Setter
 public class Origem {
