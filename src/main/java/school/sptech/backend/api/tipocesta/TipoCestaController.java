@@ -3,6 +3,8 @@ package school.sptech.backend.api.tipocesta;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import jakarta.validation.Valid;
 import school.sptech.backend.domain.tipocesta.TipoCesta;
 import school.sptech.backend.service.tipocesta.TipoCestaService;
 import school.sptech.backend.service.tipocesta.dto.TipoCestaAtualizacaoDto;
@@ -20,7 +22,7 @@ public class TipoCestaController {
     private final TipoCestaService tipoCestaService;
     private final TipoCestaMapper tipoCestaMapper;
     @PostMapping
-    public ResponseEntity<TipoCestaListagemDto> cadastrar(@RequestBody TipoCestaCriacaoDto tipoCesta){
+    public ResponseEntity<TipoCestaListagemDto> cadastrar(@Valid @RequestBody TipoCestaCriacaoDto tipoCesta){
         TipoCestaListagemDto salvo = tipoCestaMapper.toDto(tipoCestaService.cadastrar(tipoCestaMapper.toEntity(tipoCesta)));
         URI uri = URI.create("/tipos-cestas/" + salvo.getId());
         return ResponseEntity.created(uri).body(salvo);
@@ -34,21 +36,21 @@ public class TipoCestaController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<TipoCestaListagemDto> porId(@PathVariable Long id){
+    public ResponseEntity<TipoCestaListagemDto> porId(@PathVariable Integer id){
         return ResponseEntity.ok(tipoCestaMapper.toDto(tipoCestaService.porId(id)));
 
 
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<TipoCestaListagemDto> atualizar(@PathVariable Long id, @RequestBody TipoCestaAtualizacaoDto novo){
+    public ResponseEntity<TipoCestaListagemDto> atualizar(@PathVariable Integer id, @RequestBody TipoCestaAtualizacaoDto novo){
         TipoCestaListagemDto dto = tipoCestaMapper.toDto(tipoCestaService.atualizar(id, tipoCestaMapper.toEntity(novo)));
         return ResponseEntity.ok(dto);
 
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<TipoCestaListagemDto> deletar(@PathVariable Long id){
+    public ResponseEntity<TipoCestaListagemDto> deletar(@PathVariable Integer id){
         tipoCestaService.deletar(id);
         return ResponseEntity.noContent().build();
     }

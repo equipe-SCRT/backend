@@ -1,6 +1,5 @@
 package school.sptech.backend.service.cesta.dto;
 
-import jakarta.validation.constraints.PastOrPresent;
 import lombok.Data;
 
 import java.time.LocalDate;
@@ -9,5 +8,5 @@ import java.time.LocalDate;
 public class CestaAtualizacaoDto {
     private String lote;
     private LocalDate dataMontagem;
-    private Long tipoCestaId;
+    private Integer tipoCestaId;
 }

@@ -9,5 +9,5 @@ public class CestaCriacaoDto {
     private String lote;
     @PastOrPresent
     private LocalDate dataMontagem;
-    private Long tipoCestaId;
+    private Integer tipoCestaId;
 }

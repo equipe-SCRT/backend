@@ -19,7 +19,7 @@ public class CestaService {
     private final CestaMapper cestaMapper;
     private final TipoCestaService tipoCestaService;
 
-    public Cesta porId(Long id){
+    public Cesta porId(Integer id){
         return (cestaRepository.findById(id).orElseThrow(
                 () -> new NaoEncontradoException("Cesta")
         ));
@@ -29,19 +29,19 @@ public class CestaService {
         return cestaRepository.findAll();
     }
 
-    public Cesta salvar(Cesta cesta, Long tipoCestaId){
+    public Cesta salvar(Cesta cesta, Integer tipoCestaId){
         TipoCesta tipoCesta = tipoCestaService.porId(tipoCestaId);
         cesta.setTipoCesta(tipoCesta);
         return cestaRepository.save(cesta);
     }
 
-    public Cesta atualizar(Long id, Cesta novo){
+    public Cesta atualizar(Integer id, Cesta novo){
         Cesta cesta = porId(id);
         novo.setId(cesta.getId());
         return cestaRepository.save(novo);
     }
 
-    public void deletar(Long id){
+    public void deletar(Integer id){
         cestaRepository.delete(porId(id));
     }
 

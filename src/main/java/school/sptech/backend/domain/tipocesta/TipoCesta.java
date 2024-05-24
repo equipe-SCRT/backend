@@ -14,7 +14,7 @@ import java.util.List;
 public class TipoCesta {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Integer id;
     private String nome;
 
     @OneToMany(mappedBy = "tipoCesta")

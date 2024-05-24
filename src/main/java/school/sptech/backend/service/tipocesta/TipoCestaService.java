@@ -12,7 +12,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class TipoCestaService {
     private final TipoCestaRepository tipoCestaRepository;
-    public TipoCesta porId(Long id){
+    public TipoCesta porId(Integer id){
         return tipoCestaRepository.findById(id).orElseThrow(
                 ()-> new NaoEncontradoException("Tipo Cesta")
         );
@@ -25,13 +25,13 @@ public class TipoCestaService {
         return tipoCestaRepository.save(tipoCesta);
     }
 
-    public TipoCesta atualizar(Long id, TipoCesta novo){
+    public TipoCesta atualizar(Integer id, TipoCesta novo){
         TipoCesta tipoCesta = porId(id);
         novo.setId(tipoCesta.getId());
         return tipoCestaRepository.save(novo);
     }
 
-    public void deletar(Long id){
+    public void deletar(Integer id){
         tipoCestaRepository.delete(porId(id));
     }
 }
