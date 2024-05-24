@@ -3,7 +3,12 @@ package school.sptech.backend.domain.produtounitario;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+import school.sptech.backend.domain.cesta.Cesta;
+import school.sptech.backend.domain.metrica.Metrica;
+import school.sptech.backend.domain.origem.Origem;
 import school.sptech.backend.domain.produto.Produto;
+import school.sptech.backend.domain.rota.Rota;
+import school.sptech.backend.domain.unidademedida.UnidadeMedida;
 
 import java.time.LocalDate;
 
@@ -17,22 +22,24 @@ public class ProdutoUnitario {
     private String nome;
     private LocalDate dataValidade;
     private Double peso;
-    private Boolean ativo;
+    private boolean ativo;
 
+    @ManyToOne
+    private Origem origem;
 
-    private int origem;
+    @ManyToOne
+    private UnidadeMedida unidadeMedida;
 
-
-    private int unidadeMedida;
-
-
-    private int cesta;
+    @ManyToOne
+    private Cesta cesta;
 
     @ManyToOne
     private Produto produto;
 
-    private int rota;
+    @ManyToOne
+    private Rota rota;
 
-    private int metrica;
+    @ManyToOne
+    private Metrica metrica;
 
 }

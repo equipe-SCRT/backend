@@ -12,7 +12,6 @@ import java.time.LocalDate;
 @Data
 public class ProdutoUnitarioCriacaoDto {
     @NotBlank
-    @Size
     private String nome;
 
     @NotNull
@@ -23,7 +22,8 @@ public class ProdutoUnitarioCriacaoDto {
     @PositiveOrZero
     private Double peso;
 
-    private Boolean ativo;
+    @NotNull
+    private boolean ativo;
 
     @NotNull
     @PositiveOrZero
