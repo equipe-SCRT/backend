@@ -3,6 +3,7 @@ package school.sptech.backend.service.historicomudanca;
 import java.util.List;
 import java.util.Optional;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -18,16 +19,24 @@ import school.sptech.backend.service.historicomudanca.dto.HistoricoMudancaAtuali
 import school.sptech.backend.service.historicomudanca.dto.HistoricoMudancaCriacaoDto;
 import school.sptech.backend.service.historicomudanca.dto.HistoricoMudancaListagemDto;
 import school.sptech.backend.service.historicomudanca.dto.HistoricoMudancaMapper;
+import school.sptech.backend.service.usuario.UsuarioService;
 
 @Service
+@RequiredArgsConstructor
 public class HistoricoMudancaService {
     
-    @Autowired
-    private HistoricoMudancaRepository repository;
-    private UsuarioRepository usuarioRepository;
 
-    public void criar(HistoricoMudanca novoHistorico){
+    private final HistoricoMudancaRepository repository;
+    private final UsuarioService usuarioService;
+
+
+    public HistoricoMudanca criar(HistoricoMudanca novoHistorico, Long idUsuario){
+
+        novoHistorico.setUsuario(usuarioService.porId(idUsuario));
+
         repository.save(novoHistorico);
+
+        return  novoHistorico;
     }
 
     public List<HistoricoMudanca> listar(){
@@ -48,12 +57,12 @@ public class HistoricoMudancaService {
 
     public HistoricoMudanca atualizar(HistoricoMudanca historico, Long id){
 
-        Optional<Usuario> usuario = usuarioRepository.findById(id);
+        Usuario usuario = usuarioService.porId(id);
 
         HistoricoMudanca historicoAtualizado = new HistoricoMudanca();
         historicoAtualizado.setIdHistoricoMudanca(historico.getIdHistoricoMudanca());
         historicoAtualizado.setDataHora(historico.getDataHora());
-        historicoAtualizado.setUsuario(usuario.get());
+        historicoAtualizado.setUsuario(usuario);
         repository.save(historicoAtualizado);
 
         return historicoAtualizado;

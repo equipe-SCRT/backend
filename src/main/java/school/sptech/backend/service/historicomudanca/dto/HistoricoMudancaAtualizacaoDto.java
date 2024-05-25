@@ -10,17 +10,11 @@ import lombok.Data;
 @Data
 public class HistoricoMudancaAtualizacaoDto {
 
-//    @NotNull
-//    @NotBlank
-//    @Positive
-    private int idHistoricoMudanca;
 
-//    @NotNull
-//    @NotBlank
+    @NotNull
     private LocalDate dataHora;
-//
-//    @NotNull
-//    @Positive
-    private long fkUsuario;
+
+    @Positive
+    private Long fkUsuario;
     
 }

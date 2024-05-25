@@ -2,6 +2,7 @@ package school.sptech.backend.service.metrica.dto;
 
 import java.util.List;
 
+import org.mapstruct.InheritInverseConfiguration;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
 
@@ -16,6 +17,7 @@ public interface MetricaMapper {
 
     List<MetricaListagemDto> toDto(List<Metrica> entities);
 
+    @InheritInverseConfiguration
     Metrica toEntity(MetricaCriacaoDto dto);
 
     Metrica toEntity(MetricaAtualizacaoDto dto, Integer id);

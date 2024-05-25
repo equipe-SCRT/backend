@@ -33,11 +33,16 @@ public class HistoricoMudancaController {
     @PostMapping
     public ResponseEntity<HistoricoMudancaListagemDto> criar(@RequestBody HistoricoMudancaCriacaoDto historico){
 
+        System.out.println(historico.toString());
         HistoricoMudanca historicoMudanca = mapper.toEntity(historico);
-        service.criar(historicoMudanca);
+        System.out.println(historicoMudanca.toString());
+        HistoricoMudanca resposta = service.criar(historicoMudanca, historico.getFkUsuario());
+        System.out.println(resposta);
+        HistoricoMudancaListagemDto listagemDto = mapper.toDto(resposta);
+        System.out.println(listagemDto);
 
         URI uri = URI.create("/historico-mudancas/" + historicoMudanca.getIdHistoricoMudanca());
-        return ResponseEntity.created(uri).body(mapper.toDto(historicoMudanca));
+        return ResponseEntity.created(uri).body(listagemDto);
     }
 
     @GetMapping
