@@ -10,16 +10,11 @@ import lombok.Data;
 @Data
 public class MetricaAtualizacaoDto {
 
-    @NotNull
-    @NotBlank
-    @Positive
-    private int id_metrica;
-
-    @NotNull
-    @NotBlank
+//    @NotNull
+//    @NotBlank
     private LocalDate alteracao;
 
-    @NotNull
-    @Positive
-    private long fk_usuario;
+//    @NotNull
+//    @Positive
+    private long fkUsuario;
 }

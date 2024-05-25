@@ -1,5 +1,6 @@
 package school.sptech.backend.api.historicomudanca;
 
+import java.net.URI;
 import java.util.List;
 
 import org.springframework.http.ResponseEntity;
@@ -29,20 +30,22 @@ public class HistoricoMudancaController {
     private final HistoricoMudancaService service;
     private final HistoricoMudancaMapper mapper;
 
-    
-
     @PostMapping
-    public ResponseEntity<Void> criar(@RequestBody @Valid HistoricoMudancaCriacaoDto historico){
+    public ResponseEntity<HistoricoMudancaListagemDto> criar(@RequestBody HistoricoMudancaCriacaoDto historico){
 
-        service.criar(mapper.toEntity(historico));
-        return ResponseEntity.status(201).build();
+        HistoricoMudanca historicoMudanca = mapper.toEntity(historico);
+        service.criar(historicoMudanca);
+
+        URI uri = URI.create("/historico-mudancas/" + historicoMudanca.getIdHistoricoMudanca());
+        return ResponseEntity.created(uri).body(mapper.toDto(historicoMudanca));
     }
 
     @GetMapping
     public ResponseEntity<List<HistoricoMudancaListagemDto>> listar(){
 
         List<HistoricoMudanca> dtos = service.listar();
-        return ResponseEntity.ok(mapper.toDto(dtos));
+        List<HistoricoMudancaListagemDto> listagemDtos = mapper.toDto(dtos);
+        return ResponseEntity.ok(listagemDtos);
     }
 
     @GetMapping("/{id}")

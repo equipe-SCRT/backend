@@ -10,7 +10,7 @@ import school.sptech.backend.service.historicomudanca.dto.HistoricoMudancaMapper
 
 @Mapper(componentModel = "spring")
 public interface MetricaMapper {
-    MetricaMapper INSTANCE = Mappers.getMapper(MetricaMapper.class);
+  //  MetricaMapper INSTANCE = Mappers.getMapper(MetricaMapper.class);
 
     MetricaListagemDto toDto(Metrica entity);
 
@@ -18,5 +18,5 @@ public interface MetricaMapper {
 
     Metrica toEntity(MetricaCriacaoDto dto);
 
-    Metrica toEntity(MetricaAtualizacaoDto dto);
+    Metrica toEntity(MetricaAtualizacaoDto dto, Integer id);
 }

@@ -8,8 +8,8 @@ import lombok.Data;
 @Data
 public class HistoricoMudancaListagemDto {
 
-    private int id_historico_mudanca;
-    private LocalDate data_hora;
-    private int fk_usuario;
+    private int idHistoricoMudanca;
+    private LocalDate dataHora;
+    private long fkUsuario;
     
 }

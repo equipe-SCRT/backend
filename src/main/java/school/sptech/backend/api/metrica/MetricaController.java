@@ -1,5 +1,6 @@
 package school.sptech.backend.api.metrica;
 
+import java.net.URI;
 import java.util.List;
 
 import org.springframework.http.ResponseEntity;
@@ -31,27 +32,34 @@ public class MetricaController {
     private final MetricaMapper mapper;
 
     @PostMapping
-    public ResponseEntity<Void> cadastrar(@RequestBody @Valid MetricaCriacaoDto metrica) {
-        service.criar(mapper.toEntity(metrica));
-        return ResponseEntity.status(201).build();
+    public ResponseEntity<MetricaListagemDto> cadastrar(@RequestBody @Valid MetricaCriacaoDto metrica) {
+        Metrica novaMetrica = mapper.toEntity(metrica);
+        service.criar(novaMetrica);
+        URI uri = URI.create("/metricas/" + novaMetrica.getIdMetrica());
+        return ResponseEntity.created(uri).body(mapper.toDto(novaMetrica));
     }
 
     @GetMapping
     public ResponseEntity<List<MetricaListagemDto>> listar() {
         List<Metrica> dtos = service.listar();
-        return ResponseEntity.ok(mapper.toDto(dtos));
+        List<MetricaListagemDto> listagemDtos = mapper.toDto(dtos);
+        return ResponseEntity.ok(listagemDtos);
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<MetricaListagemDto> porId(@PathVariable int id) {
         Metrica dto = service.porId(id);
-        return ResponseEntity.ok().body(mapper.toDto(dto));
+        MetricaListagemDto consultaMetrica = mapper.toDto(dto);
+        return ResponseEntity.ok().body(consultaMetrica);
     }
 
     @PutMapping("/{id}")
     public ResponseEntity<MetricaListagemDto> atualizar(@RequestBody @Valid MetricaAtualizacaoDto metricaAtualizacao, @PathVariable int id) {
-        Metrica dto = service.atualizar(metricaAtualizacao);
-        return ResponseEntity.ok().body(mapper.toDto(dto));
+
+        Metrica dto = service.atualizar(metricaAtualizacao, id);
+        MetricaListagemDto listagemDto = mapper.toDto(dto);
+
+        return ResponseEntity.ok().body(listagemDto);
 
     }
 

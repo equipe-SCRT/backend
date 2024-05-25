@@ -51,8 +51,8 @@ public class HistoricoMudancaService {
         Optional<Usuario> usuario = usuarioRepository.findById(id);
 
         HistoricoMudanca historicoAtualizado = new HistoricoMudanca();
-        historicoAtualizado.setId_historico_mudanca(historico.getId_historico_mudanca());
-        historicoAtualizado.setData_hora(historico.getData_hora());
+        historicoAtualizado.setIdHistoricoMudanca(historico.getIdHistoricoMudanca());
+        historicoAtualizado.setDataHora(historico.getDataHora());
         historicoAtualizado.setUsuario(usuario.get());
         repository.save(historicoAtualizado);
 

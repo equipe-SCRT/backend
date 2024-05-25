@@ -30,7 +30,6 @@ public class MetricaService {
     private UsuarioRepository usuarioRepository;
 
     public void criar(Metrica metricaCriacao){
-
         repository.save(metricaCriacao);
     }
 
@@ -49,13 +48,17 @@ public class MetricaService {
         return repository.findById(id).orElseThrow(() -> new NaoEncontradoException("Metrica"));
     }
 
-    public Metrica atualizar(MetricaAtualizacaoDto metricaAtualizacao){
+    public Metrica atualizar(MetricaAtualizacaoDto metricaAtualizacao, int id){
 
-        Optional<Usuario> usuario = usuarioRepository.findById(metricaAtualizacao.getFk_usuario());
+        Optional<Usuario> usuario = usuarioRepository.findById(metricaAtualizacao.getFkUsuario());
+
+        if (usuario.isEmpty()) {
+            throw new NaoEncontradoException("Usuario");
+        }
 
         Metrica metricaAtualizado = new Metrica();
 
-        metricaAtualizado.setId_metrica(metricaAtualizacao.getId_metrica());
+        metricaAtualizado.setIdMetrica(id);
         metricaAtualizado.setAlteracao(metricaAtualizacao.getAlteracao());
         metricaAtualizado.setUsuario(usuario.get());
         repository.save(metricaAtualizado);
