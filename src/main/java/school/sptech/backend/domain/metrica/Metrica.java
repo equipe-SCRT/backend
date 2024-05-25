@@ -19,9 +19,10 @@ public class Metrica {
 
     @Id
     @GeneratedValue(strategy =  GenerationType.IDENTITY)
-    private int id_metrica;
+    private int idMetrica;
     private LocalDate alteracao;
     @ManyToOne
     private Usuario usuario;
     
 }
+ 

@@ -18,8 +18,8 @@ public class HistoricoMudanca {
     
     @Id
     @GeneratedValue(strategy =  GenerationType.IDENTITY)
-    private int id_historico_mudanca;
-    private LocalDate data_hora;
+    private int idHistoricoMudanca;
+    private LocalDate dataHora;
     @ManyToOne
-    private Usuario Usuario;
+    private Usuario usuario;
 }

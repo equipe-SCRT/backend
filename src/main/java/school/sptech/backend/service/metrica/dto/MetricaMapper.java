@@ -8,18 +8,15 @@ import org.mapstruct.factory.Mappers;
 import school.sptech.backend.domain.metrica.Metrica;
 import school.sptech.backend.service.historicomudanca.dto.HistoricoMudancaMapper;
 
-@Mapper(componentModel = "String")
+@Mapper(componentModel = "spring")
 public interface MetricaMapper {
     MetricaMapper INSTANCE = Mappers.getMapper(MetricaMapper.class);
 
     MetricaListagemDto toDto(Metrica entity);
-    static List<MetricaListagemDto> toDto(List<Metrica> entities) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'toDto'");
-    }
-    static Metrica toEntity(MetricaCriacaoDto dto) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'toEntity'");
-    }
+
+    List<MetricaListagemDto> toDto(List<Metrica> entities);
+
+    Metrica toEntity(MetricaCriacaoDto dto);
+
     Metrica toEntity(MetricaAtualizacaoDto dto);
 }
