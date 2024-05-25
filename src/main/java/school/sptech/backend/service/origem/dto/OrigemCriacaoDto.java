@@ -11,7 +11,7 @@ public class OrigemCriacaoDto   {
 
     @NotNull
     @Positive
-    private Integer auta_de_souza_rua;
+    private Integer autaDeSouzaRua;
     @NotNull
     @Positive
     private Integer itapora;

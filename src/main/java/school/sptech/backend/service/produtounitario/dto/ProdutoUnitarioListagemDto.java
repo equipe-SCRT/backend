@@ -40,7 +40,7 @@ public class ProdutoUnitarioListagemDto {
     @Data
     public static class Origem {
         private Integer id;
-        private Integer auta_de_souza_rua;
+        private Integer autaDeSouzaRua;
         private Integer itapora;
     }
 

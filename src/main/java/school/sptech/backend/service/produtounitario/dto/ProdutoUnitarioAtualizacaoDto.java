@@ -25,11 +25,11 @@ public class ProdutoUnitarioAtualizacaoDto {
 
     @NotNull
     @Positive
-    private Integer origem;
+    private Integer origemId;
 
     @NotNull
     @Positive
-    private Integer unidadeMedida;
+    private Integer unidadeMedidaId;
 
     @NotNull
     @Positive

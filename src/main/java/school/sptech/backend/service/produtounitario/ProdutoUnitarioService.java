@@ -28,7 +28,7 @@ public class ProdutoUnitarioService {
     private final RotaService rotaService;
     private final MetricaService metricaService;
 
-    public ProdutoUnitario criar(ProdutoUnitario novoProdutoUnitario, Integer origemId, Integer unidadeMedidaId, Long cestaId, Integer produtoId, Integer rotaId, Integer metricaId){
+    public ProdutoUnitario criar(ProdutoUnitario novoProdutoUnitario, Integer origemId, Integer unidadeMedidaId, Integer cestaId, Integer produtoId, Integer rotaId, Integer metricaId){
         novoProdutoUnitario.setOrigem(origemService.porId(origemId));
         novoProdutoUnitario.setUnidadeMedida(unidadeMedidaService.porId(unidadeMedidaId));
         novoProdutoUnitario.setCesta(cestaService.porId(cestaId));
