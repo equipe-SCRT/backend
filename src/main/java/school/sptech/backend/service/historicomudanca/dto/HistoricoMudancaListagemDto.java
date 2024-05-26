@@ -10,7 +10,6 @@ import school.sptech.backend.domain.usuario.entity.Usuario;
 @Data
 public class HistoricoMudancaListagemDto {
 
-    private Integer idHistoricoMudanca;
     private LocalDate dataHora;
     private Usuario usuario;
 

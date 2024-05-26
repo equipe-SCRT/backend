@@ -1,24 +1,16 @@
 package school.sptech.backend.service.historicomudanca;
 
 import java.util.List;
-import java.util.Optional;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
-import jakarta.validation.Valid;
 import school.sptech.backend.domain.historicomudanca.HistoricoMudanca;
 import school.sptech.backend.domain.historicomudanca.repository.HistoricoMudancaRepository;
 import school.sptech.backend.domain.usuario.entity.Usuario;
-import school.sptech.backend.domain.usuario.repository.UsuarioRepository;
 import school.sptech.backend.exception.NaoEncontradoException;
-import school.sptech.backend.service.historicomudanca.dto.HistoricoMudancaAtualizacaoDto;
-import school.sptech.backend.service.historicomudanca.dto.HistoricoMudancaCriacaoDto;
-import school.sptech.backend.service.historicomudanca.dto.HistoricoMudancaListagemDto;
-import school.sptech.backend.service.historicomudanca.dto.HistoricoMudancaMapper;
 import school.sptech.backend.service.usuario.UsuarioService;
 
 @Service

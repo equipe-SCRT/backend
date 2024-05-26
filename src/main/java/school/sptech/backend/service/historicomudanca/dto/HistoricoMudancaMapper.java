@@ -1,21 +1,23 @@
 package school.sptech.backend.service.historicomudanca.dto;
 
-import java.util.List;
-
-import org.mapstruct.InheritConfiguration;
 import org.mapstruct.InheritInverseConfiguration;
 import org.mapstruct.Mapper;
-import org.mapstruct.factory.Mappers;
-
+//import org.mapstruct.factory.Mappers;
 import school.sptech.backend.domain.historicomudanca.HistoricoMudanca;
 
-@Mapper(componentModel = "spring")
-public interface HistoricoMudancaMapper{
-    HistoricoMudancaMapper INSTANCE = Mappers.getMapper(HistoricoMudancaMapper.class);
+import java.util.List;
 
-     HistoricoMudancaListagemDto toDto(HistoricoMudanca entity);
-     List<HistoricoMudancaListagemDto> toDto(List<HistoricoMudanca> entities);
-     @InheritInverseConfiguration
-     HistoricoMudanca toEntity(HistoricoMudancaCriacaoDto dto);
-     HistoricoMudanca toEntity(HistoricoMudancaAtualizacaoDto dto);
-}
+
+
+    @Mapper(componentModel = "spring")
+    public interface HistoricoMudancaMapper{
+       // school.sptech.backend.service.historicomudanca.dto.HistoricoMudancaMapper INSTANCE = Mappers.getMapper(school.sptech.backend.service.historicomudanca.dto.HistoricoMudancaMapper.class);
+
+        HistoricoMudancaListagemDto toDto(HistoricoMudanca entity);
+
+        List<HistoricoMudancaListagemDto> toDto(List<HistoricoMudanca> entities);
+        @InheritInverseConfiguration
+        HistoricoMudanca toEntity(HistoricoMudancaCriacaoDto dto);
+
+        HistoricoMudanca toEntity(HistoricoMudancaAtualizacaoDto dto);
+    }

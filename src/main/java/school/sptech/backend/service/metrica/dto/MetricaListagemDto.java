@@ -6,7 +6,15 @@ import lombok.Data;
 
 @Data
 public class MetricaListagemDto {
-    private int idMetrica;
+
     private LocalDate alteracao;
-    private long fkUsuario;
+    private Usuario usuario;
+
+    @Data
+    public static class Usuario {
+        private String nome;
+        private String email;
+        private Integer tipoUsuario;
+    }
+
 }

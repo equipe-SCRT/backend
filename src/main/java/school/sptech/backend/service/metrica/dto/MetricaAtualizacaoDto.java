@@ -10,8 +10,7 @@ import lombok.Data;
 @Data
 public class MetricaAtualizacaoDto {
 
-    @NotNull
-    @NotBlank
+   @NotNull
     private LocalDate alteracao;
 
     @NotNull

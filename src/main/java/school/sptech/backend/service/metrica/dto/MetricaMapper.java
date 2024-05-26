@@ -4,10 +4,8 @@ import java.util.List;
 
 import org.mapstruct.InheritInverseConfiguration;
 import org.mapstruct.Mapper;
-import org.mapstruct.factory.Mappers;
 
 import school.sptech.backend.domain.metrica.Metrica;
-import school.sptech.backend.service.historicomudanca.dto.HistoricoMudancaMapper;
 
 @Mapper(componentModel = "spring")
 public interface MetricaMapper {

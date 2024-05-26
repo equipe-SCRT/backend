@@ -9,28 +9,13 @@ import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
 import lombok.Data;
 
-
+@Data
 public class HistoricoMudancaCriacaoDto {
 
+    @FutureOrPresent
     private LocalDate dataHora;
 
-
+    @Positive
     private Long fkUsuario;
 
-
-    public LocalDate getDataHora() {
-        return dataHora;
-    }
-
-    public void setDataHora(LocalDate dataHora) {
-        this.dataHora = dataHora;
-    }
-
-    public Long getFkUsuario() {
-        return fkUsuario;
-    }
-
-    public void setFkUsuario(Long fkUsuario) {
-        this.fkUsuario = fkUsuario;
-    }
 }

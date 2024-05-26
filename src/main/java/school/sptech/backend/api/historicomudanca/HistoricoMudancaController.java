@@ -4,15 +4,9 @@ import java.net.URI;
 import java.util.List;
 
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
-import io.swagger.v3.oas.annotations.parameters.RequestBody;
+
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import school.sptech.backend.domain.historicomudanca.HistoricoMudanca;
@@ -21,6 +15,7 @@ import school.sptech.backend.service.historicomudanca.dto.HistoricoMudancaAtuali
 import school.sptech.backend.service.historicomudanca.dto.HistoricoMudancaCriacaoDto;
 import school.sptech.backend.service.historicomudanca.dto.HistoricoMudancaListagemDto;
 import school.sptech.backend.service.historicomudanca.dto.HistoricoMudancaMapper;
+
 
 @RequiredArgsConstructor
 @RestController
@@ -31,14 +26,14 @@ public class HistoricoMudancaController {
     private final HistoricoMudancaMapper mapper;
 
     @PostMapping
-    public ResponseEntity<HistoricoMudancaListagemDto> criar(@RequestBody HistoricoMudancaCriacaoDto historico){
+    public ResponseEntity<HistoricoMudancaListagemDto> criar(@RequestBody @Valid HistoricoMudancaCriacaoDto historico){
 
         System.out.println(historico.toString());
         HistoricoMudanca historicoMudanca = mapper.toEntity(historico);
         System.out.println(historicoMudanca.toString());
         HistoricoMudanca resposta = service.criar(historicoMudanca, historico.getFkUsuario());
         System.out.println(resposta);
-        HistoricoMudancaListagemDto listagemDto = mapper.toDto(resposta);
+        HistoricoMudancaListagemDto listagemDto = toListagem(resposta);
         System.out.println(listagemDto);
 
         URI uri = URI.create("/historico-mudancas/" + historicoMudanca.getIdHistoricoMudanca());
@@ -74,5 +69,18 @@ public class HistoricoMudancaController {
     public ResponseEntity<Void> deletar(@PathVariable int id) {
         service.deletar(id);
         return ResponseEntity.noContent().build();
+    }
+
+    public HistoricoMudancaListagemDto toListagem(HistoricoMudanca entity){
+        HistoricoMudancaListagemDto listagemDto = new HistoricoMudancaListagemDto();
+        listagemDto.setDataHora(entity.getDataHora());
+
+        HistoricoMudancaListagemDto.Usuario usuario = new HistoricoMudancaListagemDto.Usuario();
+        usuario.setNome(entity.getUsuario().getNome());
+        usuario.setTipoUsuario(entity.getUsuario().getTipoUsuario());
+        usuario.setEmail(entity.getUsuario().getEmail());
+
+        listagemDto.setUsuario(usuario);
+        return listagemDto;
     }
 }
