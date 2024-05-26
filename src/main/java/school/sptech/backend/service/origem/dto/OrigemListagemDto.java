@@ -12,7 +12,7 @@ import java.util.Date;
 public class OrigemListagemDto {
 
     private Integer id;
-    private Integer auta_de_souza_rua;
+    private Integer autaDeSouzaRua;
     private Integer itapora;
 
     private CondominioDto condominio;

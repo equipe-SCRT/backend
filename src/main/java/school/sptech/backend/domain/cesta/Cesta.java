@@ -15,7 +15,7 @@ import java.time.LocalDate;
 public class Cesta {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Integer id;
     private String lote;
     @PastOrPresent
     private LocalDate dataMontagem;

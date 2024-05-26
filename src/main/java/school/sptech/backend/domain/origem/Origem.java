@@ -8,6 +8,7 @@ import school.sptech.backend.domain.condominio.Condominio;
 
 import java.util.Date;
 
+@Entity
 @Getter
 @Entity
 @Setter
@@ -16,12 +17,12 @@ public class Origem {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-    private Integer auta_de_souza_rua;
+    private Integer autaDeSouzaRua;
     private Integer itapora;
 
 
     @ManyToOne
-    private Condominio comdominio;
+    private Condominio condominio;
 
     @ManyToOne
     private Campanha campanha;

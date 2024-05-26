@@ -2,13 +2,14 @@ package school.sptech.backend.service.produtounitario.dto;
 
 import jakarta.validation.constraints.*;
 import lombok.Data;
+import school.sptech.backend.domain.origem.Origem;
+import school.sptech.backend.domain.unidademedida.UnidadeMedida;
 
 import java.time.LocalDate;
 
 @Data
 public class ProdutoUnitarioAtualizacaoDto {
     @NotBlank
-    @Size
     private String nome;
 
     @NotNull
@@ -19,29 +20,30 @@ public class ProdutoUnitarioAtualizacaoDto {
     @PositiveOrZero
     private Double peso;
 
-    private Boolean ativo;
+    @NotNull
+    private boolean ativo;
 
     @NotNull
-    @PositiveOrZero
+    @Positive
     private Integer origemId;
 
     @NotNull
-    @PositiveOrZero
+    @Positive
     private Integer unidadeMedidaId;
 
     @NotNull
-    @PositiveOrZero
+    @Positive
     private Integer cestaId;
 
     @NotNull
-    @PositiveOrZero
+    @Positive
     private Integer produtoId;
 
     @NotNull
-    @PositiveOrZero
+    @Positive
     private Integer rotaId;
 
     @NotNull
-    @PositiveOrZero
+    @Positive
     private Integer metricaId;
 }
