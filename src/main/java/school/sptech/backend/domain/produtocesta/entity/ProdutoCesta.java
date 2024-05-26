@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
+import school.sptech.backend.domain.cesta.Cesta;
 import school.sptech.backend.domain.produto.Produto;
 
 @Entity
@@ -15,5 +16,6 @@ public class ProdutoCesta {
     private Integer idProdutoCesta;
     @ManyToOne
     private Produto Produto;
-    private Integer Cesta;
+    @ManyToOne
+    private Cesta Cesta;
 }
