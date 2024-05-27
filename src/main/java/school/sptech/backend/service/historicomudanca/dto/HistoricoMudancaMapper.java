@@ -1,30 +1,23 @@
 package school.sptech.backend.service.historicomudanca.dto;
 
-import java.util.List;
-
+import org.mapstruct.InheritInverseConfiguration;
 import org.mapstruct.Mapper;
-import org.mapstruct.factory.Mappers;
-
+//import org.mapstruct.factory.Mappers;
 import school.sptech.backend.domain.historicomudanca.HistoricoMudanca;
 
-@Mapper(componentModel = "String")
-public interface HistoricoMudancaMapper{
-    HistoricoMudancaMapper INSTANCE = Mappers.getMapper(HistoricoMudancaMapper.class);
+import java.util.List;
 
-    static HistoricoMudancaListagemDto toDto(HistoricoMudanca entity) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'toDto'");
+
+
+    @Mapper(componentModel = "spring")
+    public interface HistoricoMudancaMapper{
+       // school.sptech.backend.service.historicomudanca.dto.HistoricoMudancaMapper INSTANCE = Mappers.getMapper(school.sptech.backend.service.historicomudanca.dto.HistoricoMudancaMapper.class);
+
+        HistoricoMudancaListagemDto toDto(HistoricoMudanca entity);
+
+        List<HistoricoMudancaListagemDto> toDto(List<HistoricoMudanca> entities);
+        @InheritInverseConfiguration
+        HistoricoMudanca toEntity(HistoricoMudancaCriacaoDto dto);
+
+        HistoricoMudanca toEntity(HistoricoMudancaAtualizacaoDto dto);
     }
-    static List<HistoricoMudancaListagemDto> toDto(List<HistoricoMudanca> entities) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'toDto'");
-    }
-    static HistoricoMudanca toEntity(HistoricoMudancaCriacaoDto dto) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'toEntity'");
-    }
-    static HistoricoMudanca toEntity(HistoricoMudancaAtualizacaoDto dto) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'toEntity'");
-    }
-}

@@ -2,11 +2,7 @@ package school.sptech.backend.domain.historicomudanca;
 
 import java.time.LocalDate;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.ManyToOne;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 import school.sptech.backend.domain.usuario.entity.Usuario;
@@ -18,8 +14,20 @@ public class HistoricoMudanca {
     
     @Id
     @GeneratedValue(strategy =  GenerationType.IDENTITY)
-    private int id_historico_mudanca;
-    private LocalDate data_hora;
+    private int idHistoricoMudanca;
+    private LocalDate dataHora;
     @ManyToOne
-    private Usuario Usuario;
+    @JoinColumn(name = "fk_usuario")
+    private Usuario usuario;
+
+
+    @Override
+    public String toString() {
+        final StringBuffer sb = new StringBuffer("HistoricoMudanca{");
+        sb.append("idHistoricoMudanca=").append(idHistoricoMudanca);
+        sb.append(", dataHora=").append(dataHora);
+        sb.append(", usuario=").append(usuario);
+        sb.append('}');
+        return sb.toString();
+    }
 }
