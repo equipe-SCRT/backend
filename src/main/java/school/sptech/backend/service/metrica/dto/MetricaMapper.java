@@ -11,12 +11,14 @@ import school.sptech.backend.domain.metrica.Metrica;
 public interface MetricaMapper {
   //  MetricaMapper INSTANCE = Mappers.getMapper(MetricaMapper.class);
 
-    MetricaListagemDto toDto(Metrica entity);
 
+    MetricaListagemDto toDto(Metrica entity);
+  
     List<MetricaListagemDto> toDto(List<Metrica> entities);
 
     @InheritInverseConfiguration
     Metrica toEntity(MetricaCriacaoDto dto);
 
     Metrica toEntity(MetricaAtualizacaoDto dto, Integer id);
+
 }

@@ -13,11 +13,13 @@ import school.sptech.backend.domain.historicomudanca.HistoricoMudanca;
 import school.sptech.backend.domain.metrica.Metrica;
 
 import school.sptech.backend.service.historicomudanca.dto.HistoricoMudancaListagemDto;
+
 import school.sptech.backend.service.metrica.MetricaService;
 import school.sptech.backend.service.metrica.dto.MetricaAtualizacaoDto;
 import school.sptech.backend.service.metrica.dto.MetricaCriacaoDto;
 import school.sptech.backend.service.metrica.dto.MetricaListagemDto;
 import school.sptech.backend.service.metrica.dto.MetricaMapper;
+
 import  school.sptech.backend.service.usuario.UsuarioService;
 
 @RequiredArgsConstructor
@@ -72,5 +74,6 @@ public class MetricaController {
     public ResponseEntity<Void> deletar(@PathVariable int id) {
         service.deletar(id);
         return ResponseEntity.noContent().build();
+
     }
 }
