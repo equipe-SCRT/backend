@@ -31,26 +31,27 @@ public class MetricaController {
 
     @PostMapping
     public ResponseEntity<MetricaListagemDto> criar(@RequestBody @Valid MetricaCriacaoDto metrica) {
-        System.out.println(metrica);
-        Metrica novaMetrica = toEntidade(metrica);
-        System.out.println(novaMetrica);
+        //System.out.println(metrica);
+        Metrica novaMetrica = mapper.toEntity(metrica);
+        novaMetrica.setUsuario(userService.porId(metrica.getFkUsuario()));
+        //System.out.println(novaMetrica);
         service.criar(novaMetrica);
-        System.out.println(novaMetrica);
+        //System.out.println(novaMetrica);
         URI uri = URI.create("/metricas/" + novaMetrica.getIdMetrica());
-        return ResponseEntity.created(uri).body(toListagem(novaMetrica));
+        return ResponseEntity.created(uri).body(mapper.toDto(novaMetrica));
     }
 
     @GetMapping
     public ResponseEntity<List<MetricaListagemDto>> listar() {
         List<Metrica> dtos = service.listar();
-        List<MetricaListagemDto> listagemDtos = toListagem(dtos);
+        List<MetricaListagemDto> listagemDtos = mapper.toDto(dtos);
         return ResponseEntity.ok(listagemDtos);
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<MetricaListagemDto> porId(@PathVariable int id) {
         Metrica dto = service.porId(id);
-        MetricaListagemDto consultaMetrica = toListagem(dto);
+        MetricaListagemDto consultaMetrica = mapper.toDto(dto);
         return ResponseEntity.ok().body(consultaMetrica);
     }
 
@@ -61,7 +62,7 @@ public class MetricaController {
         metrica.setAlteracao(metricaAtualizacao.getAlteracao());
         metrica.setUsuario(userService.porId(metricaAtualizacao.getFkUsuario()));
         Metrica resposta = service.atualizar(metrica);
-        MetricaListagemDto listagemDto = toListagem(resposta);
+        MetricaListagemDto listagemDto = mapper.toDto(resposta);
 
         return ResponseEntity.ok().body(listagemDto);
 
@@ -71,29 +72,5 @@ public class MetricaController {
     public ResponseEntity<Void> deletar(@PathVariable int id) {
         service.deletar(id);
         return ResponseEntity.noContent().build();
-    }
-
-    public MetricaListagemDto toListagem(Metrica entity){
-        MetricaListagemDto listagemDto = new MetricaListagemDto();
-        listagemDto.setAlteracao(entity.getAlteracao());
-        MetricaListagemDto.Usuario usuario = new MetricaListagemDto.Usuario();
-
-        usuario.setNome(entity.getUsuario().getNome());
-        usuario.setEmail(entity.getUsuario().getEmail());
-        usuario.setTipoUsuario(entity.getUsuario().getTipoUsuario());
-
-        listagemDto.setUsuario(usuario);
-        return listagemDto;
-    }
-
-    public List<MetricaListagemDto> toListagem(List<Metrica> entity){
-       return entity.stream().map(this::toListagem).collect(Collectors.toList());
-    }
-
-    public Metrica toEntidade(MetricaCriacaoDto dto){
-       Metrica metrica = new Metrica();
-       metrica.setAlteracao(dto.getAlteracao());
-       metrica.setUsuario(userService.porId(dto.getFkUsuario()));
-       return metrica;
     }
 }

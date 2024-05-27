@@ -33,7 +33,7 @@ public class HistoricoMudancaController {
         System.out.println(historicoMudanca.toString());
         HistoricoMudanca resposta = service.criar(historicoMudanca, historico.getFkUsuario());
         System.out.println(resposta);
-        HistoricoMudancaListagemDto listagemDto = toListagem(resposta);
+        HistoricoMudancaListagemDto listagemDto = mapper.toDto(resposta);
         System.out.println(listagemDto);
 
         URI uri = URI.create("/historico-mudancas/" + historicoMudanca.getIdHistoricoMudanca());
@@ -56,10 +56,10 @@ public class HistoricoMudancaController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<HistoricoMudancaListagemDto> atualizar(@RequestBody HistoricoMudancaAtualizacaoDto historicoAtualizacao, @PathVariable Long id) {
+    public ResponseEntity<HistoricoMudancaListagemDto> atualizar(@RequestBody HistoricoMudancaAtualizacaoDto historicoAtualizacao, @PathVariable int id) {
 
 
-        HistoricoMudanca dto = service.atualizar(mapper.toEntity(historicoAtualizacao), id);
+        HistoricoMudanca dto = service.atualizar(mapper.toEntity(historicoAtualizacao), id, historicoAtualizacao.getFkUsuario());
 
         return ResponseEntity.ok().body(mapper.toDto(dto));
 
@@ -71,16 +71,4 @@ public class HistoricoMudancaController {
         return ResponseEntity.noContent().build();
     }
 
-    public HistoricoMudancaListagemDto toListagem(HistoricoMudanca entity){
-        HistoricoMudancaListagemDto listagemDto = new HistoricoMudancaListagemDto();
-        listagemDto.setDataHora(entity.getDataHora());
-
-        HistoricoMudancaListagemDto.Usuario usuario = new HistoricoMudancaListagemDto.Usuario();
-        usuario.setNome(entity.getUsuario().getNome());
-        usuario.setTipoUsuario(entity.getUsuario().getTipoUsuario());
-        usuario.setEmail(entity.getUsuario().getEmail());
-
-        listagemDto.setUsuario(usuario);
-        return listagemDto;
-    }
 }

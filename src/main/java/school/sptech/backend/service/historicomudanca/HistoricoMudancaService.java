@@ -47,12 +47,12 @@ public class HistoricoMudancaService {
         );
     }
 
-    public HistoricoMudanca atualizar(HistoricoMudanca historico, Long id){
+    public HistoricoMudanca atualizar(HistoricoMudanca historico, int IdHistoricoMudanca, Long idUsuario){
 
-        Usuario usuario = usuarioService.porId(id);
+        Usuario usuario = usuarioService.porId(idUsuario);
 
         HistoricoMudanca historicoAtualizado = new HistoricoMudanca();
-        historicoAtualizado.setIdHistoricoMudanca(historico.getIdHistoricoMudanca());
+        historicoAtualizado.setIdHistoricoMudanca(IdHistoricoMudanca);
         historicoAtualizado.setDataHora(historico.getDataHora());
         historicoAtualizado.setUsuario(usuario);
         repository.save(historicoAtualizado);
