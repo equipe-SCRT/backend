@@ -24,9 +24,9 @@ public class ProdutoController {
     private final ProdutoMapper mapper;
 
     @PostMapping
-    public ResponseEntity<ProdutoListagemDto> criar(@RequestBody ProdutoCriacaoDto novoProduto){
+    public ResponseEntity<ProdutoListagemDto> criar(@RequestBody @Valid ProdutoCriacaoDto novoProduto){
         Produto produtoCriado = mapper.toEntity(novoProduto);
-        Produto resposta = service.criar(produtoCriado, produtoCriado.getId());
+        Produto resposta = service.criar(produtoCriado, novoProduto.getTipoProdutoId());
         ProdutoListagemDto dto = mapper.toDto(resposta);
 
         URI uri = URI.create("/produtos/" + dto.getId());
@@ -51,7 +51,7 @@ public class ProdutoController {
     public ResponseEntity<ProdutoListagemDto> porId(@PathVariable Integer id){
         Produto produto = service.porId(id);
         ProdutoListagemDto dto = mapper.toDto(produto);
-        return ResponseEntity.status(200).body(dto);
+        return ResponseEntity.ok(dto);
     }
 
     @PutMapping("/{id}")
@@ -59,7 +59,7 @@ public class ProdutoController {
         Produto produto = mapper.atualizacaoDto(produtoAtualizado, id);
         Produto resposta = service.atualizar(produto, produto.getId());
         ProdutoListagemDto dto = mapper.toDto(resposta);
-        return ResponseEntity.status(200).body(dto);
+        return ResponseEntity.ok(dto);
     }
 
     @DeleteMapping("/{id}")

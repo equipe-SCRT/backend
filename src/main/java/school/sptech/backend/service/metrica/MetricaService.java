@@ -13,6 +13,7 @@ import school.sptech.backend.domain.metrica.repository.MetricaRepository;
 import school.sptech.backend.domain.usuario.repository.UsuarioRepository;
 import school.sptech.backend.exception.NaoEncontradoException;
 import school.sptech.backend.service.historicomudanca.dto.HistoricoMudancaCriacaoDto;
+import school.sptech.backend.service.metrica.dto.MetricaAtualizacaoDto;
 import school.sptech.backend.service.metrica.dto.MetricaCriacaoDto;
 import school.sptech.backend.service.metrica.dto.MetricaListagemDto;
 import school.sptech.backend.service.metrica.dto.MetricaMapper;
@@ -24,10 +25,11 @@ public class MetricaService {
     private MetricaRepository repository;
     private UsuarioRepository alunoRepository;
 
-    public void criar(MetricaCriacaoDto metricaCriacao){
+    public Metrica criar(MetricaCriacaoDto metricaCriacao){
         final Metrica MetricaCriada = MetricaMapper.toEntity(metricaCriacao);
 
-        repository.save(MetricaCriada);
+        Metrica save = repository.save(MetricaCriada);
+        return save;
     }
 
     public List<MetricaListagemDto> listar(){
@@ -45,8 +47,11 @@ public class MetricaService {
         return repository.findById(id).orElseThrow(() -> new NaoEncontradoException("Metrica"));
     }
 
-    public Metrica atualizar(){
-        return null;
+    public Metrica atualizar(int id, MetricaAtualizacaoDto metricaAtualizacaoDto){
+        metricaAtualizacaoDto.setId_metrica(id);
+        Metrica save = repository.save(MetricaMapper.toEntity(metricaAtualizacaoDto));
+
+        return save;
     }
 
     public void deletar(int id){

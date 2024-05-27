@@ -15,4 +15,5 @@ public class TipoProduto {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     private String nome;
+
 }

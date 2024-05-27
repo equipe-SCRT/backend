@@ -12,6 +12,7 @@ import school.sptech.backend.service.historicomudanca.dto.HistoricoMudancaMapper
 public interface MetricaMapper {
     MetricaMapper INSTANCE = Mappers.getMapper(MetricaMapper.class);
 
+
     MetricaListagemDto toDto(Metrica entity);
     static List<MetricaListagemDto> toDto(List<Metrica> entities) {
         // TODO Auto-generated method stub
@@ -21,5 +22,8 @@ public interface MetricaMapper {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'toEntity'");
     }
-    Metrica toEntity(MetricaAtualizacaoDto dto);
+    static Metrica toEntity(MetricaAtualizacaoDto dto){
+        throw new UnsupportedOperationException("Unimplemented method 'toEntity'");
+    }
+
 }

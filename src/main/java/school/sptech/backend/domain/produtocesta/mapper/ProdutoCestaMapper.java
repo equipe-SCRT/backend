@@ -12,7 +12,7 @@ public class ProdutoCestaMapper {
         List<ProdutoCestaEntityDto> produtoCestaEntityDtos = new ArrayList<>();
         for (int i = 0; i < produtoCestas.size(); i++) {
             ProdutoCestaEntityDto produtoCestaEntityDto = new ProdutoCestaEntityDto();
-            produtoCestaEntityDto.setIdCesta(produtoCestas.get(i).getCesta());
+            produtoCestaEntityDto.setIdCesta(produtoCestas.get(i).getCesta().getId());
             produtoCestaEntityDto.setIdProduto(produtoCestas.get(i).getProduto().getId());
 
             produtoCestaEntityDtos.add(produtoCestaEntityDto);
@@ -23,7 +23,7 @@ public class ProdutoCestaMapper {
     public static ProdutoCestaEntityDto toDto(ProdutoCesta produtoCesta){
 
         ProdutoCestaEntityDto produtoCestaEntityDto = new ProdutoCestaEntityDto();
-        produtoCestaEntityDto.setIdCesta(produtoCesta.getCesta());
+        produtoCestaEntityDto.setIdCesta(produtoCesta.getCesta().getId());
         produtoCestaEntityDto.setIdProduto(produtoCesta.getProduto().getId());
 
 
