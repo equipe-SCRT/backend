@@ -8,6 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
+import lombok.RequiredArgsConstructor;
 import school.sptech.backend.domain.metrica.Metrica;
 import school.sptech.backend.domain.metrica.repository.MetricaRepository;
 import school.sptech.backend.domain.usuario.entity.Usuario;
@@ -18,25 +19,26 @@ import school.sptech.backend.service.metrica.dto.MetricaAtualizacaoDto;
 
 
 @Service
+
 public class MetricaService {
-    
+
+
     @Autowired
     private MetricaRepository repository;
+    @Autowired
     private UsuarioRepository usuarioRepository;
 
 
-    public void criar(Metrica metricaCriacao){
-        repository.save(metricaCriacao);
+    public Metrica criar(Metrica metricaCriacao, Long idUsuario){
 
+        metricaCriacao.setUsuario(usuarioRepository.findById(idUsuario).get());
+        repository.save(metricaCriacao);
+        return metricaCriacao;
     }
 
     public List<Metrica> listar(){
 
         final List<Metrica> metricas = repository.findAll();
-
-        if (metricas.isEmpty()) {
-            throw new ResponseStatusException(HttpStatus.NO_CONTENT);
-        }
 
         return metricas;
     }

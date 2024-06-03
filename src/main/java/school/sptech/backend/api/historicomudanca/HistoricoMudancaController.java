@@ -45,6 +45,9 @@ public class HistoricoMudancaController {
 
         List<HistoricoMudanca> dtos = service.listar();
         List<HistoricoMudancaListagemDto> listagemDtos = mapper.toDto(dtos);
+        if (listagemDtos.isEmpty()){
+            return ResponseEntity.noContent().build();
+        }
         return ResponseEntity.ok(listagemDtos);
     }
 
