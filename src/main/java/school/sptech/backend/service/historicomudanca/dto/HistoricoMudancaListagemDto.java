@@ -3,13 +3,22 @@ package school.sptech.backend.service.historicomudanca.dto;
 import java.time.LocalDate;
 
 import lombok.Data;
+import school.sptech.backend.domain.usuario.entity.Usuario;
 
 
 @Data
 public class HistoricoMudancaListagemDto {
 
-    private int id_historico_mudanca;
-    private LocalDate data_hora;
-    private int fk_usuario;
+    private Integer idHistoricoMudanca;
+    private LocalDate dataHora;
+    private Usuario usuario;
+
+    @Data
+    public static class Usuario {
+        private Integer idUsuario;
+        private String nome;
+        private String email;
+        private Integer tipoUsuario;
+    }
     
 }

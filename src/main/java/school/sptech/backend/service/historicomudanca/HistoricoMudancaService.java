@@ -3,6 +3,8 @@ package school.sptech.backend.service.historicomudanca;
 import java.util.List;
 import java.util.Optional;
 
+import lombok.RequiredArgsConstructor;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -11,33 +13,33 @@ import org.springframework.web.server.ResponseStatusException;
 import school.sptech.backend.domain.historicomudanca.HistoricoMudanca;
 import school.sptech.backend.domain.historicomudanca.repository.HistoricoMudancaRepository;
 import school.sptech.backend.domain.usuario.entity.Usuario;
-import school.sptech.backend.domain.usuario.repository.UsuarioRepository;
 import school.sptech.backend.exception.NaoEncontradoException;
-import school.sptech.backend.service.historicomudanca.dto.HistoricoMudancaAtualizacaoDto;
-import school.sptech.backend.service.historicomudanca.dto.HistoricoMudancaCriacaoDto;
-import school.sptech.backend.service.historicomudanca.dto.HistoricoMudancaListagemDto;
-import school.sptech.backend.service.historicomudanca.dto.HistoricoMudancaMapper;
+import school.sptech.backend.service.usuario.UsuarioService;
 
 @Service
+
 public class HistoricoMudancaService {
     
     @Autowired
-    private HistoricoMudancaRepository repository;
-    private UsuarioRepository usuarioRepository;
+    private  HistoricoMudancaRepository repository;
+    @Autowired
+    private  UsuarioService usuarioService;
 
-    public void criar(HistoricoMudancaCriacaoDto HistoricoMudancaCriacao){
-        final HistoricoMudanca novoHistorico = HistoricoMudancaMapper.toEntity(HistoricoMudancaCriacao);
+
+    public HistoricoMudanca criar(HistoricoMudanca novoHistorico, Long idUsuario){
+
+        
+        novoHistorico.setUsuario(usuarioService.porId(idUsuario));
+
         repository.save(novoHistorico);
+
+        return  novoHistorico;
     }
 
-    public List<HistoricoMudancaListagemDto> listar(){
+    public List<HistoricoMudanca> listar(){
         final List<HistoricoMudanca> historicos = repository.findAll();
 
-       if (historicos.isEmpty()) {
-          throw new ResponseStatusException(HttpStatus.NO_CONTENT);
-       }
-
-       return HistoricoMudancaMapper.toDto(historicos);
+       return historicos;
     }
 
     public HistoricoMudanca porId(int id){
@@ -46,18 +48,17 @@ public class HistoricoMudancaService {
         );
     }
 
-    public HistoricoMudancaListagemDto atualizar(HistoricoMudancaAtualizacaoDto historico, long fk_usuario){
+    public HistoricoMudanca atualizar(HistoricoMudanca historico, int IdHistoricoMudanca, Long idUsuario){
 
-        Optional<Usuario> usuario = usuarioRepository.findById(fk_usuario);
+        Usuario usuario = usuarioService.porId(idUsuario);
 
         HistoricoMudanca historicoAtualizado = new HistoricoMudanca();
-
-        historicoAtualizado.setId_historico_mudanca(historico.getId_historico_mudanca());
-        historicoAtualizado.setData_hora(historico.getData_hora());
-        historicoAtualizado.setUsuario(usuario.get());
+        historicoAtualizado.setIdHistoricoMudanca(IdHistoricoMudanca);
+        historicoAtualizado.setDataHora(historico.getDataHora());
+        historicoAtualizado.setUsuario(usuario);
         repository.save(historicoAtualizado);
 
-        return HistoricoMudancaMapper.toDto(historicoAtualizado);
+        return historicoAtualizado;
 
     }
 

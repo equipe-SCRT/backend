@@ -9,7 +9,8 @@ import org.antlr.v4.runtime.misc.NotNull;
 @Entity
 public class Usuario {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)private Long idUsuario;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long idUsuario;
     @NotNull
     private String nome;
     @NotNull
@@ -18,6 +19,22 @@ public class Usuario {
     private String senha;
     @NotNull
     private Integer tipoUsuario;
+
+
+    
+    
+    public Usuario(Long idUsuario, String nome, String email, String senha, Integer tipoUsuario) {
+        this.idUsuario = idUsuario;
+        this.nome = nome;
+        this.email = email;
+        this.senha = senha;
+        this.tipoUsuario = tipoUsuario;
+    }
+
+    public Usuario() {
+    }
+
+
 
     public Long getIdUsuario() {
         return idUsuario;
