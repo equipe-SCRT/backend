@@ -7,6 +7,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.web.client.HttpServerErrorException;
 import school.sptech.backend.domain.rota.Rota;
 import school.sptech.backend.domain.rota.repository.RotaRepository;
 import school.sptech.backend.exception.NaoEncontradoException;
@@ -118,18 +119,15 @@ class RotaServiceTest {
         assertNotNull(rota);
     }
 
-//    @Test
-//    @DisplayName("Ao buscar nome ignorando case não contendo, retornar nulo")
-//    void cenarioBuscaPorNomeNaoContendoIgnoreCase() {
-//        Rota rota = new Rota();
-//
-//        Mockito.when(repository.findByNomeIgnoreCase("w")).thenReturn(Optional.of(rota));
-//
-//        Rota rotaResposta = service.porNome("w");
-//
-//        assertNull(rotaResposta);
-//        Mockito.verify(repository, Mockito.times(1)).findByNomeIgnoreCase("w");
-//    }
+    @Test
+    @DisplayName("Ao buscar nome ignorando case não contendo, retornar nulo")
+    void cenarioBuscaPorNomeNaoContendoIgnoreCase() {
+        Mockito.when(repository.findByNomeIgnoreCase("w")).thenReturn(Optional.empty());
+
+        assertThrows(NaoEncontradoException.class, () -> service.porNome("w"));
+
+        Mockito.verify(repository, Mockito.times(1)).findByNomeIgnoreCase("w");
+    }
 
     @Test
     @DisplayName("Dado que tenho o id no banco e passei o objeto, atualiza com sucesso")
@@ -159,5 +157,17 @@ class RotaServiceTest {
 
         assertThrows(NaoEncontradoException.class,
                 () -> service.atualizar(Mockito.any(), 1));
+    }
+
+    @Test
+    @DisplayName("Quando deletar errado devolva erro")
+    void deletarErrado(){
+        Mockito.when(repository.existsById(1)).thenReturn(false);
+
+        assertThrows(NaoEncontradoException.class, () -> {
+            service.deletar(1);
+        });
+
+        Mockito.verify(repository, Mockito.times(1)).existsById(1);
     }
 }
