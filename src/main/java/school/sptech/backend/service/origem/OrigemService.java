@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 import school.sptech.backend.domain.origem.Origem;
 import school.sptech.backend.domain.origem.repository.OrigemRepository;
+import school.sptech.backend.exception.NaoEncontradoException;
 
 import java.util.List;
 
@@ -31,14 +32,14 @@ public class OrigemService {
 
     public Origem porId(int id) {
         return this.repository.findById(id).orElseThrow(
-                () -> new ResponseStatusException(HttpStatus.NOT_FOUND)
+                () -> new NaoEncontradoException("Origem")
         );
     }
 
 
     public Origem atualizar(Origem origemAtualizado, int id) {
         this.repository.findById(id).orElseThrow(
-                () -> new ResponseStatusException(HttpStatus.NOT_FOUND)
+                () -> new NaoEncontradoException("Origem")
         );
 
         origemAtualizado.setId(id);
@@ -46,9 +47,9 @@ public class OrigemService {
     }
 
     public void deletar(int id) {
-        this.repository.findById(id).orElseThrow(
-                () -> new ResponseStatusException(HttpStatus.NOT_FOUND)
-        );
+         if (!repository.existsById(id)){
+             throw new NaoEncontradoException("Origem");
+         }
 
         this.repository.deleteById(id);
     }
