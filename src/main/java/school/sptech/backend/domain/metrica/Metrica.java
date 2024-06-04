@@ -2,11 +2,8 @@ package school.sptech.backend.domain.metrica;
 
 import java.time.LocalDate;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.ManyToOne;
+import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
 import school.sptech.backend.domain.usuario.entity.Usuario;
@@ -19,9 +16,9 @@ public class Metrica {
 
     @Id
     @GeneratedValue(strategy =  GenerationType.IDENTITY)
-    private int id_metrica;
+    private int idMetrica;
     private LocalDate alteracao;
     @ManyToOne
+    @JoinColumn(name = "fk_usuario")
     private Usuario usuario;
-    
 }
