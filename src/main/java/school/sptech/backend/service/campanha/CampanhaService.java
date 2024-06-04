@@ -8,6 +8,7 @@ import org.springframework.web.server.ResponseStatusException;
 import school.sptech.backend.domain.campanha.Campanha;
 import school.sptech.backend.domain.campanha.repository.CampanhaRepository;
 import school.sptech.backend.domain.produto.Produto;
+import school.sptech.backend.exception.NaoEncontradoException;
 import school.sptech.backend.service.campanha.dto.CampanhaAtualizacaoDto;
 import school.sptech.backend.service.campanha.dto.CampanhaCriacaoDto;
 import school.sptech.backend.service.campanha.dto.CampanhaListagemDto;
@@ -44,7 +45,7 @@ public class CampanhaService {
     public Campanha atualizar(Campanha campanhaAtualizacao, int id){
 
         this.campanhaRepository.findById(id).orElseThrow(
-                () -> new ResponseStatusException(HttpStatus.NOT_FOUND)
+                () -> new NaoEncontradoException("Origem")
         );
         campanhaAtualizacao.setId(id);
         return this.campanhaRepository.save(campanhaAtualizacao);
@@ -52,14 +53,14 @@ public class CampanhaService {
     public Campanha porId(int id){
 
         return this.campanhaRepository.findById(id).orElseThrow(
-                () -> new ResponseStatusException(HttpStatus.NOT_FOUND)
+                () -> new NaoEncontradoException("Origem")
         );
     }
 
     public void deletar(int id){
-        this.campanhaRepository.findById(id).orElseThrow(
-                () -> new ResponseStatusException(HttpStatus.NOT_FOUND)
-        );
+        if (!campanhaRepository.existsById(id)){
+            throw new NaoEncontradoException("Origem");
+        }
         this.campanhaRepository.deleteById(id);
     }
 }
