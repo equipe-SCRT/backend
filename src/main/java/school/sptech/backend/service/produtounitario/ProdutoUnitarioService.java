@@ -46,14 +46,22 @@ public class ProdutoUnitarioService {
         return repository.findById(id).orElseThrow(()-> new NaoEncontradoException("Produto Unitário"));
     }
 
+    public List<ProdutoUnitario> buscaPorParteDoNome(String nome){
+        return repository.findByNomeContainingIgnoreCase(nome);
+    }
+
     public ProdutoUnitario atualizar(ProdutoUnitario produtoUnitarioAtualizado, Integer id){
-        porId(id);
+        if (!repository.existsById(id)){
+            throw new NaoEncontradoException("ProdutoUnitario");
+        }
         produtoUnitarioAtualizado.setId(id);
         return repository.save(produtoUnitarioAtualizado);
     }
 
     public void deletar(int id){
-        porId(id);
+        if (!repository.existsById(id)){
+            throw new NaoEncontradoException("ProdutoUnitario");
+        }
         repository.deleteById(id);
     }
 }

@@ -220,8 +220,8 @@ class ProdutoServiceTest {
     }
 
     @Test
-    @DisplayName("Quando deletar errado devolva erro")
-    void deletarErrado(){
+    @DisplayName("Quando deletar por id que não existe no banco devolve erro")
+    void deletarComIdInexistente(){
         Mockito.when(produtoRepository.existsById(1)).thenReturn(Boolean.FALSE);
 
         assertThrows(NaoEncontradoException.class, () -> {
