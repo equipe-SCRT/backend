@@ -1,8 +1,11 @@
 package school.sptech.backend.service.historicomudanca;
 
 import java.util.List;
+import java.util.Optional;
 
 import lombok.RequiredArgsConstructor;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
@@ -14,16 +17,18 @@ import school.sptech.backend.exception.NaoEncontradoException;
 import school.sptech.backend.service.usuario.UsuarioService;
 
 @Service
-@RequiredArgsConstructor
+
 public class HistoricoMudancaService {
     
-
-    private final HistoricoMudancaRepository repository;
-    private final UsuarioService usuarioService;
+    @Autowired
+    private  HistoricoMudancaRepository repository;
+    @Autowired
+    private  UsuarioService usuarioService;
 
 
     public HistoricoMudanca criar(HistoricoMudanca novoHistorico, Long idUsuario){
 
+        
         novoHistorico.setUsuario(usuarioService.porId(idUsuario));
 
         repository.save(novoHistorico);
@@ -33,10 +38,6 @@ public class HistoricoMudancaService {
 
     public List<HistoricoMudanca> listar(){
         final List<HistoricoMudanca> historicos = repository.findAll();
-
-       if (historicos.isEmpty()) {
-          throw new ResponseStatusException(HttpStatus.NO_CONTENT);
-       }
 
        return historicos;
     }

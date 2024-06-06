@@ -11,15 +11,34 @@ import school.sptech.backend.domain.usuario.entity.Usuario;
 @Getter
 @Setter
 public class HistoricoMudanca {
-    
+
     @Id
-    @GeneratedValue(strategy =  GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int idHistoricoMudanca;
     private LocalDate dataHora;
     @ManyToOne
     @JoinColumn(name = "fk_usuario")
     private Usuario usuario;
 
+    public HistoricoMudanca(int idHistoricoMudanca, LocalDate dataHora, Usuario usuario) {
+        this.idHistoricoMudanca = idHistoricoMudanca;
+        this.dataHora = dataHora;
+        this.usuario = usuario;
+    }
+
+    public HistoricoMudanca(LocalDate dataHora, Usuario usuario) {
+        this.dataHora = dataHora;
+        this.usuario = usuario;
+    }
+
+    
+
+    public HistoricoMudanca(LocalDate dataHora) {
+        this.dataHora = dataHora;
+    }
+
+    public HistoricoMudanca() {
+    }
 
     @Override
     public String toString() {

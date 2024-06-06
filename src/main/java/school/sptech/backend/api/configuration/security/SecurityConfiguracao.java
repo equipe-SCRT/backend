@@ -71,7 +71,7 @@ public class SecurityConfiguracao {
             new AntPathRequestMatcher("/unidades-medidas/**"),
             new AntPathRequestMatcher("/produto-cesta/**"),
             new AntPathRequestMatcher("/historico-mudancas/**"),
-            new AntPathRequestMatcher("/metricas/**")
+            new AntPathRequestMatcher("/metricas/**"),
 
     };
 

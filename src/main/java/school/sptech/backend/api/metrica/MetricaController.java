@@ -37,7 +37,7 @@ public class MetricaController {
         Metrica novaMetrica = mapper.toEntity(metrica);
         novaMetrica.setUsuario(userService.porId(metrica.getFkUsuario()));
         //System.out.println(novaMetrica);
-        service.criar(novaMetrica);
+        service.criar(novaMetrica, metrica.getFkUsuario());
         //System.out.println(novaMetrica);
         URI uri = URI.create("/metricas/" + novaMetrica.getIdMetrica());
         return ResponseEntity.created(uri).body(mapper.toDto(novaMetrica));
@@ -47,6 +47,9 @@ public class MetricaController {
     public ResponseEntity<List<MetricaListagemDto>> listar() {
         List<Metrica> dtos = service.listar();
         List<MetricaListagemDto> listagemDtos = mapper.toDto(dtos);
+        if(listagemDtos.isEmpty()){
+            return ResponseEntity.noContent().build();
+        }
         return ResponseEntity.ok(listagemDtos);
     }
 
