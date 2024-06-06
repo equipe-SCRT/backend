@@ -54,6 +54,19 @@ public class ProdutoController {
         return ResponseEntity.ok(dto);
     }
 
+    @GetMapping("/{nome}")
+    public ResponseEntity<List<ProdutoListagemDto>> buscaPorParteDoNome(@RequestParam String nome){
+        List<Produto> produtos = service.buscaPorParteDoNome(nome);
+
+        if (produtos.isEmpty()) {
+            return ResponseEntity.noContent().build();
+        }
+
+        List<ProdutoListagemDto> dtos = mapper.toDto(produtos);
+
+        return ResponseEntity.ok(dtos);
+    }
+
     @PutMapping("/{id}")
     public ResponseEntity<ProdutoListagemDto> atualizar(@RequestBody @Valid ProdutoAtualizacaoDto produtoAtualizado, @PathVariable Integer id) {
         Produto produto = mapper.atualizacaoDto(produtoAtualizado, id);
