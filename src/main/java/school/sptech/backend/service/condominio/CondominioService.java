@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 import school.sptech.backend.domain.condominio.Condominio;
 import school.sptech.backend.domain.condominio.repository.CondominioRepository;
+import school.sptech.backend.exception.NaoEncontradoException;
 
 import java.util.List;
 
@@ -20,40 +21,34 @@ public class CondominioService {
     }
 
     public List<Condominio> listar() {
-        final List<Condominio> condominios = this.repository.findAll();
-
-        if (condominios.isEmpty()) {
-            throw new ResponseStatusException(HttpStatus.NO_CONTENT);
-        }
-
-        return condominios;
+        return this.repository.findAll();
     }
 
     public Condominio porId(int id) {
         return this.repository.findById(id).orElseThrow(
-                () -> new ResponseStatusException(HttpStatus.NOT_FOUND)
+                () -> new NaoEncontradoException("Condomínio")
         );
     }
 
     public Condominio porNome(String nome) {
         return this.repository.findByNomeIgnoreCase(nome).orElseThrow(
-                () -> new ResponseStatusException(HttpStatus.NOT_FOUND)
+                () -> new NaoEncontradoException("Condomínio")
         );
     }
 
     public Condominio atualizar(Condominio condominioAtualizado, int id) {
-        this.repository.findById(id).orElseThrow(
-                () -> new ResponseStatusException(HttpStatus.NOT_FOUND)
-        );
+        if (!this.repository.existsById(id)) {
+            throw new NaoEncontradoException("Condomínio");
+        }
 
         condominioAtualizado.setId(id);
         return this.repository.save(condominioAtualizado);
     }
 
     public void deletar(int id) {
-        this.repository.findById(id).orElseThrow(
-                () -> new ResponseStatusException(HttpStatus.NOT_FOUND)
-        );
+        if (!this.repository.existsById(id)) {
+            throw new NaoEncontradoException("Condomínio");
+        }
 
         this.repository.deleteById(id);
     }

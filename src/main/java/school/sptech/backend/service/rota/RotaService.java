@@ -1,9 +1,7 @@
 package school.sptech.backend.service.rota;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
-import org.springframework.web.server.ResponseStatusException;
 import school.sptech.backend.domain.rota.Rota;
 import school.sptech.backend.domain.rota.repository.RotaRepository;
 import school.sptech.backend.exception.NaoEncontradoException;
@@ -21,13 +19,7 @@ public class RotaService {
     }
 
     public List<Rota> listar() {
-        final List<Rota> rotas = this.repository.findAll();
-
-        if (rotas.isEmpty()) {
-            throw new ResponseStatusException(HttpStatus.NO_CONTENT);
-        }
-
-        return rotas;
+        return this.repository.findAll();
     }
 
     public Rota porId(int id) {
@@ -43,18 +35,18 @@ public class RotaService {
     }
 
     public Rota atualizar(Rota rotaAtualizada, int id) {
-        this.repository.findById(id).orElseThrow(
-                () -> new NaoEncontradoException("Rota")
-        );
+        if (!this.repository.existsById(id)) {
+            throw new NaoEncontradoException("Rota");
+        }
 
         rotaAtualizada.setId(id);
         return this.repository.save(rotaAtualizada);
     }
 
     public void deletar(int id) {
-        this.repository.findById(id).orElseThrow(
-                () -> new NaoEncontradoException("Rota")
-        );
+        if (!this.repository.existsById(id)) {
+            throw new NaoEncontradoException("Rota");
+        }
 
         this.repository.deleteById(id);
     }
