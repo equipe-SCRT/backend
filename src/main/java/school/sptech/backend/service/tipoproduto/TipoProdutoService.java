@@ -29,13 +29,17 @@ public class TipoProdutoService {
     }
 
     public TipoProduto atualizar(TipoProduto tipoProdutoAtualizado, Integer id){
-        porId(id);
+        if (!repository.existsById(id)){
+            throw new NaoEncontradoException("Tipo Produto");
+        }
         tipoProdutoAtualizado.setId(id);
         return repository.save(tipoProdutoAtualizado);
     }
 
     public void deletar(Integer id){
-        porId(id);
+        if (!repository.existsById(id)){
+            throw new NaoEncontradoException("Tipo Produto");
+        }
         repository.deleteById(id);
     }
 }

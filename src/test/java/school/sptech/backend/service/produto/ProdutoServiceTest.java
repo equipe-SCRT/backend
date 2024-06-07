@@ -230,4 +230,18 @@ class ProdutoServiceTest {
 
         Mockito.verify(produtoRepository, Mockito.times(1)).existsById(1);
     }
+
+    @Test
+    @DisplayName("Quando deletar por id que existe no banco deleta produto")
+    void deletarComIdExistente(){
+        Integer idInformado = 1;
+
+        Mockito.when(produtoRepository.existsById(idInformado)).thenReturn(Boolean.TRUE);
+
+        produtoService.deletar(idInformado);
+
+        Mockito.verify(produtoRepository, Mockito.times(1)).existsById(idInformado);
+        Mockito.verify(produtoRepository, Mockito.times(1)).deleteById(idInformado);
+    }
+
 }
