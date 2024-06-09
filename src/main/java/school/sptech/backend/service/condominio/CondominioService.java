@@ -7,6 +7,7 @@ import org.springframework.web.server.ResponseStatusException;
 import school.sptech.backend.domain.condominio.Condominio;
 import school.sptech.backend.domain.condominio.repository.CondominioRepository;
 import school.sptech.backend.exception.NaoEncontradoException;
+import school.sptech.backend.service.endereco.EnderecoService;
 
 import java.util.List;
 
@@ -16,7 +17,10 @@ public class CondominioService {
 
     private final CondominioRepository repository;
 
-    public Condominio criar(Condominio condominio) {
+    private final EnderecoService enderecoService;
+
+    public Condominio criar(Condominio condominio, Integer enderecoId) {
+        condominio.setEndereco(enderecoService.porId(enderecoId));
         return this.repository.save(condominio);
     }
 
