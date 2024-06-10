@@ -13,10 +13,10 @@ public class UsuarioMapper {
     public static Usuario of(UsuarioCriacaoDtoJwt usuarioCriacaoDto){
         Usuario usuario = new Usuario();
 
-        usuario.setEmail(usuario.getEmail());
-        usuario.setNome(usuario.getNome());
-        usuario.setSenha(usuario.getSenha());
-        usuario.setTipoUsuario(usuario.getTipoUsuario());
+        usuario.setEmail(usuarioCriacaoDto.getEmail());
+        usuario.setNome(usuarioCriacaoDto.getNome());
+        usuario.setSenha(usuarioCriacaoDto.getSenha());
+        usuario.setTipoUsuario(usuarioCriacaoDto.getTipoUsuario());
 
         return usuario;
     }

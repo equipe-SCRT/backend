@@ -21,10 +21,8 @@ public class Cesta {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     private String lote;
-    @PastOrPresent
     private LocalDate dataMontagem;
 
     @ManyToOne
-    @NotNull
     private TipoCesta tipoCesta;
 }

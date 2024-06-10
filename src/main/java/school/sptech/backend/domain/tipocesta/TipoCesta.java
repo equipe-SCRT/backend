@@ -5,6 +5,8 @@ import jakarta.validation.constraints.NotBlank;
 import lombok.Getter;
 import lombok.Setter;
 import school.sptech.backend.domain.cesta.Cesta;
+import school.sptech.backend.domain.produto.Produto;
+import school.sptech.backend.domain.tipoproduto.TipoProduto;
 
 import java.util.List;
 
@@ -17,6 +19,6 @@ public class TipoCesta {
     private Integer id;
     private String nome;
 
-    @OneToMany(mappedBy = "tipoCesta")
-    private List<Cesta> cestas;
+    @OneToMany
+    private List<TipoProduto> tipoProduto;
 }

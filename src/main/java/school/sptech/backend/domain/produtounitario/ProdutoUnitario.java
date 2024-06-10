@@ -27,6 +27,7 @@ public class ProdutoUnitario {
     private LocalDate dataValidade;
     private Double peso;
     private boolean ativo;
+    private LocalDate dataCriacao;
 
     @ManyToOne
     private Origem origem;

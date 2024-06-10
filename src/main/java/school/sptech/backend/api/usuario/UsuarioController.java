@@ -28,8 +28,9 @@ public class UsuarioController {
 
     @PostMapping("/login")
     public ResponseEntity<UsuarioTokenDto> login(@RequestBody UsuarioLoginDto usuarioLoginDto){
-        UsuarioTokenDto usuarioToken = this.usuarioService.autenticar(usuarioLoginDto);
-        return ResponseEntity.status(200) . body(usuarioToken);
+        System.out.println(usuarioLoginDto);
+        UsuarioTokenDto usuarioToken = usuarioService.autenticar(usuarioLoginDto);
+        return ResponseEntity.status(200).body(usuarioToken);
 
     }
 
@@ -39,13 +40,13 @@ public class UsuarioController {
 //        return ResponseEntity.status(201).body(user);
 //    }
 
-    @GetMapping
-    public ResponseEntity<List<UsuarioConsultaDtoJwt>> getGamer(){
-        List<UsuarioConsultaDtoJwt> usuarios = usuarioService.getUsuarios();
-        if (usuarios.isEmpty()){
-            return ResponseEntity.noContent().build();
-        }
-
-        return ResponseEntity.ok(usuarios);
-    }
+//    @GetMapping
+//    public ResponseEntity<List<UsuarioConsultaDtoJwt>> getGamer(){
+//        List<UsuarioConsultaDtoJwt> usuarios = usuarioService.getUsuarios();
+//        if (usuarios.isEmpty()){
+//            return ResponseEntity.noContent().build();
+//        }
+//
+//        return ResponseEntity.ok(usuarios);
+//    }
 }
