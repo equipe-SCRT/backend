@@ -6,10 +6,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import school.sptech.backend.domain.produtounitario.ProdutoUnitario;
 import school.sptech.backend.service.produtounitario.ProdutoUnitarioService;
-import school.sptech.backend.service.produtounitario.dto.ProdutoUnitarioAtualizacaoDto;
-import school.sptech.backend.service.produtounitario.dto.ProdutoUnitarioCriacaoDto;
-import school.sptech.backend.service.produtounitario.dto.ProdutoUnitarioListagemDto;
-import school.sptech.backend.service.produtounitario.dto.ProdutoUnitarioMapper;
+import school.sptech.backend.service.produtounitario.dto.*;
 
 
 import java.net.URI;
@@ -82,4 +79,21 @@ public class ProdutoUnitarioController {
         return ResponseEntity.noContent().build();
     }
 
+    @GetMapping("/quantidade-produtos/mes")
+    public ResponseEntity<List<ProdutoUnitarioCountMesDto>> qtdAtivosPorMes(@RequestParam boolean ativo){
+        List<ProdutoUnitarioCountMesDto> dto = service.qtdAtivosPorMes(ativo);
+//        if(dto.isEmpty()) return ResponseEntity.noContent().build();
+        return ResponseEntity.ok(dto);
+    }
+
+
+    @GetMapping("/vencimento-em-15-e-30-dias")
+    public ResponseEntity<ProdutoUnitarioVencimento15E30DiasDto> alimentosVencimento15E30Dias(){
+        return ResponseEntity.ok(service.alimentosVencimento15E30Dias());
+    }
+
+    @GetMapping("/arrecadados-x-vencidos")
+    public ResponseEntity<List<ProdutoUnitarioArrecadadoXVencidoDto>> countAtivoByNome(){
+        return ResponseEntity.ok(service.countAtivoByNome());
+    }
 }

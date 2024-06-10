@@ -57,5 +57,10 @@ public class CestaController {
         return ResponseEntity.noContent().build();
     }
 
+    @GetMapping("/quantidade-cestas")
+    public ResponseEntity<CestaCountAtivoDto> qtdCestaPorMes(){
+        return ResponseEntity.ok(cestaMapper.toDto(cestaService.qtdMesAtual()));
+    }
+
 
 }

@@ -15,4 +15,5 @@ public interface CestaMapper {
     Cesta toEntity(CestaCriacaoDto dto);
     Cesta toEntity(CestaAtualizacaoDto dto);
     Cesta toEntity(CestaAtualizacaoTipoCestaIdDto dto);
+    CestaCountAtivoDto toDto(Integer count);
 }

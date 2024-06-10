@@ -4,8 +4,13 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.antlr.v4.runtime.misc.NotNull;
-
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity
 public class Usuario {
     @Id
@@ -20,59 +25,4 @@ public class Usuario {
     @NotNull
     private Integer tipoUsuario;
 
-
-    
-    
-    public Usuario(Long idUsuario, String nome, String email, String senha, Integer tipoUsuario) {
-        this.idUsuario = idUsuario;
-        this.nome = nome;
-        this.email = email;
-        this.senha = senha;
-        this.tipoUsuario = tipoUsuario;
-    }
-
-    public Usuario() {
-    }
-
-
-
-    public Long getIdUsuario() {
-        return idUsuario;
-    }
-
-    public void setIdUsuario(Long idUsuario) {
-        this.idUsuario = idUsuario;
-    }
-
-    public String getNome() {
-        return nome;
-    }
-
-    public void setNome(String nome) {
-        this.nome = nome;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getSenha() {
-        return senha;
-    }
-
-    public void setSenha(String senha) {
-        this.senha = senha;
-    }
-
-    public Integer getTipoUsuario() {
-        return tipoUsuario;
-    }
-
-    public void setTipoUsuario(Integer tipoUsuario) {
-        this.tipoUsuario = tipoUsuario;
-    }
 }

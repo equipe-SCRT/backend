@@ -49,7 +49,6 @@ public class UsuarioService {
 
         final UsernamePasswordAuthenticationToken credentials = new UsernamePasswordAuthenticationToken(
                 usuarioLoginDto.getEmail(), usuarioLoginDto.getSenha());
-
         final Authentication authentication = this.authenticationManager.authenticate(credentials);
 
         Usuario usuarioAutenticado =
@@ -60,7 +59,6 @@ public class UsuarioService {
         SecurityContextHolder.getContext().setAuthentication(authentication);
 
         final String token = gerenciadorTokenJwt.generateToken(authentication);
-
         return UsuarioMapper.of(usuarioAutenticado, token);
     }
 

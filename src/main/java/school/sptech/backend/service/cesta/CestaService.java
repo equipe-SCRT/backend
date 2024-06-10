@@ -10,6 +10,7 @@ import school.sptech.backend.exception.NaoEncontradoException;
 import school.sptech.backend.service.cesta.dto.CestaMapper;
 import school.sptech.backend.service.tipocesta.TipoCestaService;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @Service
@@ -43,6 +44,10 @@ public class CestaService {
 
     public void deletar(Integer id){
         cestaRepository.delete(porId(id));
+    }
+
+    public Integer qtdMesAtual(){
+        return cestaRepository.qtdPorMesAno(LocalDate.now().getMonthValue(), LocalDate.now().getYear());
     }
 
 }

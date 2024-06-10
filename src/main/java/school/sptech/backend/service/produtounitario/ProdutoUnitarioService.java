@@ -10,9 +10,13 @@ import school.sptech.backend.service.cesta.CestaService;
 import school.sptech.backend.service.metrica.MetricaService;
 import school.sptech.backend.service.origem.OrigemService;
 import school.sptech.backend.service.produto.ProdutoService;
+import school.sptech.backend.service.produtounitario.dto.ProdutoUnitarioArrecadadoXVencidoDto;
+import school.sptech.backend.service.produtounitario.dto.ProdutoUnitarioCountMesDto;
+import school.sptech.backend.service.produtounitario.dto.ProdutoUnitarioVencimento15E30DiasDto;
 import school.sptech.backend.service.rota.RotaService;
 import school.sptech.backend.service.unidademedida.UnidadeMedidaService;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @Service
@@ -35,6 +39,7 @@ public class ProdutoUnitarioService {
         novoProdutoUnitario.setProduto(produtoService.porId(produtoId));
         novoProdutoUnitario.setRota(rotaService.porId(rotaId));
         novoProdutoUnitario.setMetrica(metricaService.porId(metricaId));
+        novoProdutoUnitario.setDataCriacao(LocalDate.now());
         return repository.save(novoProdutoUnitario);
     }
 
@@ -63,5 +68,16 @@ public class ProdutoUnitarioService {
             throw new NaoEncontradoException("ProdutoUnitario");
         }
         repository.deleteById(id);
+    }
+
+    public List<ProdutoUnitarioCountMesDto> qtdAtivosPorMes(boolean ativo){
+        return repository.qtdAtivosPorMes(ativo);
+    }
+
+    public ProdutoUnitarioVencimento15E30DiasDto alimentosVencimento15E30Dias(){
+        return repository.alimentosVencimento15E30Dias();
+    }
+    public List<ProdutoUnitarioArrecadadoXVencidoDto> countAtivoByNome(){
+        return repository.countAtivoByNome();
     }
 }

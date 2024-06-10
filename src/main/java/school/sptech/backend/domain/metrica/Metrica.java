@@ -26,14 +26,6 @@ public class Metrica {
     @JoinColumn(name = "fk_usuario")
     private Usuario usuario;
 
-    public Metrica(int idMetrica, LocalDate alteracao, Usuario usuario) {
-        this.idMetrica = idMetrica;
-        this.alteracao = alteracao;
-        this.usuario = usuario;
-    }
-
-    public Metrica() {
-    }
 
     public Metrica(LocalDate alteracao, Usuario usuario) {
         this.alteracao = alteracao;
