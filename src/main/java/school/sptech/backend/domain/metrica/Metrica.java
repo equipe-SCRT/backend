@@ -13,6 +13,8 @@ import school.sptech.backend.domain.usuario.entity.Usuario;
 @Entity
 @Getter
 @Setter
+@NoArgsConstructor
+@AllArgsConstructor
 public class Metrica {
 
 
@@ -29,11 +31,4 @@ public class Metrica {
         this.alteracao = alteracao;
         this.usuario = usuario;
     }
-
-    
-
-    
-
-
-    
 }
