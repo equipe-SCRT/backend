@@ -18,16 +18,6 @@ Para a estruturação do projeto, utilizamos os padrões **MVC (Model-View-Contr
 
 O padrão **Adapter** é utilizado para permitir a colaboração entre objetos com interfaces incompatíveis, atuando como um intermediário que traduz as chamadas de um formato para outro. Isso facilita a integração de componentes ou sistemas distintos.
 
-### 📌 SOLID
-
-**SOLID** é um conjunto de cinco princípios de design de software que visam tornar o código mais modular, flexível e fácil de manter. Eles promovem coesão, baixo acoplamento e abstração.
-
-- **S**ingle Responsibility Principle: Uma classe deve ter uma, e apenas uma, razão para mudar.
-- **O**pen/Closed Principle: Entidades de software devem estar abertas para extensão, mas fechadas para modificação.
-- **L**iskov Substitution Principle: Objetos de uma classe base devem poder ser substituídos por objetos de uma classe derivada sem alterar o funcionamento do programa.
-- **I**nterface Segregation Principle: Muitas interfaces específicas são melhores do que uma interface única e geral.
-- **D**ependency Inversion Principle: Dependa de abstrações, não de implementações concretas.
-
 ## 💻 Tecnologias Utilizadas
 
 - **Spring Boot**: Framework para criação de aplicações Java que simplifica o desenvolvimento com configuração mínima.
