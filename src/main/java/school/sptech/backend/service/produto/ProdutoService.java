@@ -30,14 +30,22 @@ public class ProdutoService {
         return repository.findById(id).orElseThrow(()-> new NaoEncontradoException("Produto"));
     }
 
+    public List<Produto> buscaPorParteDoNome(String nome){
+        return repository.findByNomeContainingIgnoreCase(nome);
+    }
+
     public Produto atualizar(Produto produtoAtualizado, Integer id){
-        porId(id);
+        if (!repository.existsById(id)) {
+            throw new NaoEncontradoException("Produto");
+        }
         produtoAtualizado.setId(id);
         return repository.save(produtoAtualizado);
     }
 
     public void deletar(Integer id){
-        porId(id);
+        if (!repository.existsById(id)) {
+            throw new NaoEncontradoException("Produto");
+        }
         repository.deleteById(id);
     }
 }

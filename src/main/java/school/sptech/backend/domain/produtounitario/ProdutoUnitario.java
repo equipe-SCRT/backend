@@ -1,7 +1,9 @@
 package school.sptech.backend.domain.produtounitario;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import school.sptech.backend.domain.cesta.Cesta;
 import school.sptech.backend.domain.metrica.Metrica;
@@ -15,6 +17,8 @@ import java.time.LocalDate;
 @Entity
 @Getter
 @Setter
+@NoArgsConstructor
+@AllArgsConstructor
 public class ProdutoUnitario {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -23,6 +27,7 @@ public class ProdutoUnitario {
     private LocalDate dataValidade;
     private Double peso;
     private boolean ativo;
+    private LocalDate dataCriacao;
 
     @ManyToOne
     private Origem origem;

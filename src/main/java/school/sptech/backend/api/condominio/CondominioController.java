@@ -24,9 +24,10 @@ public class CondominioController {
 
     @PostMapping
     public ResponseEntity<CondominioListagemDto> criar(@RequestBody @Valid CondominioCriacaoDto dto) {
-        Condominio condominioCriado = this.service.criar(mapper.toEntity(dto));
-        URI uri = URI.create("/condominios/" + condominioCriado.getId());
-        return ResponseEntity.created(uri).body(mapper.toDto(condominioCriado));
+        Condominio condominioCriado = mapper.toEntity(dto);
+        Condominio resposta = this.service.criar(condominioCriado, dto.getEnderecoId());
+        URI uri = URI.create("/condominios/" + resposta.getId());
+        return ResponseEntity.created(uri).body(mapper.toDto(resposta));
     }
 
     @GetMapping

@@ -1,71 +1,58 @@
 package school.sptech.backend.api.endereco;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.JsonMappingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
-
-import java.util.*;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.client.RestTemplate;
-import school.sptech.backend.service.endereco.EnderecoViaCep;
-import school.sptech.backend.utils.ListaObj;
+import school.sptech.backend.domain.endereco.Endereco;
+import school.sptech.backend.service.endereco.EnderecoService;
+import school.sptech.backend.service.endereco.dto.EnderecoAtualizacaoDto;
+import school.sptech.backend.service.endereco.dto.EnderecoCriacaoDto;
+import school.sptech.backend.service.endereco.dto.EnderecoListagemDto;
+import school.sptech.backend.service.endereco.dto.EnderecoMapper;
+
+import java.net.URI;
+import java.util.List;
 
 
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/enderecos")
 public class EnderecoController {
-    private final ListaObj<EnderecoViaCep> enderecos = new ListaObj<>(10);
+    private final EnderecoService service;
+    private final EnderecoMapper mapper;
 
-    @PostMapping("/{cep}/{numero}")
-    public ResponseEntity<EnderecoViaCep> adicionar(@PathVariable String cep, @PathVariable int numero) throws JsonProcessingException {
-        cep = cep.replace("-", "");
-        if (cep.length() != 8)
-            return ResponseEntity.badRequest().build();
+    @PostMapping
+    public ResponseEntity<EnderecoListagemDto> salvar(@RequestBody EnderecoCriacaoDto dto)  {
+        Endereco criar = service.criar(mapper.toEntity(dto));
+        URI uri = URI.create("/enderecos/"+criar.getId());
+        return ResponseEntity.created(uri).body(mapper.toDto(criar));
 
-        RestTemplate restTemplate = new RestTemplate();
-        ObjectMapper objectMapper = new ObjectMapper();
-        String url = "https://viacep.com.br/ws/" + cep + "/json/";
-        var result = restTemplate.getForObject(url, String.class);
-        if (result.toString().equalsIgnoreCase("{\n" +
-                "  \"erro\": true\n" +
-                "}")) {
-            return ResponseEntity.notFound().build();
-        }
-        EnderecoViaCep endereco = objectMapper.readValue(result, EnderecoViaCep.class);
-        endereco.setNumero(numero);
-        enderecos.adiciona(endereco);
-        return ResponseEntity.status(201).body(endereco);
     }
 
     @GetMapping
-    public ResponseEntity<EnderecoViaCep[]> listar() {
-        if(enderecos.getTamanho() == 0) return ResponseEntity.noContent().build();
-        EnderecoViaCep[] vetorCep = new EnderecoViaCep[enderecos.getTamanho()];
-        for (int i = 0; i < vetorCep.length; i++) {
-            vetorCep[i] = enderecos.getElemento(i);
-        }
-        ListaObj.quickSort(vetorCep, 0, vetorCep.length - 1) ;
-        enderecos.setVetor(vetorCep);
-        return ResponseEntity.status(200).body(vetorCep);
+    public ResponseEntity<List<EnderecoListagemDto>> listar() {
+        List<EnderecoListagemDto> dto = mapper.toDto(service.listar());
+        if(dto.isEmpty()) return ResponseEntity.noContent().build();
+        return ResponseEntity.ok(dto);
+
     }
 
-    @GetMapping("/{logradouro}")
-    public ResponseEntity<EnderecoViaCep> buscarPorLogradouro(@PathVariable String logradouro){
-        if(enderecos.getTamanho() == 0) return ResponseEntity.noContent().build();
-        EnderecoViaCep[] vetorCep = new EnderecoViaCep[enderecos.getTamanho()];
-        for (int i = 0; i < vetorCep.length; i++) {
-            vetorCep[i] = enderecos.getElemento(i);
-        }
-        ListaObj.quickSort(vetorCep, 0, vetorCep.length - 1);
-        enderecos.setVetor(vetorCep);
-        EnderecoViaCep enderecoBuscado = enderecos.pesquisaBinariaLougradoro(vetorCep, logradouro);
-        if(enderecoBuscado == null) return ResponseEntity.noContent().build();
+    @GetMapping("/{id}")
+    public ResponseEntity<EnderecoListagemDto> porId(@PathVariable Integer id){
+        return ResponseEntity.ok(mapper.toDto(service.porId(id)));
+    }
 
-        return ResponseEntity.ok(enderecoBuscado);
+    @PutMapping("/{id}")
+    public ResponseEntity<EnderecoListagemDto> atualizar(@PathVariable Integer id, @RequestBody EnderecoAtualizacaoDto endereco){
+        service.atualizar(id, mapper.toEntity(endereco));
+        return ResponseEntity.noContent().build();
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<EnderecoListagemDto> deletar(@PathVariable Integer id){
+        service.deletar(id);
+        return ResponseEntity.noContent().build();
     }
 
 

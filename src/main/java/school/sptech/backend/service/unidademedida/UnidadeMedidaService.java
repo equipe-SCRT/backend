@@ -23,17 +23,21 @@ public class UnidadeMedidaService {
     }
 
     public UnidadeMedida porId(Integer id){
-        return repository.findById(id).orElseThrow(()-> new NaoEncontradoException("Produto"));
+        return repository.findById(id).orElseThrow(()-> new NaoEncontradoException("Unidade de Medida"));
     }
 
     public UnidadeMedida atualizar(UnidadeMedida produtoAtualizado, Integer id){
-        porId(id);
+        if (!repository.existsById(id)){
+            throw new NaoEncontradoException("Unidade de Medida");
+        }
         produtoAtualizado.setId(id);
         return repository.save(produtoAtualizado);
     }
 
     public void deletar(Integer id){
-        porId(id);
+        if (!repository.existsById(id)){
+            throw new NaoEncontradoException("Unidade de Medida");
+        }
         repository.deleteById(id);
     }
 }

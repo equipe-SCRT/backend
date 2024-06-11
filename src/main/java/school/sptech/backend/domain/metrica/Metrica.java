@@ -4,13 +4,17 @@ import java.time.LocalDate;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import school.sptech.backend.domain.usuario.entity.Usuario;
 
 @Entity
 @Getter
 @Setter
+@NoArgsConstructor
+@AllArgsConstructor
 public class Metrica {
 
 
@@ -22,14 +26,6 @@ public class Metrica {
     @JoinColumn(name = "fk_usuario")
     private Usuario usuario;
 
-    public Metrica(int idMetrica, LocalDate alteracao, Usuario usuario) {
-        this.idMetrica = idMetrica;
-        this.alteracao = alteracao;
-        this.usuario = usuario;
-    }
-
-    public Metrica() {
-    }
 
     public Metrica(LocalDate alteracao, Usuario usuario) {
         this.alteracao = alteracao;

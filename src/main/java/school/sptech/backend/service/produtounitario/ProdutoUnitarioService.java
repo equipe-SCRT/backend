@@ -10,9 +10,13 @@ import school.sptech.backend.service.cesta.CestaService;
 import school.sptech.backend.service.metrica.MetricaService;
 import school.sptech.backend.service.origem.OrigemService;
 import school.sptech.backend.service.produto.ProdutoService;
+import school.sptech.backend.service.produtounitario.dto.ProdutoUnitarioArrecadadoXVencidoDto;
+import school.sptech.backend.service.produtounitario.dto.ProdutoUnitarioCountMesDto;
+import school.sptech.backend.service.produtounitario.dto.ProdutoUnitarioVencimento15E30DiasDto;
 import school.sptech.backend.service.rota.RotaService;
 import school.sptech.backend.service.unidademedida.UnidadeMedidaService;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @Service
@@ -35,6 +39,7 @@ public class ProdutoUnitarioService {
         novoProdutoUnitario.setProduto(produtoService.porId(produtoId));
         novoProdutoUnitario.setRota(rotaService.porId(rotaId));
         novoProdutoUnitario.setMetrica(metricaService.porId(metricaId));
+        novoProdutoUnitario.setDataCriacao(LocalDate.now());
         return repository.save(novoProdutoUnitario);
     }
 
@@ -46,14 +51,33 @@ public class ProdutoUnitarioService {
         return repository.findById(id).orElseThrow(()-> new NaoEncontradoException("Produto Unitário"));
     }
 
+    public List<ProdutoUnitario> buscaPorParteDoNome(String nome){
+        return repository.findByNomeContainingIgnoreCase(nome);
+    }
+
     public ProdutoUnitario atualizar(ProdutoUnitario produtoUnitarioAtualizado, Integer id){
-        porId(id);
+        if (!repository.existsById(id)){
+            throw new NaoEncontradoException("ProdutoUnitario");
+        }
         produtoUnitarioAtualizado.setId(id);
         return repository.save(produtoUnitarioAtualizado);
     }
 
     public void deletar(int id){
-        porId(id);
+        if (!repository.existsById(id)){
+            throw new NaoEncontradoException("ProdutoUnitario");
+        }
         repository.deleteById(id);
+    }
+
+    public List<ProdutoUnitarioCountMesDto> qtdAtivosPorMes(boolean ativo){
+        return repository.qtdAtivosPorMes(ativo);
+    }
+
+    public ProdutoUnitarioVencimento15E30DiasDto alimentosVencimento15E30Dias(){
+        return repository.alimentosVencimento15E30Dias();
+    }
+    public List<ProdutoUnitarioArrecadadoXVencidoDto> countAtivoByNome(){
+        return repository.countAtivoByNome();
     }
 }
