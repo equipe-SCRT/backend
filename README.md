@@ -1,6 +1,6 @@
 # backend
 
-Esse é um repositório destinado a backend do projeto de extensão do Grupo 5 nomeado SCRT.
+Esse é um repositório destinado a backend do projeto Tech For Good do Grupo 5 nomeado SCRT.
 
 Tecnologias: 
 
