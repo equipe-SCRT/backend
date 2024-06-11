@@ -110,11 +110,11 @@ public class MetricaServiceTest {
 
         Integer id = 100;
 
-        Mockito.when(service.porId(id)).thenReturn(null);
+        Mockito.when(repository.findById(id)).thenReturn(Optional.empty());
 
         NaoEncontradoException exception = assertThrows(NaoEncontradoException.class, () -> service.porId(id));
 
-        assertEquals("Histórico Mudança não encontrada", exception.getLocalizedMessage());
+        assertEquals("Metrica não encontrado(a)", exception.getLocalizedMessage());
 
         Mockito.verify(repository, Mockito.times(1)).findById(id);
     }

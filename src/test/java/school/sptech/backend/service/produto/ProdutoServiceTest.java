@@ -58,9 +58,9 @@ class ProdutoServiceTest {
     void cenarioListaTresProdutos() {
 
         List<Produto> lista = List.of(
-                new Produto(1, "Produto 1", new TipoProduto(), new UnidadeMedida()),
-                new Produto(2, "Produto 2", new TipoProduto(), new UnidadeMedida()),
-                new Produto(3, "Produto 3", new TipoProduto(), new UnidadeMedida())
+                new Produto(1, "Produto 1", 1, new TipoProduto(), new UnidadeMedida()),
+                new Produto(2, "Produto 2", 2,new TipoProduto(), new UnidadeMedida()),
+                new Produto(3, "Produto 3", 3, new TipoProduto(), new UnidadeMedida())
         );
 
         Mockito.when(produtoService.listar()).thenReturn(lista);
@@ -78,7 +78,7 @@ class ProdutoServiceTest {
     @Test
     @DisplayName("Caso houver o produto pelo id, retorne o mesmo")
     void cenarioProdutoExistente(){
-        Optional<Produto> produto = Optional.of(new Produto(1, "Produto 1", new TipoProduto(), new UnidadeMedida()));
+        Optional<Produto> produto = Optional.of(new Produto(1, "Produto 1", 2, new TipoProduto(), new UnidadeMedida()));
         Integer id = 1;
 
         Mockito.when(produtoRepository.findById(id)).thenReturn(produto);
@@ -109,8 +109,8 @@ class ProdutoServiceTest {
 
         TipoProduto tipoProduto = new TipoProduto(1, "Perecível");
         UnidadeMedida u1 = new UnidadeMedida(1, "Quilos", "kg");
-        Produto produto = new Produto(1, "p1", tipoProduto, u1);
-        Produto novoProduto = new Produto(null, "p1", tipoProduto, u1);
+        Produto produto = new Produto(1, "p1", 2, tipoProduto, u1);
+        Produto novoProduto = new Produto(null, "p1", 2, tipoProduto, u1);
 
         Mockito.when(tipoProdutoService.porId(tipoProduto.getId())).thenReturn(tipoProduto);
         Mockito.when(unidadeMedidaService.porId(u1.getId())).thenReturn(u1);
@@ -128,7 +128,7 @@ class ProdutoServiceTest {
     void retonaProdutoPeloId() {
         TipoProduto tipoProduto = new TipoProduto(1, "Perecível");
         UnidadeMedida u1 = new UnidadeMedida(1, "Quilos", "kg");
-        Produto produto = new Produto(1, "Arroz", tipoProduto, u1);
+        Produto produto = new Produto(1, "Arroz", 1, tipoProduto, u1);
         Integer idBusca = 1;
 
         Mockito.when(produtoRepository.findById(idBusca)).thenReturn(Optional.of(produto));
@@ -164,8 +164,8 @@ class ProdutoServiceTest {
         UnidadeMedida u1 = new UnidadeMedida(1, "Quilos", "kg");
 
         List<Produto> produtosFiltrados = List.of(
-                new Produto(1, "Bolacha", t1, u1),
-                new Produto(2, "Chocolate", t2, u1)
+                new Produto(1, "Bolacha", 250, t1, u1),
+                new Produto(2, "Chocolate", 90, t2, u1)
         );
 
         Mockito.when(produtoRepository.findByNomeContainingIgnoreCase("a")).thenReturn(produtosFiltrados);
@@ -205,9 +205,9 @@ class ProdutoServiceTest {
     void dadoQueAtualizacaoCorreta(){
         TipoProduto t1 = new TipoProduto(1, "Perecível");
         UnidadeMedida u1 = new UnidadeMedida(1, "Quilos", "kg");
-        Produto produtoAtualizacao = new Produto(null, "Bolacha 2", t1, u1);
+        Produto produtoAtualizacao = new Produto(null, "Bolacha 2", 200,t1, u1);
         Integer idInformado = 1;
-        Produto produtoRetorno = new Produto(idInformado, "Bolacha 2", t1, u1);
+        Produto produtoRetorno = new Produto(idInformado, "Bolacha 2", 200,t1, u1);
 
         Mockito.when(produtoRepository.save(produtoAtualizacao)).thenReturn(produtoRetorno);
         Mockito.when(produtoRepository.existsById(idInformado)).thenReturn(Boolean.TRUE);

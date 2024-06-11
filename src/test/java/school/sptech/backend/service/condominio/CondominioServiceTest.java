@@ -9,7 +9,9 @@ import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 import school.sptech.backend.domain.condominio.Condominio;
 import school.sptech.backend.domain.condominio.repository.CondominioRepository;
+import school.sptech.backend.domain.endereco.Endereco;
 import school.sptech.backend.exception.NaoEncontradoException;
+import school.sptech.backend.service.endereco.EnderecoService;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,6 +27,9 @@ class CondominioServiceTest {
 
     @Mock
     private CondominioRepository repository;
+
+    @Mock
+    private EnderecoService enderecoService;
 
     @Test
     @DisplayName("Caso houver uma lista com 3 condomínios, retorne os 3 condomínios")
@@ -62,14 +67,14 @@ class CondominioServiceTest {
     @Test
     @DisplayName("Deve retornar o objeto salvo")
     void testSalvaProduto() {
-        Condominio condominio = new Condominio();
-        condominio.setId(1);
-        Condominio novoCondominio = new Condominio();
-        novoCondominio.setId(null);
+        Endereco endereco = new Endereco(1, "Rua", "Teste", "250", "09981145");
+        Condominio condominio = new Condominio(1, "teste", endereco);
+        Condominio novoCondominio = new Condominio(null, "teste", endereco);
 
-        Mockito.when(service.criar(novoCondominio)).thenReturn(condominio);
+        Mockito.when(enderecoService.porId(endereco.getId())).thenReturn(endereco);
+        Mockito.when(service.criar(novoCondominio, condominio.getEndereco().getId())).thenReturn(condominio);
 
-        Condominio condominioSalvo = service.criar(novoCondominio);
+        Condominio condominioSalvo = service.criar(novoCondominio, novoCondominio.getEndereco().getId());
 
         assertEquals(condominio.getId(), condominioSalvo.getId());
         Mockito.verify(repository, Mockito.times(1)).save(novoCondominio);
