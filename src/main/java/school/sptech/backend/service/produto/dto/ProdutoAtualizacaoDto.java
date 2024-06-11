@@ -11,15 +11,7 @@ public class ProdutoAtualizacaoDto {
     @NotBlank
     @Size(min = 3, max = 15)
     private String nome;
-
-    @NotNull
-    private int qtdUnidadeMedida;
-
     @NotNull
     @Positive
     private int tipoProdutoId;
-
-    @NotNull
-    @Positive
-    private int tipoUnidadeMedidaId;
 }
