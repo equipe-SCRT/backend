@@ -13,8 +13,6 @@ import school.sptech.backend.domain.usuario.entity.Usuario;
 @Entity
 @Getter
 @Setter
-@NoArgsConstructor
-@AllArgsConstructor
 public class Metrica {
 
 
