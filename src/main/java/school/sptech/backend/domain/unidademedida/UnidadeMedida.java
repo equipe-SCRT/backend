@@ -20,4 +20,9 @@ public class UnidadeMedida {
     private Integer id;
     private String nome;
     private String representacao;
+
+    @Override
+    public String toString() {
+        return "%s".formatted(representacao);
+    }
 }

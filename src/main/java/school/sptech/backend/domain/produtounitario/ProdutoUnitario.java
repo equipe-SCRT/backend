@@ -47,4 +47,8 @@ public class ProdutoUnitario {
     @ManyToOne
     private Metrica metrica;
 
+    @Override
+    public String toString() {
+        return "%s".formatted(nome);
+    }
 }
