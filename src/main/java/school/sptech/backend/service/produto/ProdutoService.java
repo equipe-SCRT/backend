@@ -6,6 +6,7 @@ import school.sptech.backend.domain.produto.Produto;
 import school.sptech.backend.domain.produto.repository.ProdutoRepository;
 import school.sptech.backend.exception.NaoEncontradoException;
 import school.sptech.backend.service.tipoproduto.TipoProdutoService;
+import school.sptech.backend.service.unidademedida.UnidadeMedidaService;
 
 import java.util.List;
 
@@ -17,8 +18,11 @@ public class ProdutoService {
 
     private final TipoProdutoService tipoProdutoService;
 
-    public Produto criar(Produto novoProduto, Integer tipoProdutoId){
+    private final UnidadeMedidaService unidadeMedidaService;
+
+    public Produto criar(Produto novoProduto, Integer tipoProdutoId, Integer unidadeMedidaId){
         novoProduto.setTipoProduto(tipoProdutoService.porId(tipoProdutoId));
+        novoProduto.setUnidadeMedida(unidadeMedidaService.porId(unidadeMedidaId));
         return repository.save(novoProduto);
     }
 

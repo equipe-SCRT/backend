@@ -146,7 +146,7 @@ class ProdutoUnitarioServiceTest {
         Origem origem = new Origem(1, 1, 1, new Condominio(), new Campanha());
         UnidadeMedida unidadeMedida = new UnidadeMedida(1, "Quilos", "KG");
         Cesta cesta = new Cesta(1, "Lote 1", LocalDate.now(), new TipoCesta());
-        Produto p1 = new Produto(1, "Produto 1", new TipoProduto());
+        Produto p1 = new Produto(1, "Produto 1", new TipoProduto(), new UnidadeMedida());
         Rota rota = new Rota(1, "Rota 1", "km rodados", 5, LocalDate.now(), new Time(12,0,0), new Time(17, 0, 0));
         Metrica metrica = new Metrica(1, LocalDate.now(), new Usuario());
 
