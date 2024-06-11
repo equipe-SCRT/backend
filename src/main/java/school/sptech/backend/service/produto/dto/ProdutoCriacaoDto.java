@@ -13,6 +13,13 @@ public class ProdutoCriacaoDto {
     private String nome;
 
     @NotNull
+    private int qtdUnidadeMedida;
+
+    @NotNull
     @Positive
     private Integer tipoProdutoId;
+
+    @NotNull
+    @Positive
+    private Integer tipoUnidadeMedidaId;
 }
