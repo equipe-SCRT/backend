@@ -38,9 +38,6 @@ public class OrigemService {
 
 
     public Origem atualizar(Origem origemAtualizado, int id) {
-        this.repository.findById(id).orElseThrow(
-                () -> new NaoEncontradoException("Origem")
-        );
 
         origemAtualizado.setId(id);
         return this.repository.save(origemAtualizado);
