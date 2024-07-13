@@ -20,7 +20,7 @@ public class Metrica {
 
     @Id
     @GeneratedValue(strategy =  GenerationType.IDENTITY)
-    private int idMetrica;
+    private int id;
     private LocalDate alteracao;
     @ManyToOne
     @JoinColumn(name = "fk_usuario")

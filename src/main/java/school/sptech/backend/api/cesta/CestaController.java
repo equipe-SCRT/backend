@@ -28,7 +28,7 @@ public class CestaController {
 
     @PostMapping
     public ResponseEntity<CestaListagemDto> cadastrar(@Valid @RequestBody CestaCriacaoDto cesta){
-        Cesta salvar = cestaService.salvar(cestaMapper.toEntity(cesta), cesta.getTipoCestaId());
+        Cesta salvar = cestaService.salvar(cestaMapper.toEntity(cesta), cesta.getId());
         URI uri = URI.create("/cestas/" + salvar.getId());
         return ResponseEntity.created(uri).body(cestaMapper.toDto(salvar));
     }

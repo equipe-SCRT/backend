@@ -1,6 +1,6 @@
 package school.sptech.backend.domain.produtocesta.mapper;
 
-import school.sptech.backend.domain.produtocesta.entity.ProdutoCesta;
+import school.sptech.backend.domain.produtocesta.ProdutoCesta;
 import school.sptech.backend.service.produtocesta.dto.ProdutoCestaEntityDto;
 
 import java.util.ArrayList;

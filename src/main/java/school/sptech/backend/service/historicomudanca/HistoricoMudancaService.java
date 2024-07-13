@@ -26,10 +26,10 @@ public class HistoricoMudancaService {
     private  UsuarioService usuarioService;
 
 
-    public HistoricoMudanca criar(HistoricoMudanca novoHistorico, Long idUsuario){
+    public HistoricoMudanca criar(HistoricoMudanca novoHistorico, Long id){
 
         
-        novoHistorico.setUsuario(usuarioService.porId(idUsuario));
+        novoHistorico.setUsuario(usuarioService.porId(id));
 
         repository.save(novoHistorico);
 
@@ -53,7 +53,7 @@ public class HistoricoMudancaService {
         Usuario usuario = usuarioService.porId(idUsuario);
 
         HistoricoMudanca historicoAtualizado = new HistoricoMudanca();
-        historicoAtualizado.setIdHistoricoMudanca(IdHistoricoMudanca);
+        historicoAtualizado.setId(IdHistoricoMudanca);
         historicoAtualizado.setDataHora(historico.getDataHora());
         historicoAtualizado.setUsuario(usuario);
         repository.save(historicoAtualizado);

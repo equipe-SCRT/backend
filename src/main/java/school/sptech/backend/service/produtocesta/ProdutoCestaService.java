@@ -4,14 +4,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.HttpServerErrorException;
-import school.sptech.backend.domain.produto.Produto;
-import school.sptech.backend.domain.produto.repository.ProdutoRepository;
-import school.sptech.backend.domain.produtocesta.entity.ProdutoCesta;
-import school.sptech.backend.domain.produtocesta.mapper.ProdutoCestaMapper;
+import school.sptech.backend.domain.produtocesta.ProdutoCesta;
 import school.sptech.backend.domain.produtocesta.repository.ProdutoCestaRepository;
-import school.sptech.backend.service.produtocesta.dto.ProdutoCestaEntityDto;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -50,7 +45,7 @@ public class ProdutoCestaService {
         if (!repository.existsById(id))
             throw new HttpServerErrorException(HttpStatus.NOT_FOUND);
 
-        produtoCesta.setIdProdutoCesta(id);
+        produtoCesta.setId(id);
         return repository.save(produtoCesta);
     }
 

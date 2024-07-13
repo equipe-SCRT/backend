@@ -4,5 +4,5 @@ import lombok.Data;
 
 @Data
 public class CestaAtualizacaoTipoCestaIdDto {
-    private Integer tipoCestaId;
+    private Integer id;
 }

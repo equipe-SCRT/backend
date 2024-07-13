@@ -33,13 +33,10 @@ public class MetricaController {
 
     @PostMapping
     public ResponseEntity<MetricaListagemDto> criar(@RequestBody @Valid MetricaCriacaoDto metrica) {
-        //System.out.println(metrica);
         Metrica novaMetrica = mapper.toEntity(metrica);
         novaMetrica.setUsuario(userService.porId(metrica.getFkUsuario()));
-        //System.out.println(novaMetrica);
         service.criar(novaMetrica, metrica.getFkUsuario());
-        //System.out.println(novaMetrica);
-        URI uri = URI.create("/metricas/" + novaMetrica.getIdMetrica());
+        URI uri = URI.create("/metricas/" + novaMetrica.getId());
         return ResponseEntity.created(uri).body(mapper.toDto(novaMetrica));
     }
 
@@ -63,7 +60,7 @@ public class MetricaController {
     @PutMapping("/{id}")
     public ResponseEntity<MetricaListagemDto> atualizar(@RequestBody @Valid MetricaAtualizacaoDto metricaAtualizacao, @PathVariable int id) {
         Metrica metrica = new Metrica();
-        metrica.setIdMetrica(id);
+        metrica.setId(id);
         metrica.setAlteracao(metricaAtualizacao.getAlteracao());
         metrica.setUsuario(userService.porId(metricaAtualizacao.getFkUsuario()));
         Metrica resposta = service.atualizar(metrica);
