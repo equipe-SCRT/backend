@@ -25,7 +25,7 @@ public class CondominioController {
     @PostMapping
     public ResponseEntity<CondominioListagemDto> criar(@RequestBody @Valid CondominioCriacaoDto dto) {
         Condominio condominioCriado = mapper.toEntity(dto);
-        Condominio resposta = this.service.criar(condominioCriado, dto.getEnderecoId());
+        Condominio resposta = this.service.criar(condominioCriado, dto.getId());
         URI uri = URI.create("/condominios/" + resposta.getId());
         return ResponseEntity.created(uri).body(mapper.toDto(resposta));
     }

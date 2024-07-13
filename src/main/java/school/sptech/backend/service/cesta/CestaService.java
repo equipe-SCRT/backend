@@ -17,7 +17,6 @@ import java.util.List;
 @RequiredArgsConstructor
 public class CestaService {
     private final CestaRepository cestaRepository;
-    private final CestaMapper cestaMapper;
     private final TipoCestaService tipoCestaService;
 
     public Cesta porId(Integer id){

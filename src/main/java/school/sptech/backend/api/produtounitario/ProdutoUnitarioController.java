@@ -82,7 +82,6 @@ public class ProdutoUnitarioController {
     @GetMapping("/quantidade-produtos/mes")
     public ResponseEntity<List<ProdutoUnitarioCountMesDto>> qtdAtivosPorMes(@RequestParam boolean ativo){
         List<ProdutoUnitarioCountMesDto> dto = service.qtdAtivosPorMes(ativo);
-//        if(dto.isEmpty()) return ResponseEntity.noContent().build();
         return ResponseEntity.ok(dto);
     }
 

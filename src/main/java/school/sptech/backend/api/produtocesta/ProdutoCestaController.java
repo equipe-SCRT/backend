@@ -5,7 +5,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import school.sptech.backend.domain.produtocesta.entity.ProdutoCesta;
+import school.sptech.backend.domain.produtocesta.ProdutoCesta;
 import school.sptech.backend.domain.produtocesta.mapper.ProdutoCestaMapper;
 import school.sptech.backend.service.produtocesta.ProdutoCestaService;
 import school.sptech.backend.service.produtocesta.dto.ProdutoCestaEntityDto;

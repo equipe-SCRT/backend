@@ -11,5 +11,5 @@ public class CestaCriacaoDto {
     @PastOrPresent
     private LocalDate dataMontagem;
     @NotNull
-    private Integer tipoCestaId;
+    private Integer id;
 }

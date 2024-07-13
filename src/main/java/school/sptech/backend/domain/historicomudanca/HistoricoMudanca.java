@@ -14,14 +14,14 @@ public class HistoricoMudanca {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int idHistoricoMudanca;
+    private int id;
     private LocalDate dataHora;
     @ManyToOne
     @JoinColumn(name = "fk_usuario")
     private Usuario usuario;
 
-    public HistoricoMudanca(int idHistoricoMudanca, LocalDate dataHora, Usuario usuario) {
-        this.idHistoricoMudanca = idHistoricoMudanca;
+    public HistoricoMudanca(int id, LocalDate dataHora, Usuario usuario) {
+        this.id = id;
         this.dataHora = dataHora;
         this.usuario = usuario;
     }
@@ -43,7 +43,7 @@ public class HistoricoMudanca {
     @Override
     public String toString() {
         final StringBuffer sb = new StringBuffer("HistoricoMudanca{");
-        sb.append("idHistoricoMudanca=").append(idHistoricoMudanca);
+        sb.append("id=").append(id);
         sb.append(", dataHora=").append(dataHora);
         sb.append(", usuario=").append(usuario);
         sb.append('}');

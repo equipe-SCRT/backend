@@ -8,5 +8,5 @@ import java.time.LocalDate;
 public class CestaAtualizacaoDto {
     private String lote;
     private LocalDate dataMontagem;
-    private Integer tipoCestaId;
+    private Integer id;
 }

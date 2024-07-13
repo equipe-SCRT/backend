@@ -36,7 +36,7 @@ public class HistoricoMudancaController {
         HistoricoMudancaListagemDto listagemDto = mapper.toDto(resposta);
         System.out.println(listagemDto);
 
-        URI uri = URI.create("/historico-mudancas/" + historicoMudanca.getIdHistoricoMudanca());
+        URI uri = URI.create("/historico-mudancas/" + historicoMudanca.getId());
         return ResponseEntity.created(uri).body(listagemDto);
     }
 

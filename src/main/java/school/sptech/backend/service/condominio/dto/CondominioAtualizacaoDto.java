@@ -14,5 +14,5 @@ public class CondominioAtualizacaoDto {
     private String nome;
     @NotNull
     @Positive
-    private Integer enderecoId;
+    private Integer id;
 }

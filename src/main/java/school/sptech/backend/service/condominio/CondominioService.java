@@ -19,8 +19,8 @@ public class CondominioService {
 
     private final EnderecoService enderecoService;
 
-    public Condominio criar(Condominio condominio, Integer enderecoId) {
-        condominio.setEndereco(enderecoService.porId(enderecoId));
+    public Condominio criar(Condominio condominio, Integer id) {
+        condominio.setEndereco(enderecoService.porId(id));
         return this.repository.save(condominio);
     }
 
