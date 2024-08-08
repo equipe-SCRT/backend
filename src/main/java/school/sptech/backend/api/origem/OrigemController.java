@@ -5,6 +5,7 @@ import lombok.RequiredArgsConstructor;
 import org.aspectj.weaver.ast.Or;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import school.sptech.backend.api.BaseController;
 import school.sptech.backend.domain.origem.Origem;
 import school.sptech.backend.service.origem.OrigemService;
 import school.sptech.backend.service.origem.dto.OrigemAtualizacaoDto;
@@ -18,7 +19,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/origens")
 @RequiredArgsConstructor
-public class OrigemController {
+public class OrigemController implements BaseController<OrigemCriacaoDto, OrigemAtualizacaoDto, OrigemListagemDto, Integer> {
 
     private final OrigemService origemService;
     private final OrigemMapper origemMapper;
@@ -37,20 +38,20 @@ public class OrigemController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<OrigemListagemDto> porId(@PathVariable int id){
+    public ResponseEntity<OrigemListagemDto> porId(@PathVariable Integer id){
         Origem entity = this.origemService.porId(id);
         return ResponseEntity.ok().body(origemMapper.toDto(entity));
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<OrigemListagemDto> atualizar(@RequestBody @Valid OrigemAtualizacaoDto origemAtualizacao, @PathVariable int id) {
+    public ResponseEntity<OrigemListagemDto> atualizar(@PathVariable Integer id, @RequestBody @Valid OrigemAtualizacaoDto origemAtualizacao) {
         Origem entity = origemMapper.atualizacaoDto(origemAtualizacao, id);
-        OrigemListagemDto dto = origemMapper.toDto(this.origemService.atualizar(entity, entity.getId()));
+        OrigemListagemDto dto = origemMapper.toDto(this.origemService.atualizar(entity.getId(), entity));
         return ResponseEntity.ok().body(dto);
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deletar(@PathVariable int id){
+    public ResponseEntity<Void> deletar(@PathVariable Integer id){
         this.origemService.deletar(id);
         return ResponseEntity.noContent().build();
     }

@@ -2,10 +2,10 @@ package school.sptech.backend.service.produtounitario;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import school.sptech.backend.domain.produto.Produto;
 import school.sptech.backend.domain.produtounitario.ProdutoUnitario;
 import school.sptech.backend.domain.produtounitario.repository.ProdutoUnitarioRepository;
 import school.sptech.backend.exception.NaoEncontradoException;
+import school.sptech.backend.service.BaseService;
 import school.sptech.backend.service.cesta.CestaService;
 import school.sptech.backend.service.metrica.MetricaService;
 import school.sptech.backend.service.origem.OrigemService;
@@ -16,12 +16,11 @@ import school.sptech.backend.service.produtounitario.dto.ProdutoUnitarioVencimen
 import school.sptech.backend.service.rota.RotaService;
 import school.sptech.backend.service.unidademedida.UnidadeMedidaService;
 
-import java.time.LocalDate;
 import java.util.List;
 
 @Service
 @RequiredArgsConstructor
-public class ProdutoUnitarioService {
+public class ProdutoUnitarioService implements BaseService<ProdutoUnitario, Integer>{
 
     private final ProdutoUnitarioRepository repository;
 
@@ -32,14 +31,13 @@ public class ProdutoUnitarioService {
     private final RotaService rotaService;
     private final MetricaService metricaService;
 
-    public ProdutoUnitario criar(ProdutoUnitario novoProdutoUnitario, Integer origemId, Integer unidadeMedidaId, Integer cestaId, Integer produtoId, Integer rotaId, Integer metricaId){
-        novoProdutoUnitario.setOrigem(origemService.porId(origemId));
-        novoProdutoUnitario.setUnidadeMedida(unidadeMedidaService.porId(unidadeMedidaId));
-        novoProdutoUnitario.setCesta(cestaService.porId(cestaId));
-        novoProdutoUnitario.setProduto(produtoService.porId(produtoId));
-        novoProdutoUnitario.setRota(rotaService.porId(rotaId));
-        novoProdutoUnitario.setMetrica(metricaService.porId(metricaId));
-        novoProdutoUnitario.setDataCriacao(LocalDate.now());
+    public ProdutoUnitario criar(ProdutoUnitario novoProdutoUnitario){
+        novoProdutoUnitario.setOrigem(origemService.porId(novoProdutoUnitario.getOrigem().getId()));
+        novoProdutoUnitario.setUnidadeMedida(unidadeMedidaService.porId(novoProdutoUnitario.getUnidadeMedida().getId()));
+        novoProdutoUnitario.setCesta(cestaService.porId(novoProdutoUnitario.getCesta().getId()));
+        novoProdutoUnitario.setProduto(produtoService.porId(novoProdutoUnitario.getProduto().getId()));
+        novoProdutoUnitario.setRota(rotaService.porId(novoProdutoUnitario.getRota().getId()));
+        novoProdutoUnitario.setMetrica(metricaService.porId(novoProdutoUnitario.getMetrica().getId()));
         return repository.save(novoProdutoUnitario);
     }
 
@@ -55,7 +53,7 @@ public class ProdutoUnitarioService {
         return repository.findByNomeContainingIgnoreCase(nome);
     }
 
-    public ProdutoUnitario atualizar(ProdutoUnitario produtoUnitarioAtualizado, Integer id){
+    public ProdutoUnitario atualizar(Integer id, ProdutoUnitario produtoUnitarioAtualizado){
         if (!repository.existsById(id)){
             throw new NaoEncontradoException("ProdutoUnitario");
         }
@@ -63,11 +61,12 @@ public class ProdutoUnitarioService {
         return repository.save(produtoUnitarioAtualizado);
     }
 
-    public void deletar(int id){
+    public Void deletar(Integer id){
         if (!repository.existsById(id)){
             throw new NaoEncontradoException("ProdutoUnitario");
         }
         repository.deleteById(id);
+        return null;
     }
 
     public List<ProdutoUnitarioCountMesDto> qtdAtivosPorMes(boolean ativo){
@@ -80,4 +79,6 @@ public class ProdutoUnitarioService {
     public List<ProdutoUnitarioArrecadadoXVencidoDto> countAtivoByNome(){
         return repository.countAtivoByNome();
     }
+
+
 }

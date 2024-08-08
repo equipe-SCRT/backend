@@ -15,12 +15,12 @@ public class CampanhaCriacaoDto {
     private String nome;
     @NotBlank
     @Size(min = 2, max = 40)
-    private String local_campanha;
+    private String localCampanha;
     @PastOrPresent
-    private Date data_campanha;
+    private Date dataCampanha;
     @NotNull
     @Positive
-    private Integer qtd_arrecadada;
+    private Integer qtdArrecadada;
     @NotNull
     @Positive
     private Integer meta;

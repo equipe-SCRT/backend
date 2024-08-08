@@ -4,6 +4,7 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import school.sptech.backend.api.BaseController;
 import school.sptech.backend.domain.produto.Produto;
 import school.sptech.backend.service.produto.ProdutoService;
 import school.sptech.backend.service.produto.dto.ProdutoAtualizacaoDto;
@@ -17,7 +18,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/produtos")
 @RequiredArgsConstructor
-public class ProdutoController {
+public class ProdutoController implements BaseController<ProdutoCriacaoDto, ProdutoAtualizacaoDto, ProdutoListagemDto, Integer> {
 
     private final ProdutoService service;
 
@@ -26,7 +27,7 @@ public class ProdutoController {
     @PostMapping
     public ResponseEntity<ProdutoListagemDto> criar(@RequestBody @Valid ProdutoCriacaoDto novoProduto){
         Produto produtoCriado = mapper.toEntity(novoProduto);
-        Produto resposta = service.criar(produtoCriado, novoProduto.getTipoProdutoId(), novoProduto.getTipoUnidadeMedidaId());
+        Produto resposta = service.criar(produtoCriado);
         ProdutoListagemDto dto = mapper.toDto(resposta);
 
         URI uri = URI.create("/produtos/" + dto.getId());
@@ -68,9 +69,9 @@ public class ProdutoController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<ProdutoListagemDto> atualizar(@RequestBody @Valid ProdutoAtualizacaoDto produtoAtualizado, @PathVariable Integer id) {
-        Produto produto = mapper.atualizacaoDto(produtoAtualizado, id);
-        Produto resposta = service.atualizar(produto, produto.getId());
+    public ResponseEntity<ProdutoListagemDto> atualizar(@PathVariable Integer id, @RequestBody @Valid ProdutoAtualizacaoDto produtoAtualizado) {
+        Produto produto = mapper.atualizacaoDto(produtoAtualizado);
+        Produto resposta = service.atualizar(produto.getId(), produto);
         ProdutoListagemDto dto = mapper.toDto(resposta);
         return ResponseEntity.ok(dto);
     }

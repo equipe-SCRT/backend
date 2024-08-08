@@ -1,0 +1,14 @@
+package school.sptech.backend.service.produtocesta.dto;
+
+import org.mapstruct.Mapper;
+import school.sptech.backend.domain.produtocesta.ProdutoCesta;
+
+import java.util.List;
+
+@Mapper(componentModel = "spring")
+public interface ProdutoCestaMapper {
+
+    List<ProdutoCestaEntityDto> toDto(List<ProdutoCesta> produtoCestas);
+
+    ProdutoCestaEntityDto toDto(ProdutoCesta produtoCesta);
+}

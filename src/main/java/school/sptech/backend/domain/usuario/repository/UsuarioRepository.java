@@ -2,7 +2,7 @@ package school.sptech.backend.domain.usuario.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
-import school.sptech.backend.domain.usuario.entity.Usuario;
+import school.sptech.backend.domain.usuario.Usuario;
 
 import java.util.Optional;
 

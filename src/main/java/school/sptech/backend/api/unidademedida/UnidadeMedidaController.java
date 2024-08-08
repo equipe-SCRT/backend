@@ -4,6 +4,7 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import school.sptech.backend.api.BaseController;
 import school.sptech.backend.domain.unidademedida.UnidadeMedida;
 import school.sptech.backend.service.unidademedida.UnidadeMedidaService;
 import school.sptech.backend.service.unidademedida.dto.UnidadeMedidaAtualizacaoDto;
@@ -18,7 +19,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/unidades-medidas")
 @RequiredArgsConstructor
-public class UnidadeMedidaController {
+public class UnidadeMedidaController implements BaseController<UnidadeMedidaCriacaoDto, UnidadeMedidaAtualizacaoDto, UnidadeMedidaListagemDto, Integer> {
 
     private final UnidadeMedidaService service;
 
@@ -56,9 +57,9 @@ public class UnidadeMedidaController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<UnidadeMedidaListagemDto> atualizar(@RequestBody @Valid UnidadeMedidaAtualizacaoDto unidadeMedidaAtualizada, @PathVariable Integer id) {
-        UnidadeMedida unidadeMedida = mapper.atualizacaoDto(unidadeMedidaAtualizada, id);
-        UnidadeMedida resposta = service.atualizar(unidadeMedida, unidadeMedida.getId());
+    public ResponseEntity<UnidadeMedidaListagemDto> atualizar(@PathVariable Integer id, @Valid @RequestBody UnidadeMedidaAtualizacaoDto unidadeMedidaAtualizada) {
+        UnidadeMedida unidadeMedida = mapper.toEntity(unidadeMedidaAtualizada);
+        UnidadeMedida resposta = service.atualizar(unidadeMedida.getId(), unidadeMedida);
         UnidadeMedidaListagemDto dto = mapper.toDto(resposta);
         return ResponseEntity.ok(dto);
     }

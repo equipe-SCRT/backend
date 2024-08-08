@@ -4,6 +4,7 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import school.sptech.backend.api.BaseController;
 import school.sptech.backend.domain.condominio.Condominio;
 import school.sptech.backend.service.condominio.CondominioService;
 import school.sptech.backend.service.condominio.dto.CondominioAtualizacaoDto;
@@ -17,7 +18,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/condominios")
 @RequiredArgsConstructor
-public class CondominioController {
+public class CondominioController implements BaseController<CondominioCriacaoDto,CondominioAtualizacaoDto,CondominioListagemDto,Integer> {
 
     private final CondominioService service;
     private final CondominioMapper mapper;
@@ -25,7 +26,7 @@ public class CondominioController {
     @PostMapping
     public ResponseEntity<CondominioListagemDto> criar(@RequestBody @Valid CondominioCriacaoDto dto) {
         Condominio condominioCriado = mapper.toEntity(dto);
-        Condominio resposta = this.service.criar(condominioCriado, dto.getId());
+        Condominio resposta = this.service.criar(condominioCriado);
         URI uri = URI.create("/condominios/" + resposta.getId());
         return ResponseEntity.created(uri).body(mapper.toDto(resposta));
     }
@@ -37,7 +38,7 @@ public class CondominioController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<CondominioListagemDto> porId(@PathVariable int id) {
+    public ResponseEntity<CondominioListagemDto> porId(@PathVariable Integer id) {
         Condominio entity = this.service.porId(id);
         return ResponseEntity.ok().body(mapper.toDto(entity));
     }
@@ -49,15 +50,15 @@ public class CondominioController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<CondominioListagemDto> atualizar(@RequestBody @Valid CondominioAtualizacaoDto condominioAtualizado, @PathVariable int id) {
-        Condominio entity = mapper.atualizacaoDto(condominioAtualizado, id);
-        CondominioListagemDto dto = mapper.toDto(this.service.atualizar(entity, entity.getId()));
+    public ResponseEntity<CondominioListagemDto> atualizar(@PathVariable Integer id, @RequestBody @Valid CondominioAtualizacaoDto condominioAtualizado) {
+        Condominio entity = mapper.toEntity(condominioAtualizado);
+        CondominioListagemDto dto = mapper.toDto(this.service.atualizar(entity.getId(), entity));
         return ResponseEntity.ok().body(dto);
 
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deletar(@PathVariable int id) {
+    public ResponseEntity<Void> deletar(@PathVariable Integer id) {
         this.service.deletar(id);
         return ResponseEntity.noContent().build();
     }

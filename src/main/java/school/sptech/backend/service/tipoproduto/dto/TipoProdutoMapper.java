@@ -15,5 +15,5 @@ public interface TipoProdutoMapper {
 
     List<TipoProdutoListagemDto> toDto(List<TipoProduto> entities);
 
-    TipoProduto atualizacaoDto(TipoProdutoAtualizacaoDto dto, Integer id);
+    TipoProduto toEntity(TipoProdutoAtualizacaoDto dto);
 }

@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import school.sptech.backend.api.BaseController;
 import school.sptech.backend.domain.endereco.Endereco;
 import school.sptech.backend.service.endereco.EnderecoService;
 import school.sptech.backend.service.endereco.dto.EnderecoAtualizacaoDto;
@@ -18,12 +19,12 @@ import java.util.List;
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/enderecos")
-public class EnderecoController {
+public class EnderecoController implements BaseController<EnderecoCriacaoDto, EnderecoAtualizacaoDto,EnderecoListagemDto,Integer> {
     private final EnderecoService service;
     private final EnderecoMapper mapper;
 
     @PostMapping
-    public ResponseEntity<EnderecoListagemDto> salvar(@RequestBody EnderecoCriacaoDto dto)  {
+    public ResponseEntity<EnderecoListagemDto> criar(@RequestBody EnderecoCriacaoDto dto)  {
         Endereco criar = service.criar(mapper.toEntity(dto));
         URI uri = URI.create("/enderecos/"+criar.getId());
         return ResponseEntity.created(uri).body(mapper.toDto(criar));
@@ -50,7 +51,7 @@ public class EnderecoController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<EnderecoListagemDto> deletar(@PathVariable Integer id){
+    public ResponseEntity<Void> deletar(@PathVariable Integer id){
         service.deletar(id);
         return ResponseEntity.noContent().build();
     }

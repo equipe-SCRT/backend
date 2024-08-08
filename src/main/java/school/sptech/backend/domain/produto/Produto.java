@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import school.sptech.backend.domain.Timestamped;
 import school.sptech.backend.domain.tipoproduto.TipoProduto;
 import school.sptech.backend.domain.unidademedida.UnidadeMedida;
 
@@ -13,7 +14,7 @@ import school.sptech.backend.domain.unidademedida.UnidadeMedida;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class Produto {
+public class Produto extends Timestamped {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;

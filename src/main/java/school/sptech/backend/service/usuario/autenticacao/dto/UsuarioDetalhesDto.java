@@ -2,7 +2,7 @@ package school.sptech.backend.service.usuario.autenticacao.dto;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-import school.sptech.backend.domain.usuario.entity.Usuario;
+import school.sptech.backend.domain.usuario.Usuario;
 
 import java.util.Collection;
 

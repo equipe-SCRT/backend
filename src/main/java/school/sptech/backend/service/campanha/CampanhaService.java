@@ -8,6 +8,7 @@ import org.springframework.web.server.ResponseStatusException;
 import school.sptech.backend.domain.campanha.Campanha;
 import school.sptech.backend.domain.campanha.repository.CampanhaRepository;
 import school.sptech.backend.domain.produto.Produto;
+import school.sptech.backend.service.BaseService;
 import school.sptech.backend.service.campanha.dto.CampanhaAtualizacaoDto;
 import school.sptech.backend.service.campanha.dto.CampanhaCriacaoDto;
 import school.sptech.backend.service.campanha.dto.CampanhaListagemDto;
@@ -22,7 +23,7 @@ import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
-public class CampanhaService {
+public class CampanhaService implements BaseService<Campanha, Integer> {
 
 
     private final CampanhaRepository campanhaRepository;
@@ -41,7 +42,7 @@ public class CampanhaService {
         return campanhas;
     }
 
-    public Campanha atualizar(Campanha campanhaAtualizacao, int id){
+    public Campanha atualizar(Integer id,Campanha campanhaAtualizacao){
 
         this.campanhaRepository.findById(id).orElseThrow(
                 () -> new ResponseStatusException(HttpStatus.NOT_FOUND)
@@ -49,17 +50,18 @@ public class CampanhaService {
         campanhaAtualizacao.setId(id);
         return this.campanhaRepository.save(campanhaAtualizacao);
     }
-    public Campanha porId(int id){
+    public Campanha porId(Integer id){
 
         return this.campanhaRepository.findById(id).orElseThrow(
                 () -> new ResponseStatusException(HttpStatus.NOT_FOUND)
         );
     }
 
-    public void deletar(int id){
+    public Void deletar(Integer id){
         this.campanhaRepository.findById(id).orElseThrow(
                 () -> new ResponseStatusException(HttpStatus.NOT_FOUND)
         );
         this.campanhaRepository.deleteById(id);
+        return null;
     }
 }

@@ -5,12 +5,13 @@ import java.time.LocalDate;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
-import school.sptech.backend.domain.usuario.entity.Usuario;
+import school.sptech.backend.domain.Timestamped;
+import school.sptech.backend.domain.usuario.Usuario;
 
 @Entity
 @Getter
 @Setter
-public class HistoricoMudanca {
+public class HistoricoMudanca extends Timestamped {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

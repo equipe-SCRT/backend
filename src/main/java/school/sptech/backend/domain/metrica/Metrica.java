@@ -1,34 +1,21 @@
 package school.sptech.backend.domain.metrica;
 
-import java.time.LocalDate;
-
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotNull;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
-import school.sptech.backend.domain.usuario.entity.Usuario;
+import school.sptech.backend.domain.Timestamped;
+import school.sptech.backend.domain.usuario.Usuario;
 
 @Entity
 @Getter
 @Setter
-@NoArgsConstructor
-@AllArgsConstructor
-public class Metrica {
-
-
+public class Metrica extends Timestamped {
     @Id
     @GeneratedValue(strategy =  GenerationType.IDENTITY)
-    private int id;
-    private LocalDate alteracao;
+    private Integer id;
     @ManyToOne
-    @JoinColumn(name = "fk_usuario")
     private Usuario usuario;
 
 
-    public Metrica(LocalDate alteracao, Usuario usuario) {
-        this.alteracao = alteracao;
-        this.usuario = usuario;
-    }
+
 }

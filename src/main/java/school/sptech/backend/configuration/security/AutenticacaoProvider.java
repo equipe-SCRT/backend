@@ -1,4 +1,4 @@
-package school.sptech.backend.api.configuration.security;
+package school.sptech.backend.configuration.security;
 
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.BadCredentialsException;

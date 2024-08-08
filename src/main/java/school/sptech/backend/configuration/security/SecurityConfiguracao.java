@@ -1,4 +1,4 @@
-package school.sptech.backend.api.configuration.security;
+package school.sptech.backend.configuration.security;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -23,7 +23,7 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
-import school.sptech.backend.api.configuration.security.jwt.GerenciadorTokenJwt;
+import school.sptech.backend.configuration.security.jwt.GerenciadorTokenJwt;
 import school.sptech.backend.service.usuario.autenticacao.AutenticacaoService;
 
 import java.util.Arrays;

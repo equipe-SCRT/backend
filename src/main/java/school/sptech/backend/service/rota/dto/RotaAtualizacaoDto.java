@@ -5,6 +5,7 @@ import lombok.Data;
 
 import java.sql.Time;
 import java.time.LocalDate;
+import java.time.LocalTime;
 
 @Data
 public class RotaAtualizacaoDto {
@@ -13,11 +14,11 @@ public class RotaAtualizacaoDto {
     @Size(min = 5, max = 50)
     private String nome;
     @Size(min = 5, max = 10)
-    private String km_rodados;
+    private String kmRodados;
     @PositiveOrZero
-    private Integer qtd_colaboradores;
+    private Integer qtdColaboradores;
     @PastOrPresent
-    private LocalDate data_historico;
-    private Time hora_inicio;
-    private Time hora_fim;
+    private LocalDate dataHistorico;
+    private Time horaInicio;
+    private Time horaFim;
 }

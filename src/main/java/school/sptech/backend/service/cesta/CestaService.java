@@ -7,6 +7,7 @@ import school.sptech.backend.domain.cesta.repository.CestaRepository;
 import school.sptech.backend.domain.tipocesta.TipoCesta;
 import school.sptech.backend.domain.tipocesta.repository.TipoCestaRepository;
 import school.sptech.backend.exception.NaoEncontradoException;
+import school.sptech.backend.service.BaseService;
 import school.sptech.backend.service.cesta.dto.CestaMapper;
 import school.sptech.backend.service.tipocesta.TipoCestaService;
 
@@ -15,7 +16,7 @@ import java.util.List;
 
 @Service
 @RequiredArgsConstructor
-public class CestaService {
+public class CestaService implements BaseService<Cesta, Integer> {
     private final CestaRepository cestaRepository;
     private final TipoCestaService tipoCestaService;
 
@@ -29,9 +30,8 @@ public class CestaService {
         return cestaRepository.findAll();
     }
 
-    public Cesta salvar(Cesta cesta, Integer tipoCestaId){
-        TipoCesta tipoCesta = tipoCestaService.porId(tipoCestaId);
-        cesta.setTipoCesta(tipoCesta);
+    public Cesta criar(Cesta cesta){
+        cesta.setTipoCesta(tipoCestaService.porId(cesta.getTipoCesta().getId()));
         return cestaRepository.save(cesta);
     }
 
@@ -41,8 +41,9 @@ public class CestaService {
         return cestaRepository.save(novo);
     }
 
-    public void deletar(Integer id){
+    public Void deletar(Integer id){
         cestaRepository.delete(porId(id));
+        return null;
     }
 
     public Integer qtdMesAtual(){

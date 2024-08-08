@@ -1,4 +1,4 @@
-package school.sptech.backend.api.configuration.security;
+package school.sptech.backend.configuration.security;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;

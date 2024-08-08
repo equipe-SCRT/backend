@@ -5,12 +5,13 @@ import org.springframework.stereotype.Service;
 import school.sptech.backend.domain.unidademedida.UnidadeMedida;
 import school.sptech.backend.domain.unidademedida.repository.UnidadeMedidaRepository;
 import school.sptech.backend.exception.NaoEncontradoException;
+import school.sptech.backend.service.BaseService;
 
 import java.util.List;
 
 @Service
 @RequiredArgsConstructor
-public class UnidadeMedidaService {
+public class UnidadeMedidaService implements BaseService<UnidadeMedida, Integer> {
 
     private final UnidadeMedidaRepository repository;
 
@@ -26,7 +27,7 @@ public class UnidadeMedidaService {
         return repository.findById(id).orElseThrow(()-> new NaoEncontradoException("Unidade de Medida"));
     }
 
-    public UnidadeMedida atualizar(UnidadeMedida produtoAtualizado, Integer id){
+    public UnidadeMedida atualizar(Integer id, UnidadeMedida produtoAtualizado){
         if (!repository.existsById(id)){
             throw new NaoEncontradoException("Unidade de Medida");
         }
@@ -34,10 +35,11 @@ public class UnidadeMedidaService {
         return repository.save(produtoAtualizado);
     }
 
-    public void deletar(Integer id){
+    public Void deletar(Integer id){
         if (!repository.existsById(id)){
             throw new NaoEncontradoException("Unidade de Medida");
         }
         repository.deleteById(id);
+        return null;
     }
 }

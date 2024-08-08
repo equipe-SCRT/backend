@@ -11,10 +11,9 @@ public interface RotaMapper {
 
     RotaListagemDto toDto(Rota entity);
 
-    @InheritInverseConfiguration
     Rota toEntity(RotaCriacaoDto dto);
 
     List<RotaListagemDto> toDto(List<Rota> entities);
 
-    Rota atualizacaoDto(RotaAtualizacaoDto dto, int id);
+    Rota toEntity(RotaAtualizacaoDto dto);
 }

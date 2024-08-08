@@ -2,23 +2,30 @@ package school.sptech.backend.service.metrica.dto;
 
 import java.util.List;
 
-import org.mapstruct.InheritInverseConfiguration;
 import org.mapstruct.Mapper;
-
+import org.mapstruct.Mapping;
+import org.mapstruct.Named;
 import school.sptech.backend.domain.metrica.Metrica;
+import school.sptech.backend.domain.usuario.Usuario;
 
 @Mapper(componentModel = "spring")
 public interface MetricaMapper {
-  //  MetricaMapper INSTANCE = Mappers.getMapper(MetricaMapper.class);
-
 
     MetricaListagemDto toDto(Metrica entity);
-  
     List<MetricaListagemDto> toDto(List<Metrica> entities);
 
-    @InheritInverseConfiguration
+    @Mapping(target = "usuario", source = "fkUsuario", qualifiedByName = "usuarioFromId")
     Metrica toEntity(MetricaCriacaoDto dto);
+    @Mapping(target = "usuario", source = "fkUsuario", qualifiedByName = "usuarioFromId")
+    Metrica toEntity(MetricaAtualizacaoDto dto);
 
-    Metrica toEntity(MetricaAtualizacaoDto dto, Integer id);
-
+    @Named("usuarioFromId")
+    default Usuario usuarioFromId(Long id) {
+        if (id == null) {
+            return null;
+        }
+        Usuario usuario = new Usuario();
+        usuario.setIdUsuario(id);
+        return usuario;
+    }
 }

@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import school.sptech.backend.domain.Timestamped;
 import school.sptech.backend.domain.campanha.Campanha;
 import school.sptech.backend.domain.condominio.Condominio;
 
@@ -15,7 +16,7 @@ import java.util.Date;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class Origem {
+public class Origem extends Timestamped {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

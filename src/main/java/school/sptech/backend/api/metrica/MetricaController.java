@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import school.sptech.backend.api.BaseController;
 import school.sptech.backend.domain.historicomudanca.HistoricoMudanca;
 import school.sptech.backend.domain.metrica.Metrica;
 
@@ -25,7 +26,7 @@ import  school.sptech.backend.service.usuario.UsuarioService;
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/metricas")
-public class MetricaController {
+public class MetricaController implements BaseController<MetricaCriacaoDto, MetricaAtualizacaoDto, MetricaListagemDto, Integer> {
 
     private final MetricaService service;
     private final MetricaMapper mapper;
@@ -34,8 +35,7 @@ public class MetricaController {
     @PostMapping
     public ResponseEntity<MetricaListagemDto> criar(@RequestBody @Valid MetricaCriacaoDto metrica) {
         Metrica novaMetrica = mapper.toEntity(metrica);
-        novaMetrica.setUsuario(userService.porId(metrica.getFkUsuario()));
-        service.criar(novaMetrica, metrica.getFkUsuario());
+        service.criar(novaMetrica);
         URI uri = URI.create("/metricas/" + novaMetrica.getId());
         return ResponseEntity.created(uri).body(mapper.toDto(novaMetrica));
     }
@@ -51,19 +51,18 @@ public class MetricaController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<MetricaListagemDto> porId(@PathVariable int id) {
+    public ResponseEntity<MetricaListagemDto> porId(@PathVariable Integer id) {
         Metrica dto = service.porId(id);
         MetricaListagemDto consultaMetrica = mapper.toDto(dto);
         return ResponseEntity.ok().body(consultaMetrica);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<MetricaListagemDto> atualizar(@RequestBody @Valid MetricaAtualizacaoDto metricaAtualizacao, @PathVariable int id) {
+    public ResponseEntity<MetricaListagemDto> atualizar(@PathVariable Integer id, @RequestBody @Valid MetricaAtualizacaoDto metricaAtualizacao) {
         Metrica metrica = new Metrica();
         metrica.setId(id);
-        metrica.setAlteracao(metricaAtualizacao.getAlteracao());
         metrica.setUsuario(userService.porId(metricaAtualizacao.getFkUsuario()));
-        Metrica resposta = service.atualizar(metrica);
+        Metrica resposta = service.atualizar(metrica.getId(), metrica);
         MetricaListagemDto listagemDto = mapper.toDto(resposta);
 
         return ResponseEntity.ok().body(listagemDto);
@@ -71,7 +70,7 @@ public class MetricaController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deletar(@PathVariable int id) {
+    public ResponseEntity<Void> deletar(@PathVariable Integer id) {
         service.deletar(id);
         return ResponseEntity.noContent().build();
 

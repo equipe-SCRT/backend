@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import school.sptech.backend.domain.Timestamped;
 import school.sptech.backend.domain.cesta.Cesta;
 import school.sptech.backend.domain.metrica.Metrica;
 import school.sptech.backend.domain.origem.Origem;
@@ -19,7 +20,7 @@ import java.time.LocalDate;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class ProdutoUnitario {
+public class ProdutoUnitario extends Timestamped {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;

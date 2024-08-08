@@ -5,12 +5,13 @@ import org.springframework.stereotype.Service;
 import school.sptech.backend.domain.rota.Rota;
 import school.sptech.backend.domain.rota.repository.RotaRepository;
 import school.sptech.backend.exception.NaoEncontradoException;
+import school.sptech.backend.service.BaseService;
 
 import java.util.List;
 
 @Service
 @RequiredArgsConstructor
-public class RotaService {
+public class RotaService implements BaseService<Rota, Integer> {
 
     private final RotaRepository repository;
 
@@ -22,7 +23,7 @@ public class RotaService {
         return this.repository.findAll();
     }
 
-    public Rota porId(int id) {
+    public Rota porId(Integer id) {
         return this.repository.findById(id).orElseThrow(
                 () -> new NaoEncontradoException("Rota")
         );
@@ -34,7 +35,7 @@ public class RotaService {
         );
     }
 
-    public Rota atualizar(Rota rotaAtualizada, int id) {
+    public Rota atualizar(Integer id, Rota rotaAtualizada) {
         if (!this.repository.existsById(id)) {
             throw new NaoEncontradoException("Rota");
         }
@@ -43,11 +44,12 @@ public class RotaService {
         return this.repository.save(rotaAtualizada);
     }
 
-    public void deletar(int id) {
+    public Void deletar(Integer id) {
         if (!this.repository.existsById(id)) {
             throw new NaoEncontradoException("Rota");
         }
 
         this.repository.deleteById(id);
+        return null;
     }
 }

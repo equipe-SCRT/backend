@@ -1,9 +1,9 @@
-package school.sptech.backend.domain.usuario.mapper;
+package school.sptech.backend.service.usuario.dto;
 
 import school.sptech.backend.service.usuario.autenticacao.dto.UsuarioTokenDto;
 import school.sptech.backend.service.usuario.dto.UsuarioConsultaDtoJwt;
 import school.sptech.backend.service.usuario.dto.UsuarioCriacaoDtoJwt;
-import school.sptech.backend.domain.usuario.entity.Usuario;
+import school.sptech.backend.domain.usuario.Usuario;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -3,7 +3,6 @@ package school.sptech.backend.service.historicomudanca.dto;
 import java.time.LocalDate;
 
 import lombok.Data;
-import school.sptech.backend.domain.usuario.entity.Usuario;
 
 
 @Data
