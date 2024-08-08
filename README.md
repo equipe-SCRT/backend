@@ -34,3 +34,28 @@ O padrão **Adapter** é utilizado para permitir a colaboração entre objetos c
 - **Restful**: Estilo de arquitetura para sistemas distribuídos baseados em HTTP.
 - **Java**: Linguagem de programação utilizada para o desenvolvimento do backend.
 - **SQL Server e MySQL**: Sistemas de gerenciamento de banco de dados utilizados para armazenar e gerenciar os dados da aplicação.
+
+## ✔ Versão e dependências
+
+Versão do Java (Maven) → 17 <br>
+
+dependências: <br>
+
+Spring Boot Framework -> 3.2.4 <br>
+Spring Security Test -> 3.2.4 <br>
+Spring Boot Starter Security -> 3.2.4 <br>
+JJWT :: API -> 0.11.5 <br>
+JJWT :: Impl -> 0.11.2 <br>
+JJWT :: Extensions :: Jackson -> 0.11.1 <br>
+Spring Boot Starter Actuator -> 3.0.5 <br>
+Spring Boot Starter Validation -> 3.2.4 <br>
+Spring Boot Starter Data JPA -> 3.2.4 <br>
+Spring Boot Starter Web -> 3.2.4 <br>
+Spring Boot Starter Test -> 3.2.4 <br>
+Spring Boot Maven Plugin -> 3.2.4 <br>
+MySQL Connector/J -> 8.3.0 <br>
+SpringDoc OpenAPI Starter WebMVC UI -> 2.4.0 <br>
+Project Lombok -> 1.18.30 <br>
+MapStruct Core -> 1.6.0.Beta2 <br>
+MapStruct Processor -> 1.6.0.Beta2 <br>
+Apache Commons CSV -> 1.8 <br>
