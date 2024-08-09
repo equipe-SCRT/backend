@@ -5,6 +5,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import jakarta.validation.Valid;
+import school.sptech.backend.api.BaseController;
 import school.sptech.backend.domain.cesta.Cesta;
 import school.sptech.backend.service.cesta.CestaService;
 import school.sptech.backend.service.cesta.dto.*;
@@ -15,7 +16,7 @@ import java.util.List;
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/cestas")
-public class CestaController {
+public class CestaController implements BaseController<CestaCriacaoDto, CestaAtualizacaoDto, CestaListagemDto, Integer> {
     private final CestaService cestaService;
     private final CestaMapper cestaMapper;
 
@@ -27,8 +28,8 @@ public class CestaController {
     }
 
     @PostMapping
-    public ResponseEntity<CestaListagemDto> cadastrar(@Valid @RequestBody CestaCriacaoDto cesta){
-        Cesta salvar = cestaService.salvar(cestaMapper.toEntity(cesta), cesta.getId());
+    public ResponseEntity<CestaListagemDto> criar(@Valid @RequestBody CestaCriacaoDto cesta){
+        Cesta salvar = cestaService.criar(cestaMapper.toEntity(cesta));
         URI uri = URI.create("/cestas/" + salvar.getId());
         return ResponseEntity.created(uri).body(cestaMapper.toDto(salvar));
     }
@@ -46,7 +47,7 @@ public class CestaController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<CestaListagemDto> deletar(@PathVariable Integer id){
+    public ResponseEntity<Void> deletar(@PathVariable Integer id){
         cestaService.deletar(id);
         return ResponseEntity.noContent().build();
     }

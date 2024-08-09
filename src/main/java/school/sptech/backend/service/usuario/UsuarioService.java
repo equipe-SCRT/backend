@@ -8,18 +8,17 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
-import school.sptech.backend.api.configuration.security.jwt.GerenciadorTokenJwt;
+import school.sptech.backend.configuration.security.jwt.GerenciadorTokenJwt;
 import school.sptech.backend.exception.NaoEncontradoException;
 import school.sptech.backend.service.usuario.autenticacao.dto.UsuarioLoginDto;
 import school.sptech.backend.service.usuario.autenticacao.dto.UsuarioTokenDto;
 import school.sptech.backend.service.usuario.dto.UsuarioConsultaDtoJwt;
 import school.sptech.backend.service.usuario.dto.UsuarioCriacaoDtoJwt;
-import school.sptech.backend.domain.usuario.entity.Usuario;
-import school.sptech.backend.domain.usuario.mapper.UsuarioMapper;
+import school.sptech.backend.domain.usuario.Usuario;
+import school.sptech.backend.service.usuario.dto.UsuarioMapper;
 import school.sptech.backend.domain.usuario.repository.UsuarioRepository;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class UsuarioService {

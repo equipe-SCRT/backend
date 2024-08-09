@@ -5,12 +5,13 @@ import org.springframework.stereotype.Service;
 import school.sptech.backend.domain.tipocesta.TipoCesta;
 import school.sptech.backend.domain.tipocesta.repository.TipoCestaRepository;
 import school.sptech.backend.exception.NaoEncontradoException;
+import school.sptech.backend.service.BaseService;
 
 import java.util.List;
 
 @Service
 @RequiredArgsConstructor
-public class TipoCestaService {
+public class TipoCestaService implements BaseService<TipoCesta, Integer> {
     private final TipoCestaRepository tipoCestaRepository;
     public TipoCesta porId(Integer id){
         return tipoCestaRepository.findById(id).orElseThrow(
@@ -21,7 +22,7 @@ public class TipoCestaService {
         return tipoCestaRepository.findAll();
     }
 
-    public TipoCesta cadastrar(TipoCesta tipoCesta){
+    public TipoCesta criar(TipoCesta tipoCesta){
         return tipoCestaRepository.save(tipoCesta);
     }
 
@@ -31,7 +32,8 @@ public class TipoCestaService {
         return tipoCestaRepository.save(novo);
     }
 
-    public void deletar(Integer id){
+    public Void deletar(Integer id){
         tipoCestaRepository.delete(porId(id));
+        return null;
     }
 }

@@ -4,6 +4,7 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import school.sptech.backend.api.BaseController;
 import school.sptech.backend.domain.tipoproduto.TipoProduto;
 import school.sptech.backend.service.tipoproduto.TipoProdutoService;
 import school.sptech.backend.service.tipoproduto.dto.TipoProdutoAtualizacaoDto;
@@ -17,7 +18,7 @@ import java.util.List;
 @RestController
 @RequestMapping("tipos-produtos")
 @RequiredArgsConstructor
-public class TipoProdutoController {
+public class TipoProdutoController implements BaseController<TipoProdutoCriacaoDto, TipoProdutoAtualizacaoDto, TipoProdutoListagemDto, Integer> {
 
 
     private final TipoProdutoService service;
@@ -56,9 +57,9 @@ public class TipoProdutoController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<TipoProdutoListagemDto> atualizar(@RequestBody @Valid TipoProdutoAtualizacaoDto tipoProdutoAtualizado, @PathVariable Integer id) {
-        TipoProduto tipoProduto = mapper.atualizacaoDto(tipoProdutoAtualizado, id);
-        TipoProduto resposta = service.atualizar(tipoProduto, tipoProduto.getId());
+    public ResponseEntity<TipoProdutoListagemDto> atualizar(@PathVariable Integer id,@Valid @RequestBody TipoProdutoAtualizacaoDto tipoProdutoAtualizado) {
+        TipoProduto tipoProduto = mapper.toEntity(tipoProdutoAtualizado);
+        TipoProduto resposta = service.atualizar(tipoProduto.getId(), tipoProduto);
         TipoProdutoListagemDto dto = mapper.toDto(resposta);
         return ResponseEntity.ok(dto);
     }

@@ -16,5 +16,5 @@ public interface UnidadeMedidaMapper {
 
     List<UnidadeMedidaListagemDto> toDto(List<UnidadeMedida> entities);
 
-    UnidadeMedida atualizacaoDto(UnidadeMedidaAtualizacaoDto dto, Integer id);
+    UnidadeMedida toEntity(UnidadeMedidaAtualizacaoDto dto);
 }

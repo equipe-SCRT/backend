@@ -6,12 +6,13 @@ import school.sptech.backend.domain.produto.Produto;
 import school.sptech.backend.domain.tipoproduto.TipoProduto;
 import school.sptech.backend.domain.tipoproduto.repository.TipoProdutoRepository;
 import school.sptech.backend.exception.NaoEncontradoException;
+import school.sptech.backend.service.BaseService;
 
 import java.util.List;
 
 @Service
 @RequiredArgsConstructor
-public class TipoProdutoService {
+public class TipoProdutoService implements BaseService<TipoProduto, Integer> {
 
     private final TipoProdutoRepository repository;
 
@@ -28,7 +29,7 @@ public class TipoProdutoService {
         return repository.findAll();
     }
 
-    public TipoProduto atualizar(TipoProduto tipoProdutoAtualizado, Integer id){
+    public TipoProduto atualizar(Integer id, TipoProduto tipoProdutoAtualizado){
         if (!repository.existsById(id)){
             throw new NaoEncontradoException("Tipo Produto");
         }
@@ -36,10 +37,12 @@ public class TipoProdutoService {
         return repository.save(tipoProdutoAtualizado);
     }
 
-    public void deletar(Integer id){
+    public Void deletar(Integer id){
         if (!repository.existsById(id)){
             throw new NaoEncontradoException("Tipo Produto");
         }
+
         repository.deleteById(id);
+        return null;
     }
 }

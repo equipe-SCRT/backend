@@ -5,6 +5,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import jakarta.validation.Valid;
+import school.sptech.backend.api.BaseController;
 import school.sptech.backend.domain.tipocesta.TipoCesta;
 import school.sptech.backend.service.tipocesta.TipoCestaService;
 import school.sptech.backend.service.tipocesta.dto.TipoCestaAtualizacaoDto;
@@ -18,12 +19,12 @@ import java.util.List;
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/tipos-cestas")
-public class TipoCestaController {
+public class TipoCestaController implements BaseController<TipoCestaCriacaoDto, TipoCestaAtualizacaoDto, TipoCestaListagemDto, Integer> {
     private final TipoCestaService tipoCestaService;
     private final TipoCestaMapper tipoCestaMapper;
     @PostMapping
-    public ResponseEntity<TipoCestaListagemDto> cadastrar(@Valid @RequestBody TipoCestaCriacaoDto tipoCesta){
-        TipoCestaListagemDto salvo = tipoCestaMapper.toDto(tipoCestaService.cadastrar(tipoCestaMapper.toEntity(tipoCesta)));
+    public ResponseEntity<TipoCestaListagemDto> criar(@Valid @RequestBody TipoCestaCriacaoDto tipoCesta){
+        TipoCestaListagemDto salvo = tipoCestaMapper.toDto(tipoCestaService.criar(tipoCestaMapper.toEntity(tipoCesta)));
         URI uri = URI.create("/tipos-cestas/" + salvo.getId());
         return ResponseEntity.created(uri).body(salvo);
     }
@@ -50,7 +51,7 @@ public class TipoCestaController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<TipoCestaListagemDto> deletar(@PathVariable Integer id){
+    public ResponseEntity<Void> deletar(@PathVariable Integer id){
         tipoCestaService.deletar(id);
         return ResponseEntity.noContent().build();
     }

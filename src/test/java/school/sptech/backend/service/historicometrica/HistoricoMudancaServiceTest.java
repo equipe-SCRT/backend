@@ -7,11 +7,9 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
-import org.hibernate.type.descriptor.java.LocalDateJavaType;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -21,7 +19,7 @@ import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 import school.sptech.backend.domain.historicomudanca.HistoricoMudanca;
 import school.sptech.backend.domain.historicomudanca.repository.HistoricoMudancaRepository;
-import school.sptech.backend.domain.usuario.entity.Usuario;
+import school.sptech.backend.domain.usuario.Usuario;
 import school.sptech.backend.exception.NaoEncontradoException;
 import school.sptech.backend.service.historicomudanca.HistoricoMudancaService;
 

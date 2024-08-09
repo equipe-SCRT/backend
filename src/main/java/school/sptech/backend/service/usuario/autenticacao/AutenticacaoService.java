@@ -5,7 +5,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
-import school.sptech.backend.domain.usuario.entity.Usuario;
+import school.sptech.backend.domain.usuario.Usuario;
 import school.sptech.backend.domain.usuario.repository.UsuarioRepository;
 import school.sptech.backend.service.usuario.autenticacao.dto.UsuarioDetalhesDto;
 

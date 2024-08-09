@@ -4,6 +4,7 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import school.sptech.backend.api.BaseController;
 import school.sptech.backend.domain.produtounitario.ProdutoUnitario;
 import school.sptech.backend.service.produtounitario.ProdutoUnitarioService;
 import school.sptech.backend.service.produtounitario.dto.*;
@@ -15,7 +16,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/produtos-unitario")
 @RequiredArgsConstructor
-public class ProdutoUnitarioController {
+public class ProdutoUnitarioController implements BaseController<ProdutoUnitarioCriacaoDto, ProdutoUnitarioAtualizacaoDto, ProdutoUnitarioListagemDto, Integer> {
 
     private final ProdutoUnitarioService service;
 
@@ -24,7 +25,7 @@ public class ProdutoUnitarioController {
     @PostMapping
     public ResponseEntity<ProdutoUnitarioListagemDto> criar(@RequestBody @Valid ProdutoUnitarioCriacaoDto novoProdutoUnitario){
         ProdutoUnitario produtoUnitarioCriado = mapper.toEntity(novoProdutoUnitario);
-        ProdutoUnitario resposta = service.criar(produtoUnitarioCriado, novoProdutoUnitario.getOrigemId(), novoProdutoUnitario.getUnidadeMedidaId(), novoProdutoUnitario.getCestaId(), novoProdutoUnitario.getProdutoId(), novoProdutoUnitario.getRotaId(), novoProdutoUnitario.getMetricaId());
+        ProdutoUnitario resposta = service.criar(produtoUnitarioCriado);
         ProdutoUnitarioListagemDto dto = mapper.toDto(resposta);
 
         URI uri = URI.create("/produtos-unitario/" + dto.getId());
@@ -66,9 +67,9 @@ public class ProdutoUnitarioController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<ProdutoUnitarioListagemDto> atualizar(@RequestBody @Valid ProdutoUnitarioAtualizacaoDto produtoUnitarioAtualizado, @PathVariable Integer id) {
-        ProdutoUnitario produtoUnitario = mapper.atualizacaoDto(produtoUnitarioAtualizado, id);
-        ProdutoUnitario resposta = service.atualizar(produtoUnitario, produtoUnitario.getId());
+    public ResponseEntity<ProdutoUnitarioListagemDto> atualizar(@PathVariable Integer id, @RequestBody @Valid ProdutoUnitarioAtualizacaoDto produtoUnitarioAtualizado) {
+        ProdutoUnitario produtoUnitario = mapper.atualizacaoDto(produtoUnitarioAtualizado);
+        ProdutoUnitario resposta = service.atualizar(produtoUnitario.getId(), produtoUnitario);
         ProdutoUnitarioListagemDto dto = mapper.toDto(resposta);
         return ResponseEntity.ok(dto);
     }

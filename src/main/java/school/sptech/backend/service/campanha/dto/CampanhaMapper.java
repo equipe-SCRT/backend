@@ -21,7 +21,6 @@ public interface CampanhaMapper {
 
     List<CampanhaListagemDto> toDto(List<Campanha> entities);
 
-    Campanha atualizacaoDto(CampanhaAtualizacaoDto dto, int id);
-
+    Campanha toEntity(CampanhaAtualizacaoDto dto);
 
 }

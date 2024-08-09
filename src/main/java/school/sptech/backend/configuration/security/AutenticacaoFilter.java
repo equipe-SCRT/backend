@@ -1,4 +1,4 @@
-package school.sptech.backend.api.configuration.security;
+package school.sptech.backend.configuration.security;
 
 import io.jsonwebtoken.ExpiredJwtException;
 import jakarta.servlet.FilterChain;
@@ -12,7 +12,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.web.filter.OncePerRequestFilter;
-import school.sptech.backend.api.configuration.security.jwt.GerenciadorTokenJwt;
+import school.sptech.backend.configuration.security.jwt.GerenciadorTokenJwt;
 import school.sptech.backend.service.usuario.autenticacao.AutenticacaoService;
 
 import java.io.IOException;

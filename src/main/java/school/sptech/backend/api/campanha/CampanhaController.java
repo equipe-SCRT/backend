@@ -5,6 +5,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import school.sptech.backend.api.BaseController;
 import school.sptech.backend.domain.campanha.Campanha;
 import school.sptech.backend.service.campanha.CampanhaService;
 import school.sptech.backend.service.campanha.dto.CampanhaAtualizacaoDto;
@@ -20,8 +21,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/campanhas")
 @RequiredArgsConstructor
-public class CampanhaController {
-
+public class CampanhaController implements BaseController<CampanhaCriacaoDto,CampanhaAtualizacaoDto, CampanhaListagemDto, Integer> {
 
     private final CampanhaService campanhaService;
     private final CampanhaMapper campanhaMapper;
@@ -40,20 +40,20 @@ public class CampanhaController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<CampanhaListagemDto> porId(@PathVariable int id){
+    public ResponseEntity<CampanhaListagemDto> porId(@PathVariable Integer id){
         Campanha entity = this.campanhaService.porId(id);
         return ResponseEntity.ok().body(campanhaMapper.toDto(entity));
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<CampanhaListagemDto> atualizar(@RequestBody @Valid CampanhaAtualizacaoDto campanhaAtualizado, @PathVariable int id) {
-        Campanha entity = campanhaMapper.atualizacaoDto(campanhaAtualizado, id);
-        CampanhaListagemDto dto = campanhaMapper.toDto(this.campanhaService.atualizar(entity, entity.getId()));
+    public ResponseEntity<CampanhaListagemDto> atualizar(@PathVariable Integer id, @RequestBody @Valid CampanhaAtualizacaoDto campanhaAtualizado) {
+        Campanha entity = campanhaMapper.toEntity(campanhaAtualizado);
+        CampanhaListagemDto dto = campanhaMapper.toDto(this.campanhaService.atualizar(entity.getId(), entity));
         return ResponseEntity.ok().body(dto);
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deletar(@PathVariable int id){
+    public ResponseEntity<Void> deletar(@PathVariable Integer id){
         this.campanhaService.deletar(id);
         return ResponseEntity.noContent().build();
     }

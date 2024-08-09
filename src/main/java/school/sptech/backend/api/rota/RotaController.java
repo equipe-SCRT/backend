@@ -4,6 +4,7 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import school.sptech.backend.api.BaseController;
 import school.sptech.backend.domain.rota.Rota;
 import school.sptech.backend.service.rota.RotaService;
 import school.sptech.backend.service.rota.dto.RotaAtualizacaoDto;
@@ -17,7 +18,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/rotas")
 @RequiredArgsConstructor
-public class RotaController {
+public class RotaController implements BaseController<RotaCriacaoDto, RotaAtualizacaoDto, RotaListagemDto, Integer> {
 
     private final RotaService service;
     private final RotaMapper mapper;
@@ -36,7 +37,7 @@ public class RotaController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<RotaListagemDto> porId(@PathVariable int id) {
+    public ResponseEntity<RotaListagemDto> porId(@PathVariable Integer id) {
         Rota entity = this.service.porId(id);
         return ResponseEntity.ok().body(mapper.toDto(entity));
     }
@@ -48,14 +49,14 @@ public class RotaController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<RotaListagemDto> atualizar(@RequestBody @Valid RotaAtualizacaoDto rotaAtualizada, @PathVariable int id) {
-        Rota entity = mapper.atualizacaoDto(rotaAtualizada, id);
-        RotaListagemDto dto = mapper.toDto(this.service.atualizar(entity, entity.getId()));
+    public ResponseEntity<RotaListagemDto> atualizar(@PathVariable Integer id, @Valid @RequestBody RotaAtualizacaoDto rotaAtualizada) {
+        Rota entity = mapper.toEntity(rotaAtualizada);
+        RotaListagemDto dto = mapper.toDto(this.service.atualizar(entity.getId(), entity));
         return ResponseEntity.ok().body(dto);
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deletar(@PathVariable int id) {
+    public ResponseEntity<Void> deletar(@PathVariable Integer id) {
         this.service.deletar(id);
         return ResponseEntity.noContent().build();
     }

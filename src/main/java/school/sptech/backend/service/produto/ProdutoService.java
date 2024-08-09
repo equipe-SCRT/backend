@@ -1,10 +1,13 @@
 package school.sptech.backend.service.produto;
 
+
 import lombok.RequiredArgsConstructor;
+
 import org.springframework.stereotype.Service;
 import school.sptech.backend.domain.produto.Produto;
 import school.sptech.backend.domain.produto.repository.ProdutoRepository;
 import school.sptech.backend.exception.NaoEncontradoException;
+import school.sptech.backend.service.BaseService;
 import school.sptech.backend.service.tipoproduto.TipoProdutoService;
 import school.sptech.backend.service.unidademedida.UnidadeMedidaService;
 
@@ -12,7 +15,7 @@ import java.util.List;
 
 @Service
 @RequiredArgsConstructor
-public class ProdutoService {
+public class ProdutoService implements BaseService<Produto, Integer> {
 
     private final ProdutoRepository repository;
 
@@ -20,9 +23,9 @@ public class ProdutoService {
 
     private final UnidadeMedidaService unidadeMedidaService;
 
-    public Produto criar(Produto novoProduto, Integer tipoProdutoId, Integer unidadeMedidaId){
-        novoProduto.setTipoProduto(tipoProdutoService.porId(tipoProdutoId));
-        novoProduto.setUnidadeMedida(unidadeMedidaService.porId(unidadeMedidaId));
+    public Produto criar(Produto novoProduto){
+        novoProduto.setTipoProduto(tipoProdutoService.porId(novoProduto.getTipoProduto().getId()));
+        novoProduto.setUnidadeMedida(unidadeMedidaService.porId(novoProduto.getUnidadeMedida().getId()));
         return repository.save(novoProduto);
     }
 
@@ -38,7 +41,7 @@ public class ProdutoService {
         return repository.findByNomeContainingIgnoreCase(nome);
     }
 
-    public Produto atualizar(Produto produtoAtualizado, Integer id){
+    public Produto atualizar(Integer id, Produto produtoAtualizado){
         if (!repository.existsById(id)) {
             throw new NaoEncontradoException("Produto");
         }
@@ -46,10 +49,11 @@ public class ProdutoService {
         return repository.save(produtoAtualizado);
     }
 
-    public void deletar(Integer id){
+    public Void deletar(Integer id){
         if (!repository.existsById(id)) {
             throw new NaoEncontradoException("Produto");
         }
         repository.deleteById(id);
+        return null;
     }
 }

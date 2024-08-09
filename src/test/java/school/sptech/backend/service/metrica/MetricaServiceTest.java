@@ -19,7 +19,7 @@ import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 import school.sptech.backend.domain.metrica.Metrica;
 import school.sptech.backend.domain.metrica.repository.MetricaRepository;
-import school.sptech.backend.domain.usuario.entity.Usuario;
+import school.sptech.backend.domain.usuario.Usuario;
 import school.sptech.backend.exception.NaoEncontradoException;
 
 @ExtendWith(MockitoExtension.class)

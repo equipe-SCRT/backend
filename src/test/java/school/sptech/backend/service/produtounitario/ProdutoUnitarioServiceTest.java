@@ -19,7 +19,7 @@ import school.sptech.backend.domain.rota.Rota;
 import school.sptech.backend.domain.tipocesta.TipoCesta;
 import school.sptech.backend.domain.tipoproduto.TipoProduto;
 import school.sptech.backend.domain.unidademedida.UnidadeMedida;
-import school.sptech.backend.domain.usuario.entity.Usuario;
+import school.sptech.backend.domain.usuario.Usuario;
 import school.sptech.backend.exception.NaoEncontradoException;
 import school.sptech.backend.service.cesta.CestaService;
 import school.sptech.backend.service.metrica.MetricaService;

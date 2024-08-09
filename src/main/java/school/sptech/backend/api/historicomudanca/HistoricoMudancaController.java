@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import school.sptech.backend.api.BaseController;
 import school.sptech.backend.domain.historicomudanca.HistoricoMudanca;
 import school.sptech.backend.service.historicomudanca.HistoricoMudancaService;
 import school.sptech.backend.service.historicomudanca.dto.HistoricoMudancaAtualizacaoDto;
@@ -20,7 +21,7 @@ import school.sptech.backend.service.historicomudanca.dto.HistoricoMudancaMapper
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/historico-mudancas")
-public class HistoricoMudancaController {
+public class HistoricoMudancaController implements BaseController<HistoricoMudancaCriacaoDto,HistoricoMudancaAtualizacaoDto, HistoricoMudancaListagemDto, Integer> {
 
     private final HistoricoMudancaService service;
     private final HistoricoMudancaMapper mapper;
@@ -31,7 +32,7 @@ public class HistoricoMudancaController {
         System.out.println(historico.toString());
         HistoricoMudanca historicoMudanca = mapper.toEntity(historico);
         System.out.println(historicoMudanca.toString());
-        HistoricoMudanca resposta = service.criar(historicoMudanca, historico.getFkUsuario());
+        HistoricoMudanca resposta = service.criar(historicoMudanca);
         System.out.println(resposta);
         HistoricoMudancaListagemDto listagemDto = mapper.toDto(resposta);
         System.out.println(listagemDto);
@@ -52,24 +53,24 @@ public class HistoricoMudancaController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<HistoricoMudancaListagemDto> porId(@PathVariable int id) {
+    public ResponseEntity<HistoricoMudancaListagemDto> porId(@PathVariable Integer id) {
 
         HistoricoMudanca dto = service.porId(id);
         return ResponseEntity.ok().body(mapper.toDto(dto));
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<HistoricoMudancaListagemDto> atualizar(@RequestBody HistoricoMudancaAtualizacaoDto historicoAtualizacao, @PathVariable int id) {
+    public ResponseEntity<HistoricoMudancaListagemDto> atualizar(@PathVariable Integer id, @Valid @RequestBody HistoricoMudancaAtualizacaoDto historicoAtualizacao) {
 
-
-        HistoricoMudanca dto = service.atualizar(mapper.toEntity(historicoAtualizacao), id, historicoAtualizacao.getFkUsuario());
+        HistoricoMudanca entity = mapper.toEntity(historicoAtualizacao);
+        HistoricoMudanca dto = service.atualizar(id, entity);
 
         return ResponseEntity.ok().body(mapper.toDto(dto));
 
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deletar(@PathVariable int id) {
+    public ResponseEntity<Void> deletar(@PathVariable Integer id) {
         service.deletar(id);
         return ResponseEntity.noContent().build();
     }
