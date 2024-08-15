@@ -38,20 +38,20 @@ public class Matriz {
         LocalDate dataHora = LocalDate.now();
 
 
-        ProdutoUnitario produtoUnitario1 = new ProdutoUnitario(1, "Arroz", data1, 5.0, false, dataCriacao1, null, null,
+        ProdutoUnitario produtoUnitario1 = new ProdutoUnitario(1, "Arroz", data1, 5.0, false,false, dataCriacao1, null, null,
                 null, null, null, null);
 
-        ProdutoUnitario produtoUnitario2 = new ProdutoUnitario(2, "Feijão", data2, 1.0, true, dataCriacao2, null, null,
+        ProdutoUnitario produtoUnitario2 = new ProdutoUnitario(2, "Feijão", data2, 1.0, true,false, dataCriacao2, null, null,
                 null, null, null, null);
 
-        ProdutoUnitario produtoUnitario3 = new ProdutoUnitario(3, "Macarrão", data3, 5.0, false, dataCriacao3, null,
+        ProdutoUnitario produtoUnitario3 = new ProdutoUnitario(3, "Macarrão", data3, 5.0, false,false, dataCriacao3, null,
                 null,
                 null, null, null, null);
 
-        ProdutoUnitario produtoUnitario4 = new ProdutoUnitario(4, "Óleo", data4, 1.0, true, dataCriacao4, null, null,
+        ProdutoUnitario produtoUnitario4 = new ProdutoUnitario(4, "Óleo", data4, 1.0, true,false, dataCriacao4, null, null,
                 null, null, null, null);
 
-        ProdutoUnitario produtoUnitario5 = new ProdutoUnitario(5, "Leite", data5, 1.0, true, dataCriacao5, null, null,
+        ProdutoUnitario produtoUnitario5 = new ProdutoUnitario(5, "Leite", data5, 1.0, true,false, dataCriacao5, null, null,
                 null, null, null, null);
 
         produtosUnitarios.add(produtoUnitario1);

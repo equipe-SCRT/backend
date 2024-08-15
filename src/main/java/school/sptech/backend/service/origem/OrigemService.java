@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 import school.sptech.backend.domain.origem.Origem;
 import school.sptech.backend.domain.origem.repository.OrigemRepository;
+import school.sptech.backend.exception.NaoEncontradoException;
 import school.sptech.backend.service.BaseService;
 
 import java.util.List;
@@ -32,7 +33,7 @@ public class OrigemService implements BaseService<Origem, Integer> {
 
     public Origem porId(Integer id) {
         return this.repository.findById(id).orElseThrow(
-                () -> new ResponseStatusException(HttpStatus.NOT_FOUND)
+                () -> new NaoEncontradoException("Origem")
         );
     }
 

@@ -1,7 +1,9 @@
 package school.sptech.backend.domain.produtounitario.repository;
 
-import jakarta.persistence.NamedNativeQuery;
+
+import jakarta.transaction.Transactional;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import school.sptech.backend.domain.produtounitario.ProdutoUnitario;
 import school.sptech.backend.service.produtounitario.dto.ProdutoUnitarioArrecadadoXVencidoDto;
@@ -40,4 +42,10 @@ public interface ProdutoUnitarioRepository extends JpaRepository<ProdutoUnitario
             "FROM ProdutoUnitario p GROUP BY p.nome")
     List<ProdutoUnitarioArrecadadoXVencidoDto> countAtivoByNome();
 
+    @Modifying
+    @Transactional
+    @Query(
+            "UPDATE ProdutoUnitario p SET p.vencido = true WHERE p.ativo = true AND DATE(p.dataValidade) < DATE(now()) "
+    )
+    void verificarProdutosForaDaValidade();
 }
