@@ -1,6 +1,9 @@
 package school.sptech.backend.service.produtounitario;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.boot.context.event.ApplicationReadyEvent;
+import org.springframework.context.event.EventListener;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import school.sptech.backend.domain.produtounitario.ProdutoUnitario;
 import school.sptech.backend.domain.produtounitario.repository.ProdutoUnitarioRepository;
@@ -80,5 +83,10 @@ public class ProdutoUnitarioService implements BaseService<ProdutoUnitario, Inte
         return repository.countAtivoByNome();
     }
 
+    @Scheduled(cron = "0 0 * * * *")
+    @EventListener(ApplicationReadyEvent.class)
+    public void verificarProdutosForaDaValidade(){
+        repository.verificarProdutosForaDaValidade();
+    }
 
 }

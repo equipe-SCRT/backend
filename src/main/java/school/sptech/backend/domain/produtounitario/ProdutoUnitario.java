@@ -28,6 +28,7 @@ public class ProdutoUnitario extends Timestamped {
     private LocalDate dataValidade;
     private Double peso;
     private boolean ativo;
+    private boolean vencido;
     private LocalDate dataCriacao;
 
     @ManyToOne
