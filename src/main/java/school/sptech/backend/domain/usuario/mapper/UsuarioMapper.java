@@ -1,6 +1,7 @@
 package school.sptech.backend.domain.usuario.mapper;
 
 import school.sptech.backend.service.usuario.autenticacao.dto.UsuarioTokenDto;
+import school.sptech.backend.service.usuario.dto.UsuarioConsultaDto;
 import school.sptech.backend.service.usuario.dto.UsuarioConsultaDtoJwt;
 import school.sptech.backend.service.usuario.dto.UsuarioCriacaoDtoJwt;
 import school.sptech.backend.domain.usuario.entity.Usuario;
@@ -21,6 +22,9 @@ public class UsuarioMapper {
         return usuario;
     }
 
+    public static List<Usuario> toEntity(List<UsuarioConsultaDtoJwt> usuarioCriacaoDto){
+        return usuarioCriacaoDto.stream().map(UsuarioMapper::toEntity).toList();
+    }
     public static UsuarioTokenDto of(Usuario usuario, String token){
         UsuarioTokenDto usuarioTokenDto = new UsuarioTokenDto();
 
@@ -47,6 +51,14 @@ public class UsuarioMapper {
         return usuario;
     }
 
+    public static Usuario toEntity(UsuarioConsultaDtoJwt usuarioCriacaoDto){
+        Usuario usuario = new Usuario();
+        usuario.setTipoUsuario(usuarioCriacaoDto.getTipoUsuario());
+        usuario.setNome(usuarioCriacaoDto.getNome());
+        usuario.setEmail(usuarioCriacaoDto.getEmail());
+        usuario.setSenha(usuario.getSenha());
+        return usuario;
+    }
     public static List<UsuarioConsultaDtoJwt> toDto(List<Usuario> usuarios){
         List<UsuarioConsultaDtoJwt> usuariosConsultaDto = new ArrayList<>();
 

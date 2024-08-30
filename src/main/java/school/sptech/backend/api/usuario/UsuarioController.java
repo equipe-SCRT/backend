@@ -5,6 +5,8 @@ import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import school.sptech.backend.domain.usuario.entity.Usuario;
+import school.sptech.backend.domain.usuario.mapper.UsuarioMapper;
 import school.sptech.backend.service.usuario.autenticacao.dto.UsuarioLoginDto;
 import school.sptech.backend.service.usuario.autenticacao.dto.UsuarioTokenDto;
 import school.sptech.backend.service.usuario.dto.UsuarioConsultaDtoJwt;
@@ -32,6 +34,14 @@ public class UsuarioController {
         UsuarioTokenDto usuarioToken = usuarioService.autenticar(usuarioLoginDto);
         return ResponseEntity.status(200).body(usuarioToken);
 
+    }
+
+    @GetMapping
+    public ResponseEntity<List<Usuario>> consulta(){
+        List<UsuarioConsultaDtoJwt> usuarios = usuarioService.getUsuarios();
+        List<Usuario> usuario = UsuarioMapper.toEntity(usuarios);
+
+        return ResponseEntity.ok(usuario);
     }
 
 //    @PostMapping
