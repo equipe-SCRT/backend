@@ -4,6 +4,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import lombok.*;
+import school.sptech.backend.domain.BaseEntity;
 import school.sptech.backend.domain.Timestamped;
 
 @Getter
@@ -12,10 +13,8 @@ import school.sptech.backend.domain.Timestamped;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-public class Endereco extends Timestamped {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+public class Endereco extends BaseEntity {
+
     private String logradouro;
     private String bairro;
     private String numero;

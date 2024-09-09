@@ -5,23 +5,22 @@ import java.time.LocalDate;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+import school.sptech.backend.domain.BaseEntity;
 import school.sptech.backend.domain.Timestamped;
 import school.sptech.backend.domain.usuario.Usuario;
 
 @Entity
 @Getter
 @Setter
-public class HistoricoMudanca extends Timestamped {
+public class HistoricoMudanca extends BaseEntity {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+
     private LocalDate dataHora;
     @ManyToOne
     @JoinColumn(name = "fk_usuario")
     private Usuario usuario;
 
-    public HistoricoMudanca(int id, LocalDate dataHora, Usuario usuario) {
+    public HistoricoMudanca(Integer id, LocalDate dataHora, Usuario usuario) {
         this.id = id;
         this.dataHora = dataHora;
         this.usuario = usuario;

@@ -24,7 +24,7 @@ public class HistoricoMudancaService implements BaseService<HistoricoMudanca, In
 
     public HistoricoMudanca criar(HistoricoMudanca novoHistorico){
 
-        novoHistorico.setUsuario(usuarioService.porId(novoHistorico.getUsuario().getIdUsuario()));
+        novoHistorico.setUsuario(usuarioService.porId(novoHistorico.getUsuario().getId()));
         repository.save(novoHistorico);
 
         return  novoHistorico;
@@ -44,7 +44,7 @@ public class HistoricoMudancaService implements BaseService<HistoricoMudanca, In
 
     public HistoricoMudanca atualizar(Integer IdHistoricoMudanca, HistoricoMudanca historico){
 
-        Usuario usuario = usuarioService.porId(historico.getUsuario().getIdUsuario());
+        Usuario usuario = usuarioService.porId(historico.getUsuario().getId());
 
         HistoricoMudanca historicoAtualizado = new HistoricoMudanca();
         historicoAtualizado.setId(IdHistoricoMudanca);

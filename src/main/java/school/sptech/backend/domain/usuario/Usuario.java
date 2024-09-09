@@ -4,20 +4,19 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.antlr.v4.runtime.misc.NotNull;
+import school.sptech.backend.domain.BaseEntity;
 import school.sptech.backend.domain.Timestamped;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-public class Usuario extends Timestamped {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long idUsuario;
+public class Usuario extends BaseEntity {
+
     @NotNull
     private String nome;
     @NotNull

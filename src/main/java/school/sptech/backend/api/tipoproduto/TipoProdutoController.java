@@ -56,6 +56,13 @@ public class TipoProdutoController implements BaseController<TipoProdutoCriacaoD
         return ResponseEntity.ok(dto);
     }
 
+    @GetMapping("/hash/{id}")
+    public ResponseEntity<TipoProdutoListagemDto> porIdHash(@PathVariable Integer id){
+        TipoProduto tipoProduto = service.porIdHash(id);
+        TipoProdutoListagemDto dto = mapper.toDto(tipoProduto);
+        return ResponseEntity.ok(dto);
+    }
+
     @PutMapping("/{id}")
     public ResponseEntity<TipoProdutoListagemDto> atualizar(@PathVariable Integer id,@Valid @RequestBody TipoProdutoAtualizacaoDto tipoProdutoAtualizado) {
         TipoProduto tipoProduto = mapper.toEntity(tipoProdutoAtualizado);
