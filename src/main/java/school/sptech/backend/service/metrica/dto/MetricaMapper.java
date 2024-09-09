@@ -20,12 +20,12 @@ public interface MetricaMapper {
     Metrica toEntity(MetricaAtualizacaoDto dto);
 
     @Named("usuarioFromId")
-    default Usuario usuarioFromId(Long id) {
+    default Usuario usuarioFromId(Integer id) {
         if (id == null) {
             return null;
         }
         Usuario usuario = new Usuario();
-        usuario.setIdUsuario(id);
+        usuario.setId(id);
         return usuario;
     }
 }

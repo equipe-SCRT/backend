@@ -4,7 +4,11 @@ import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
+import lombok.Getter;
+import lombok.Setter;
 
+@Getter
+@Setter
 public class UsuarioLoginConsultaDto {
     @NotNull
     @Email
@@ -15,19 +19,5 @@ public class UsuarioLoginConsultaDto {
     @Size(min = 8)
     private String senhaUsuario;
 
-    public String getEmail() {
-        return email;
-    }
 
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getSenha() {
-        return senhaUsuario;
-    }
-
-    public void setSenhaUsuario(String senha) {
-        this.senhaUsuario = senha;
-    }
 }

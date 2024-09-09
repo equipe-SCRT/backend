@@ -79,7 +79,7 @@ public class UsuarioService {
         return lista;
     }
 
-    public Usuario porId(Long id) {
+    public Usuario porId(Integer id) {
         return usuarioRepository.findById(id).orElseThrow(() -> new NaoEncontradoException("Usuario"));
     }
 }

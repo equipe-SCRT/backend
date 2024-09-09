@@ -81,9 +81,9 @@ class ProdutoUnitarioServiceTest {
     void cenarioListaTresProdutos() {
 
         List<ProdutoUnitario> lista = List.of(
-                new ProdutoUnitario(1, "Produto 1", LocalDate.now(), 20.0, true, LocalDate.now(),new Origem(), new UnidadeMedida(), new Cesta(), new Produto(), new Rota(), new Metrica()),
-                new ProdutoUnitario(2, "Produto 2", LocalDate.now(), 10.0, true, LocalDate.now(), new Origem(), new UnidadeMedida(), new Cesta(), new Produto(), new Rota(), new Metrica()),
-                new ProdutoUnitario(3, "Produto 3", LocalDate.now(), 5.0, true, LocalDate.now(), new Origem(), new UnidadeMedida(), new Cesta(), new Produto(), new Rota(), new Metrica())
+//                new ProdutoUnitario(1, "Produto 1", LocalDate.now(), 20.0, true, LocalDate.now(),new Origem(), new UnidadeMedida(), new Cesta(), new Produto(), new Rota(), new Metrica()),
+//                new ProdutoUnitario(2, "Produto 2", LocalDate.now(), 10.0, true, LocalDate.now(), new Origem(), new UnidadeMedida(), new Cesta(), new Produto(), new Rota(), new Metrica()),
+//                new ProdutoUnitario(3, "Produto 3", LocalDate.now(), 5.0, true, LocalDate.now(), new Origem(), new UnidadeMedida(), new Cesta(), new Produto(), new Rota(), new Metrica())
         );
 
         Mockito.when(produtoUnitarioService.listar()).thenReturn(lista);

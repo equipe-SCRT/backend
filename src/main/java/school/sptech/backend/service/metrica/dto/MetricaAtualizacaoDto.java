@@ -15,5 +15,5 @@ public class MetricaAtualizacaoDto {
 
     @NotNull
     @Positive
-    private Long fkUsuario;
+    private Integer fkUsuario;
 }

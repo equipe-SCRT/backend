@@ -7,6 +7,7 @@ import jakarta.persistence.Id;
 import jakarta.validation.constraints.*;
 import lombok.Getter;
 import lombok.Setter;
+import school.sptech.backend.domain.BaseEntity;
 import school.sptech.backend.domain.Timestamped;
 
 import java.util.Date;
@@ -14,11 +15,8 @@ import java.util.Date;
 @Entity
 @Getter
 @Setter
-public class Campanha extends Timestamped {
+public class Campanha extends BaseEntity {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
     private String nome;
     private String localCampanha;
     private Date dataCampanha;

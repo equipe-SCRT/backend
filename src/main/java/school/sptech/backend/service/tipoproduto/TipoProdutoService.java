@@ -7,6 +7,7 @@ import school.sptech.backend.domain.tipoproduto.TipoProduto;
 import school.sptech.backend.domain.tipoproduto.repository.TipoProdutoRepository;
 import school.sptech.backend.exception.NaoEncontradoException;
 import school.sptech.backend.service.BaseService;
+import school.sptech.backend.utils.hashtable.HashTable;
 
 import java.util.List;
 
@@ -23,6 +24,14 @@ public class TipoProdutoService implements BaseService<TipoProduto, Integer> {
 
     public TipoProduto porId(Integer id){
         return repository.findById(id).orElseThrow(()-> new NaoEncontradoException("Tipo Produto"));
+    }
+
+    public TipoProduto porIdHash(Integer id){
+        List<TipoProduto> all = repository.findAll();
+        HashTable h = new HashTable(20);
+        all.stream().forEach(h::insere);
+        return h.busca(id);
+
     }
 
     public List<TipoProduto> listar(){
