@@ -11,7 +11,7 @@ public class RotaListagemDto {
 
     private Integer id;
     private String nome;
-    private String kmRodados;
+    private Integer kmRodados;
     private Integer qtdColaboradores;
     private LocalDate dataHistorico;
     private Time horaInicio;

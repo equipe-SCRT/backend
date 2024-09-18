@@ -67,7 +67,6 @@ public class Matriz {
         for (int row = 0; row < matriz.length; row++) {
             matriz[row][0] = produtosUnitarios.get(row).getId();
             matriz[row][1] = produtosUnitarios.get(row).getPeso();
-            matriz[row][2] = produtosUnitarios.get(row).getDataCriacao();
             matriz[row][3] = produtosUnitarios.get(row).getDataValidade();
             matriz[row][4] = produtosUnitarios.get(row).isAtivo();
             produtoVencido[row] = produtosUnitarios.get(row).getDataValidade().isBefore(dataHora);
@@ -108,7 +107,6 @@ public class Matriz {
             System.out.printf("|%-20s | %20d | %20.2f | %-20s | %-20s | %-20b | %-20b |%n",
                     produtosUnitarios.get(i).getNome(), produtosUnitarios.get(i).getId(),
                     produtosUnitarios.get(i).getPeso(),
-                    produtosUnitarios.get(i).getDataCriacao().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")),
                     produtosUnitarios.get(i).getDataValidade().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")),
                     produtosUnitarios.get(i).isAtivo(),
                     produtoVencido[i]);
@@ -145,7 +143,6 @@ public class Matriz {
                                 produtosUnitarios.get(i).getNome(),
                                 produtosUnitarios.get(i).getId(),
                                 produtosUnitarios.get(i).getPeso(),
-                                produtosUnitarios.get(i).getDataCriacao().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")),
                                 produtosUnitarios.get(i).getDataValidade().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")),
                                 produtosUnitarios.get(i).isAtivo(),
                                 produtoVencido[i]);
