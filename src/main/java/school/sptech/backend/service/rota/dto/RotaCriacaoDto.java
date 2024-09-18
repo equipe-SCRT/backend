@@ -13,8 +13,8 @@ public class RotaCriacaoDto {
     @NotBlank
     @Size(min = 5, max = 50)
     private String nome;
-    @Size(min = 5, max = 10)
-    private String kmRodados;
+    @Positive
+    private Integer kmRodados;
     @PositiveOrZero
     private Integer qtdColaboradores;
     @PastOrPresent

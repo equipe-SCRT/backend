@@ -13,9 +13,9 @@ public class RotaAtualizacaoDto {
     @NotBlank
     @Size(min = 5, max = 50)
     private String nome;
-    @Size(min = 5, max = 10)
-    private String kmRodados;
-    @PositiveOrZero
+    @Positive
+    private Integer kmRodados;
+    @Positive
     private Integer qtdColaboradores;
     @PastOrPresent
     private LocalDate dataHistorico;

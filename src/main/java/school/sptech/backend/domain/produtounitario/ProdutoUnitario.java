@@ -28,7 +28,6 @@ public class ProdutoUnitario extends BaseEntity {
     private Double peso;
     private boolean ativo;
     private boolean vencido;
-    private LocalDate dataCriacao;
 
     @ManyToOne
     private Origem origem;

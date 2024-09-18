@@ -72,9 +72,13 @@ public class ProdutoUnitarioService implements BaseService<ProdutoUnitario, Inte
         return null;
     }
 
-    public List<ProdutoUnitarioCountMesDto> qtdAtivosPorMes(boolean ativo){
-        return repository.qtdAtivosPorMes(ativo);
+    public List<ProdutoUnitarioCountMesDto> qtdAtivosPorMes(){
+        return repository.qtdAtivosPorMes();
     }
+    public List<ProdutoUnitarioCountMesDto> qtdVencidosPorMes(){
+        return repository.qtdVencidosPorMes();
+    }
+
 
     public ProdutoUnitarioVencimento15E30DiasDto alimentosVencimento15E30Dias(){
         return repository.alimentosVencimento15E30Dias();

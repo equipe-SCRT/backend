@@ -23,9 +23,9 @@ public class Rota extends BaseEntity {
 
 
     private String nome;
-    private String km_rodados;
-    private Integer qtd_colaboradores;
-    private LocalDate data_historico;
-    private Time hora_inicio;
-    private Time hora_fim;
+    private Integer kmRodados;
+    private Integer qtdColaboradores;
+    private LocalDate dataHistorico;
+    private Time horaInicio;
+    private Time horaFim;
 }

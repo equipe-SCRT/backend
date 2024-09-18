@@ -81,11 +81,16 @@ public class ProdutoUnitarioController implements BaseController<ProdutoUnitario
     }
 
     @GetMapping("/quantidade-produtos/mes")
-    public ResponseEntity<List<ProdutoUnitarioCountMesDto>> qtdAtivosPorMes(@RequestParam boolean ativo){
-        List<ProdutoUnitarioCountMesDto> dto = service.qtdAtivosPorMes(ativo);
+    public ResponseEntity<List<ProdutoUnitarioCountMesDto>> qtdAtivosPorMes(){
+        List<ProdutoUnitarioCountMesDto> dto = service.qtdAtivosPorMes();
         return ResponseEntity.ok(dto);
     }
 
+    @GetMapping("/quantidade-produtos/mes/vencidos")
+    public ResponseEntity<List<ProdutoUnitarioCountMesDto>> qtdVencidosPorMes(){
+        List<ProdutoUnitarioCountMesDto> dto = service.qtdVencidosPorMes();
+        return ResponseEntity.ok(dto);
+    }
 
     @GetMapping("/vencimento-em-15-e-30-dias")
     public ResponseEntity<ProdutoUnitarioVencimento15E30DiasDto> alimentosVencimento15E30Dias(){
