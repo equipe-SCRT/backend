@@ -22,6 +22,7 @@ public class Cesta extends BaseEntity {
 
     private String lote;
     private LocalDate dataMontagem;
+    private int qtdCestasMontadas;
 
     @ManyToOne
     private TipoCesta tipoCesta;

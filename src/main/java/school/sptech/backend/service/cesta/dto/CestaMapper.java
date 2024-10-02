@@ -14,7 +14,7 @@ public interface CestaMapper {
     CestaMapper INSTANCE = Mappers.getMapper(CestaMapper.class);
 
     CestaListagemDto toDto(Cesta entity);
-    List<CestaListagemDto> toDto(List<Cesta> entities);
+    List<CestaListagemDto> toDto(List<Cesta> entity);
 
     @Mapping(target = "tipoCesta", source = "tipoCestaId", qualifiedByName = "tipoCestaFromId")
     Cesta toEntity(CestaCriacaoDto dto);
