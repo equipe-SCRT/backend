@@ -7,7 +7,7 @@ import school.sptech.backend.domain.endereco.Endereco;
 
 import java.util.Date;
 
-
+// Select SUM(quantidade), Month(data), Year(data) from ProdutoUnitario group by Month(data), Year(data) where idCampanha = ?;
 @Data
 public class OrigemListagemDto {
 

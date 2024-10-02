@@ -23,6 +23,7 @@ public class Cesta extends Timestamped {
     private Integer id;
     private String lote;
     private LocalDate dataMontagem;
+    private int qtdCestasMontadas;
 
     @ManyToOne
     private TipoCesta tipoCesta;

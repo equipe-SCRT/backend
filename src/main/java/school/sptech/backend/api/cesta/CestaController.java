@@ -40,7 +40,7 @@ public class CestaController implements BaseController<CestaCriacaoDto, CestaAtu
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<CestaListagemDto> atualizar(@PathVariable Integer id, @RequestBody CestaAtualizacaoDto nova){
+    public ResponseEntity<CestaListagemDto> atualizar(@PathVariable Integer id, @Valid @RequestBody CestaAtualizacaoDto nova){
         Cesta cesta = cestaMapper.toEntity(nova);
         CestaListagemDto dto = cestaMapper.toDto(cestaService.atualizar(id, cesta));
         return ResponseEntity.ok(dto);
