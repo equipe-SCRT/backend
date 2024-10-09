@@ -11,6 +11,7 @@ import school.sptech.backend.service.produtounitario.dto.*;
 
 
 import java.net.URI;
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -25,12 +26,16 @@ public class ProdutoUnitarioController implements BaseController<ProdutoUnitario
     @PostMapping
     public ResponseEntity<ProdutoUnitarioListagemDto> criar(@RequestBody @Valid ProdutoUnitarioCriacaoDto novoProdutoUnitario){
         ProdutoUnitario produtoUnitarioCriado = mapper.toEntity(novoProdutoUnitario);
-        ProdutoUnitario resposta = service.criar(produtoUnitarioCriado);
-        ProdutoUnitarioListagemDto dto = mapper.toDto(resposta);
+        Integer quantidade = novoProdutoUnitario.getQuantidade();
+        List<ProdutoUnitarioListagemDto> resultado = new ArrayList<>();
+        for (int i = 0; i < quantidade; i++) {
+            ProdutoUnitario resposta = service.criar(produtoUnitarioCriado);
+            resultado.add(mapper.toDto(resposta));
+        }
 
-        URI uri = URI.create("/produtos-unitario/" + dto.getId());
+        URI uri = URI.create("/produtos-unitario/" + resultado.get(0).getId());
 
-        return ResponseEntity.created(uri).body(dto);
+        return ResponseEntity.created(uri).body(resultado.get(0));
     }
 
     @GetMapping

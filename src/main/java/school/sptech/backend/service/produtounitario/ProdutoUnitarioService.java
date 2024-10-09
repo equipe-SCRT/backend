@@ -5,6 +5,7 @@ import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.event.EventListener;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
+import school.sptech.backend.domain.produto.Produto;
 import school.sptech.backend.domain.produtounitario.ProdutoUnitario;
 import school.sptech.backend.domain.produtounitario.repository.ProdutoUnitarioRepository;
 import school.sptech.backend.exception.NaoEncontradoException;
@@ -35,12 +36,15 @@ public class ProdutoUnitarioService implements BaseService<ProdutoUnitario, Inte
     private final MetricaService metricaService;
 
     public ProdutoUnitario criar(ProdutoUnitario novoProdutoUnitario){
+        Produto produto = produtoService.porId(novoProdutoUnitario.getProduto().getId());
         novoProdutoUnitario.setOrigem(origemService.porId(novoProdutoUnitario.getOrigem().getId()));
-        novoProdutoUnitario.setUnidadeMedida(unidadeMedidaService.porId(novoProdutoUnitario.getUnidadeMedida().getId()));
-        novoProdutoUnitario.setCesta(cestaService.porId(novoProdutoUnitario.getCesta().getId()));
-        novoProdutoUnitario.setProduto(produtoService.porId(novoProdutoUnitario.getProduto().getId()));
-        novoProdutoUnitario.setRota(rotaService.porId(novoProdutoUnitario.getRota().getId()));
-        novoProdutoUnitario.setMetrica(metricaService.porId(novoProdutoUnitario.getMetrica().getId()));
+        novoProdutoUnitario.setUnidadeMedida(unidadeMedidaService.porId(produto.getUnidadeMedida().getId()));
+//        novoProdutoUnitario.setCesta(cestaService.porId(novoProdutoUnitario.getCesta().getId()));
+//        novoProdutoUnitario.setProduto(produtoService.porId(novoProdutoUnitario.getProduto().getId()));
+//        novoProdutoUnitario.setRota(rotaService.porId(novoProdutoUnitario.getRota().getId()));
+        novoProdutoUnitario.setNome(produto.getNome());
+//        novoProdutoUnitario.setMetrica(metricaService.porId(novoProdutoUnitario.getMetrica().getId()));
+
         return repository.save(novoProdutoUnitario);
     }
 
