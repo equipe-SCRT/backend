@@ -11,6 +11,7 @@ import school.sptech.backend.service.produtounitario.dto.*;
 
 
 import java.net.URI;
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -26,11 +27,22 @@ public class ProdutoUnitarioController implements BaseController<ProdutoUnitario
     public ResponseEntity<ProdutoUnitarioListagemDto> criar(@RequestBody @Valid ProdutoUnitarioCriacaoDto novoProdutoUnitario){
         ProdutoUnitario produtoUnitarioCriado = mapper.toEntity(novoProdutoUnitario);
         ProdutoUnitario resposta = service.criar(produtoUnitarioCriado);
-        ProdutoUnitarioListagemDto dto = mapper.toDto(resposta);
 
-        URI uri = URI.create("/produtos-unitario/" + dto.getId());
+        URI uri = URI.create("/produtos-unitario/" + resposta.getId());
 
-        return ResponseEntity.created(uri).body(dto);
+        return ResponseEntity.created(uri).body(mapper.toDto(resposta));
+    }
+
+    @PostMapping("/lotes")
+    public ResponseEntity<List<ProdutoUnitarioListagemDto>> criarEmLote(@RequestBody @Valid List<ProdutoUnitarioCriacaoDto> novoProdutoUnitario){
+        List<ProdutoUnitarioListagemDto> lista = new ArrayList<>();
+        for (int i = 0; i < novoProdutoUnitario.size(); i++) {
+            ProdutoUnitario produtoUnitarioCriado = mapper.toEntity(novoProdutoUnitario.get(i));
+            ProdutoUnitario resposta = service.criar(produtoUnitarioCriado);
+
+            lista.add(mapper.toDto(resposta));
+        }
+        return ResponseEntity.status(201).body(lista);
     }
 
     @GetMapping
@@ -77,6 +89,14 @@ public class ProdutoUnitarioController implements BaseController<ProdutoUnitario
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deletar(@PathVariable Integer id){
         service.deletar(id);
+        return ResponseEntity.noContent().build();
+    }
+
+    @PostMapping("/lotes-delete")
+    public ResponseEntity<Void> deletar(@RequestBody List<ProdutoUnitarioListagemDto> listaProdutos){
+        for (ProdutoUnitarioListagemDto listaProduto : listaProdutos) {
+            service.deletar(listaProduto.getId());
+        }
         return ResponseEntity.noContent().build();
     }
 
