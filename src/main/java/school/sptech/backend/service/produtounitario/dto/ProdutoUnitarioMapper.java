@@ -20,21 +20,13 @@ public interface ProdutoUnitarioMapper {
     ProdutoUnitarioListagemDto toDto(ProdutoUnitario entity);
 
     @Mapping(target = "origem", source = "origemId", qualifiedByName = "origemFromId")
-    @Mapping(target = "unidadeMedida", source = "unidadeMedidaId", qualifiedByName = "unidadeMedidaFromId")
-    @Mapping(target = "cesta", source = "cestaId", qualifiedByName = "cestaFromId")
     @Mapping(target = "produto", source = "produtoId", qualifiedByName = "produtoFromId")
-    @Mapping(target = "rota", source = "rotaId", qualifiedByName = "rotaFromId")
-    @Mapping(target = "metrica", source = "metricaId", qualifiedByName = "metricaFromId")
     ProdutoUnitario toEntity(ProdutoUnitarioCriacaoDto dto);
 
     List<ProdutoUnitarioListagemDto> toDto(List<ProdutoUnitario> entities);
 
     @Mapping(target = "origem", source = "origemId", qualifiedByName = "origemFromId")
-    @Mapping(target = "unidadeMedida", source = "unidadeMedidaId", qualifiedByName = "unidadeMedidaFromId")
-    @Mapping(target = "cesta", source = "cestaId", qualifiedByName = "cestaFromId")
     @Mapping(target = "produto", source = "produtoId", qualifiedByName = "produtoFromId")
-    @Mapping(target = "rota", source = "rotaId", qualifiedByName = "rotaFromId")
-    @Mapping(target = "metrica", source = "metricaId", qualifiedByName = "metricaFromId")
     ProdutoUnitario atualizacaoDto(ProdutoUnitarioAtualizacaoDto dto);
 
     @Named("origemFromId")

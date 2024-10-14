@@ -31,19 +31,19 @@ public class ProdutoUnitarioAtualizacaoDto {
     @Positive
     private Integer unidadeMedidaId;
 
-    @NotNull
-    @Positive
-    private Integer cestaId;
+//    @NotNull
+//    @Positive
+//    private Integer cestaId;
 
     @NotNull
     @Positive
     private Integer produtoId;
 
-    @NotNull
-    @Positive
-    private Integer rotaId;
-
-    @NotNull
-    @Positive
-    private Integer metricaId;
+//    @NotNull
+//    @Positive
+//    private Integer rotaId;
+//
+//    @NotNull
+//    @Positive
+//    private Integer metricaId;
 }
