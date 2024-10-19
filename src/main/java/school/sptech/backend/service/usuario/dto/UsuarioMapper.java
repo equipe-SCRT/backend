@@ -27,13 +27,7 @@ public class UsuarioMapper {
         usuarioTokenDto.setUserId(usuario.getId());
         usuarioTokenDto.setEmail(usuario.getEmail());
         usuarioTokenDto.setNome(usuario.getNome());
-
-        if (usuario.getTipoUsuario() == 1){
-            usuarioTokenDto.setTipoUsuario("Administrador do Sistema");
-        }else if (usuario.getTipoUsuario() == 0){
-            usuarioTokenDto.setTipoUsuario("usuário comum");
-        }
-
+        usuarioTokenDto.setTipoUsuario(usuario.getTipoUsuario());
         usuarioTokenDto.setToken(token);
 
         return  usuarioTokenDto;
