@@ -7,5 +7,6 @@ import lombok.Data;
 public class TipoCestaCriacaoDto {
     @NotBlank
     private String nome;
-
+    private int idProduto;
+    private int qtdProduto;
 }

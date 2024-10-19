@@ -19,6 +19,7 @@ import school.sptech.backend.service.usuario.dto.UsuarioMapper;
 import school.sptech.backend.domain.usuario.repository.UsuarioRepository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class UsuarioService {
@@ -71,15 +72,23 @@ public class UsuarioService {
 //        return usuarioConsultaDto;
 //    }
 
-    public List<UsuarioConsultaDtoJwt> getUsuarios() {
+    public List<Usuario> getUsuarios() {
         List<Usuario> all = usuarioRepository.findAll();
 
-        List<UsuarioConsultaDtoJwt> lista = UsuarioMapper.toDto(all);
-
-        return lista;
+        return all;
     }
 
     public Usuario porId(Integer id) {
         return usuarioRepository.findById(id).orElseThrow(() -> new NaoEncontradoException("Usuario"));
+    }
+
+    public Usuario atualizarUsuario(UsuarioConsultaDtoJwt usuarioConsultaDtoJwt){
+       Optional<Usuario> usuario = usuarioRepository.findById(usuarioConsultaDtoJwt.getId());
+       usuario.get().setTipoUsuario(usuarioConsultaDtoJwt.getTipoUsuario());
+       usuario.get().setNome(usuarioConsultaDtoJwt.getNome());
+       usuario.get().setEmail(usuarioConsultaDtoJwt.getEmail());
+       usuarioRepository.save(usuario.get());
+
+       return usuario.get();
     }
 }
