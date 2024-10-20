@@ -1,21 +1,17 @@
 package school.sptech.backend.service.campanha;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 import school.sptech.backend.domain.campanha.Campanha;
 import school.sptech.backend.domain.campanha.repository.CampanhaRepository;
+
 import school.sptech.backend.domain.produto.Produto;
+import school.sptech.backend.domain.tipocampanha.TipoCampanha;
 import school.sptech.backend.service.BaseService;
-import school.sptech.backend.service.campanha.dto.CampanhaAtualizacaoDto;
-import school.sptech.backend.service.campanha.dto.CampanhaCriacaoDto;
-import school.sptech.backend.service.campanha.dto.CampanhaListagemDto;
-import school.sptech.backend.service.campanha.dto.CampanhaMapper;
-import school.sptech.backend.service.produto.dto.ProdutoAtualizacaoDto;
-import school.sptech.backend.service.produto.dto.ProdutoListagemDto;
-import school.sptech.backend.service.produto.dto.ProdutoMapper;
+import school.sptech.backend.service.produto.ProdutoService;
+import school.sptech.backend.service.tipocampanha.TipoCampanhaService;
 
 import java.util.List;
 import java.util.Optional;
@@ -23,12 +19,19 @@ import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
-public class CampanhaService implements BaseService<Campanha, Integer> {
+public class CampanhaService {
 
-
+    private final ProdutoService produtoService;
+    private final TipoCampanhaService tipoCampanhaService;
     private final CampanhaRepository campanhaRepository;
 
-    public Campanha criar(Campanha campanhaCriacao) {
+    public Campanha criar(Campanha campanhaCriacao, Integer fkProduto, Integer fkTipoCampanha) {
+        Produto produto = produtoService.porId(fkProduto);
+        TipoCampanha tipoCampanha = tipoCampanhaService.porId(fkTipoCampanha);
+
+        campanhaCriacao.setProduto(produto);
+        campanhaCriacao.setTipoCampanha(tipoCampanha);
+
         return this.campanhaRepository.save(campanhaCriacao);
     }
 

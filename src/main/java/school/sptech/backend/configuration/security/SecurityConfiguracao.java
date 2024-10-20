@@ -67,6 +67,7 @@ public class SecurityConfiguracao {
             new AntPathRequestMatcher("/origens/**"),
             new AntPathRequestMatcher("/produtos-unitario/**"),
             new AntPathRequestMatcher("/campanhas/**"),
+            new AntPathRequestMatcher("/tipo-campanhas/**"),
             new AntPathRequestMatcher("/enderecos/**"),
             new AntPathRequestMatcher("/unidades-medidas/**"),
             new AntPathRequestMatcher("/produto-cesta/**"),

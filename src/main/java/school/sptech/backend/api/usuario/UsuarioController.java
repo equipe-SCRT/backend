@@ -53,6 +53,12 @@ public class UsuarioController {
 
     }
 
+    @DeleteMapping("/{idUsuario}")
+    public ResponseEntity<Void> deletarUsuario(@PathVariable int idUsuario){
+      usuarioService.deleteUsuario(idUsuario);
+      return ResponseEntity.status(204).build();
+    }
+
 //    @PostMapping
 //    public ResponseEntity<UsuarioConsultaDto> usuarioConsultaDtoResponseEntity(@RequestBody UsuarioCriacaoDto usuarioCriacaoDto){
 //        UsuarioConsultaDto user = usuarioService.adicionarUsuario(usuarioCriacaoDto);

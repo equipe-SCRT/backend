@@ -2,6 +2,8 @@ package school.sptech.backend.service.tipocesta;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import school.sptech.backend.domain.produto.Produto;
+import school.sptech.backend.domain.produto.repository.ProdutoRepository;
 import school.sptech.backend.domain.tipocesta.TipoCesta;
 import school.sptech.backend.domain.tipocesta.repository.TipoCestaRepository;
 import school.sptech.backend.exception.NaoEncontradoException;
@@ -23,6 +25,7 @@ public class TipoCestaService implements BaseService<TipoCesta, Integer> {
     }
 
     public TipoCesta criar(TipoCesta tipoCesta){
+
         return tipoCestaRepository.save(tipoCesta);
     }
 

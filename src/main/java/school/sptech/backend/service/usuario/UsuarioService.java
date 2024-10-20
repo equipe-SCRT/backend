@@ -91,4 +91,12 @@ public class UsuarioService {
 
        return usuario.get();
     }
+
+    public boolean deleteUsuario(int idUsuario){
+        if(usuarioRepository.existsById(idUsuario)){
+            usuarioRepository.deleteById(idUsuario);
+            return true;
+        }
+        throw new NaoEncontradoException("Usuario");
+    }
 }

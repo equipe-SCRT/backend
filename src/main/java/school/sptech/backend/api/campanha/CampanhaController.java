@@ -2,7 +2,6 @@ package school.sptech.backend.api.campanha;
 
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import school.sptech.backend.api.BaseController;
@@ -12,8 +11,6 @@ import school.sptech.backend.service.campanha.dto.CampanhaAtualizacaoDto;
 import school.sptech.backend.service.campanha.dto.CampanhaCriacaoDto;
 import school.sptech.backend.service.campanha.dto.CampanhaListagemDto;
 import school.sptech.backend.service.campanha.dto.CampanhaMapper;
-import school.sptech.backend.service.produto.dto.ProdutoAtualizacaoDto;
-import school.sptech.backend.service.produto.dto.ProdutoListagemDto;
 
 import java.net.URI;
 import java.util.List;
@@ -28,7 +25,10 @@ public class CampanhaController implements BaseController<CampanhaCriacaoDto,Cam
 
     @PostMapping
     public ResponseEntity<CampanhaListagemDto> criar(@RequestBody @Valid CampanhaCriacaoDto campanhaCriacao) {
-        Campanha campanhaCriada = this.campanhaService.criar(campanhaMapper.toEntity(campanhaCriacao));
+        Integer fkProduto = campanhaCriacao.getFkProduto();
+        Integer fkTipoCampanha = campanhaCriacao.getFkTipoCampanha();
+
+        Campanha campanhaCriada = this.campanhaService.criar(campanhaMapper.toEntity(campanhaCriacao), fkProduto, fkTipoCampanha);
         URI uri = URI.create("/campanhas/" + campanhaCriada.getId());
         return ResponseEntity.created(uri).body(campanhaMapper.toDto(campanhaCriada));
     }

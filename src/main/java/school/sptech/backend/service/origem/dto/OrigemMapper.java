@@ -2,12 +2,7 @@ package school.sptech.backend.service.origem.dto;
 
 import org.mapstruct.InheritInverseConfiguration;
 import org.mapstruct.Mapper;
-import school.sptech.backend.domain.campanha.Campanha;
 import school.sptech.backend.domain.origem.Origem;
-import school.sptech.backend.service.campanha.dto.CampanhaAtualizacaoDto;
-import school.sptech.backend.service.campanha.dto.CampanhaCriacaoDto;
-import school.sptech.backend.service.campanha.dto.CampanhaListagemDto;
-import school.sptech.backend.service.campanha.dto.CampanhaMapper;
 
 import java.util.List;
 

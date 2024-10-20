@@ -11,9 +11,6 @@ import java.util.Date;
 public class CampanhaAtualizacaoDto {
 
     @NotBlank
-    @Size(min = 2, max = 20)
-    private String nome;
-    @NotBlank
     @Size(min = 2, max = 40)
     private String localCampanha;
     @PastOrPresent
