@@ -10,6 +10,8 @@ import school.sptech.backend.exception.NaoEncontradoException;
 import school.sptech.backend.service.BaseService;
 import school.sptech.backend.service.tipoproduto.TipoProdutoService;
 import school.sptech.backend.service.unidademedida.UnidadeMedidaService;
+import school.sptech.backend.view.alimentosarrecadadospormes.AlimentosArrecadadosPorMes;
+import school.sptech.backend.view.alimentosarrecadadospormes.repository.AlimentosArrecadadosPorMesRepository;
 
 import java.util.List;
 
@@ -22,6 +24,8 @@ public class ProdutoService implements BaseService<Produto, Integer> {
     private final TipoProdutoService tipoProdutoService;
 
     private final UnidadeMedidaService unidadeMedidaService;
+
+    private final AlimentosArrecadadosPorMesRepository alimentosArrecadadosPorMesRepository;
 
     public Produto criar(Produto novoProduto){
         novoProduto.setTipoProduto(tipoProdutoService.porId(novoProduto.getTipoProduto().getId()));
@@ -55,5 +59,9 @@ public class ProdutoService implements BaseService<Produto, Integer> {
         }
         repository.deleteById(id);
         return null;
+    }
+
+    public List<AlimentosArrecadadosPorMes>  alimentosArrecadadosPorMes(){
+        return alimentosArrecadadosPorMesRepository.findAll();
     }
 }
