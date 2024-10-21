@@ -61,7 +61,6 @@ public class MetricaController implements BaseController<MetricaCriacaoDto, Metr
     public ResponseEntity<MetricaListagemDto> atualizar(@PathVariable Integer id, @RequestBody @Valid MetricaAtualizacaoDto metricaAtualizacao) {
         Metrica metrica = new Metrica();
         metrica.setId(id);
-        metrica.setUsuario(userService.porId(metricaAtualizacao.getFkUsuario()));
         Metrica resposta = service.atualizar(metrica.getId(), metrica);
         MetricaListagemDto listagemDto = mapper.toDto(resposta);
 

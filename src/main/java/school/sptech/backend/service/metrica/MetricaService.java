@@ -25,8 +25,6 @@ public class MetricaService implements BaseService<Metrica, Integer> {
 
 
     public Metrica criar(Metrica metricaCriacao){
-
-        metricaCriacao.setUsuario(usuarioService.porId(metricaCriacao.getUsuario().getId()));
         repository.save(metricaCriacao);
         return metricaCriacao;
     }

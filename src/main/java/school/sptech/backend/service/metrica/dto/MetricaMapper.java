@@ -14,18 +14,8 @@ public interface MetricaMapper {
     MetricaListagemDto toDto(Metrica entity);
     List<MetricaListagemDto> toDto(List<Metrica> entities);
 
-    @Mapping(target = "usuario", source = "fkUsuario", qualifiedByName = "usuarioFromId")
     Metrica toEntity(MetricaCriacaoDto dto);
-    @Mapping(target = "usuario", source = "fkUsuario", qualifiedByName = "usuarioFromId")
     Metrica toEntity(MetricaAtualizacaoDto dto);
 
-    @Named("usuarioFromId")
-    default Usuario usuarioFromId(Integer id) {
-        if (id == null) {
-            return null;
-        }
-        Usuario usuario = new Usuario();
-        usuario.setId(id);
-        return usuario;
-    }
+
 }
