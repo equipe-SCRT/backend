@@ -39,8 +39,6 @@ public class TipoCestaController implements BaseController<TipoCestaCriacaoDto, 
     @GetMapping("/{id}")
     public ResponseEntity<TipoCestaListagemDto> porId(@PathVariable Integer id){
         return ResponseEntity.ok(tipoCestaMapper.toDto(tipoCestaService.porId(id)));
-
-
     }
 
     @PutMapping("/{id}")
