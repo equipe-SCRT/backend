@@ -48,7 +48,7 @@ public class CampanhaController implements BaseController<CampanhaCriacaoDto,Cam
     @PutMapping("/{id}")
     public ResponseEntity<CampanhaListagemDto> atualizar(@PathVariable Integer id, @RequestBody @Valid CampanhaAtualizacaoDto campanhaAtualizado) {
         Campanha entity = campanhaMapper.toEntity(campanhaAtualizado);
-        CampanhaListagemDto dto = campanhaMapper.toDto(this.campanhaService.atualizar(entity.getId(), entity));
+        CampanhaListagemDto dto = campanhaMapper.toDto(this.campanhaService.atualizar(id, entity));
         return ResponseEntity.ok().body(dto);
     }
 

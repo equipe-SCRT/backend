@@ -7,6 +7,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import school.sptech.backend.api.BaseController;
 import school.sptech.backend.domain.produtocesta.ProdutoCesta;
+import school.sptech.backend.service.produtocesta.dto.ProdutoCestaCriacaoDto;
 import school.sptech.backend.service.produtocesta.dto.ProdutoCestaMapper;
 import school.sptech.backend.service.produtocesta.ProdutoCestaService;
 import school.sptech.backend.service.produtocesta.dto.ProdutoCestaEntityDto;
@@ -15,15 +16,15 @@ import java.util.List;
 
 @RequiredArgsConstructor
 @RestController
-@RequestMapping("/produto-cesta")
-public class ProdutoCestaController implements BaseController<ProdutoCesta,ProdutoCesta, ProdutoCestaEntityDto, Integer > {
+@RequestMapping("/produto-cestas")
+public class ProdutoCestaController{
 
     private final ProdutoCestaService service;
     private final ProdutoCestaMapper mapper;
 
     @PostMapping
-    public ResponseEntity<ProdutoCestaEntityDto> criar(@Valid @RequestBody ProdutoCesta produtoCesta){
-        ProdutoCesta adicionado = service.criar(produtoCesta);
+    public ResponseEntity<ProdutoCestaEntityDto> criar(@Valid @RequestBody ProdutoCestaCriacaoDto produtoCestaDto){
+        ProdutoCesta adicionado = service.criar(produtoCestaDto);
         ProdutoCestaEntityDto dto = mapper.toDto(adicionado);
         return ResponseEntity.status(201).body(dto);
 
