@@ -4,16 +4,13 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.HttpServerErrorException;
-import school.sptech.backend.domain.produto.Produto;
 import school.sptech.backend.domain.produtocesta.ProdutoCesta;
 import school.sptech.backend.domain.produtocesta.repository.ProdutoCestaRepository;
 import school.sptech.backend.service.produto.ProdutoService;
-import school.sptech.backend.service.produto.dto.ProdutoCriacaoDto;
 import school.sptech.backend.service.produtocesta.dto.ProdutoCestaCriacaoDto;
 import school.sptech.backend.service.tipocesta.TipoCestaService;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -35,13 +32,13 @@ public class ProdutoCestaService {
         return repository.findAll();
     }
 
-    public ProdutoCesta porId(Integer id){
-        Optional<ProdutoCesta> prod = repository.findById(id);
+    public List<ProdutoCesta> porId(Integer idTipoCesta){
+        List<ProdutoCesta> prod = repository.findByTipoCestaId(idTipoCesta);
 
         if(prod.isEmpty())
             throw new HttpServerErrorException(HttpStatus.NOT_FOUND);
 
-        return prod.get();
+        return prod;
     }
 
     public Void deletar(Integer id){

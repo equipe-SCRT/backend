@@ -27,7 +27,6 @@ public class ProdutoCestaController{
         ProdutoCesta adicionado = service.criar(produtoCestaDto);
         ProdutoCestaEntityDto dto = mapper.toDto(adicionado);
         return ResponseEntity.status(201).body(dto);
-
     }
     @GetMapping
     public ResponseEntity<List<ProdutoCestaEntityDto>> listar(){
@@ -36,12 +35,13 @@ public class ProdutoCestaController{
         if (dto.isEmpty()){
             return ResponseEntity.noContent().build();
         }
-        return ResponseEntity.status(200).body(dto);    }
+        return ResponseEntity.status(200).body(dto);
+    }
 
-    @GetMapping("/{id}")
-    public ResponseEntity<ProdutoCestaEntityDto> porId(@PathVariable Integer id){
-        ProdutoCesta produtoCesta = service.porId(id);
-        ProdutoCestaEntityDto dto = mapper.toDto(produtoCesta);
+    @GetMapping("/{idTipoCesta}")
+    public ResponseEntity<List<ProdutoCestaEntityDto>> porId(@PathVariable Integer idTipoCesta){
+        List<ProdutoCesta> produtoCesta = service.porId(idTipoCesta);
+        List<ProdutoCestaEntityDto> dto = mapper.toDto(produtoCesta);
         return ResponseEntity.status(200).body(dto);
     }
 
