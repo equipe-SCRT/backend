@@ -52,7 +52,7 @@ public class CondominioController implements BaseController<CondominioCriacaoDto
     @PutMapping("/{id}")
     public ResponseEntity<CondominioListagemDto> atualizar(@PathVariable Integer id, @RequestBody @Valid CondominioAtualizacaoDto condominioAtualizado) {
         Condominio entity = mapper.toEntity(condominioAtualizado);
-        CondominioListagemDto dto = mapper.toDto(this.service.atualizar(entity.getId(), entity));
+        CondominioListagemDto dto = mapper.toDto(this.service.atualizar(id, entity));
         return ResponseEntity.ok().body(dto);
 
     }

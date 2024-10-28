@@ -91,7 +91,6 @@ public class ProdutoController implements BaseController<ProdutoCriacaoDto, Prod
     public ResponseEntity<List<AlimentosArrecadadosPorMesListagemDto>> alimentosArrecadadosPorMes(){
         List<AlimentosArrecadadosPorMes> alimentosArrecadadosPorMes = service.alimentosArrecadadosPorMes();
         List<AlimentosArrecadadosPorMesListagemDto> dto = alimentosArrecadadosPorMesMapper.toDto(alimentosArrecadadosPorMes);
-        dto.forEach(System.out::println);
         return ResponseEntity.ok(dto);
     }
 
