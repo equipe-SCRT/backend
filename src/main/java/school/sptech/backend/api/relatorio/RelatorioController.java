@@ -4,13 +4,19 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import school.sptech.backend.domain.produto.Produto;
 import school.sptech.backend.domain.produtounitario.ProdutoUnitario;
 import school.sptech.backend.domain.relatorio.Relatorio;
+import school.sptech.backend.service.produto.ProdutoService;
+import school.sptech.backend.service.produtounitario.ProdutoUnitarioService;
+import school.sptech.backend.service.produtounitario.dto.ProdutoUnitarioListagemDto;
 import school.sptech.backend.service.produtounitario.dto.ProdutoUnitarioMapper;
 import school.sptech.backend.service.produtounitario.dto.ProdutoUnitarioRelatorioDto;
-import school.sptech.backend.service.relatorio.RelatorioService;
+import school.sptech.backend.service.produtounitario.view.VencidoArrecadado;
+
 
 import java.io.*;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
@@ -20,35 +26,91 @@ import java.util.*;
 @RequiredArgsConstructor
 public class RelatorioController {
 
-    private final RelatorioService service;
+    private final ProdutoUnitarioService service;
+    private final ProdutoUnitarioService produtoService;
     private final ProdutoUnitarioMapper mapper;
 
     @PostMapping("/importar")
     public ResponseEntity<Void> inserir(@RequestParam MultipartFile file) {
+        String funcao = "";
+//        Region region = Region.US_EAST_1;
+//
+//        LambdaClient awsLambda = LambdaClient.builder()
+//                .region(region)
+//                .build();
+//
+//        // Objeto para serializar/deserializar JSON
+//        ObjectMapper objectMapper = new ObjectMapper();
+//
+//        InvokeResponse res = null;
+//        try {
+//            // "json" para enviar ao Lambda
+//            Map<String, String> parametros = Map.of("", "");
+//
+//            // Serializa o objeto para JSON e cria um SdkBytes (que é o payload)
+//            SdkBytes payload = SdkBytes.fromUtf8String(objectMapper.writeValueAsString(parametros));
+//
+//            // Configura a requisição para a Lambda
+//            InvokeRequest request = InvokeRequest.builder()
+//                    .functionName(funcao)
+//                    .payload(payload)
+//                    .build();
+//
+//            // Invoca a Lambda
+//            res = awsLambda.invoke(request);
+//
+//            // Deserializa o JSON de resposta (convertendo para String)
+//            String value = res.payload().asUtf8String();
+//
+//            // Deserializa o JSON de resposta (convertendo para objeto do tipo RespostaCpf)
+//            RespostaCpf respostaCpf =
+//                    objectMapper.readValue(value, RespostaCpf.class);
+//
+////			System.out.println(respostaCpf);
+//
+//            System.out.println();
+//            if (respostaCpf.valido()) {
+//                return  ResponseEntity.ok().build();
+//            } else {
+//                return  ResponseEntity.badRequest().build();
+//            }
+//
+//        } catch (LambdaException | JsonProcessingException e) {
+//            System.err.println(e.getMessage());
+//            return  ResponseEntity.badRequest().build();
+//        }
+//        finally {
+//            awsLambda.close();
+//        }
 
-        return null;
+        return ResponseEntity.ok().build();
     }
 
-    @GetMapping("/{dataInicio}/{dataFim}/{tipoArquivo}")
-    public ResponseEntity<List<ProdutoUnitarioRelatorioDto>> download(@PathVariable String dataInicio, @PathVariable String dataFim, @PathVariable String tipoArquivo) {
+    @GetMapping("exportar/{dataInicio}/{dataFim}/{tipoArquivo}")
+    public ResponseEntity<List<ProdutoUnitarioRelatorioDto>> download(@PathVariable LocalDate dataInicio, @PathVariable LocalDate dataFim, @PathVariable String tipoArquivo) {
 
-        List<ProdutoUnitario> produtoUnitarios = service.buscaPorPeriodo(dataInicio, dataFim);
+        List<VencidoArrecadado> produtosArrecadados = produtoService.arrecadadosVencidos();
+        List<ProdutoUnitario> produtoUnitarios = produtoService.listarPorDataEntre(dataInicio, dataFim);
         List<ProdutoUnitarioRelatorioDto> produtoRelatorios = mapper.toDtoRelatorio(produtoUnitarios);
 
         List<Relatorio> relatorios = new ArrayList<>();
 
+        String periodo = dataInicio + "-" + dataFim;
 
+            for (VencidoArrecadado produto : produtosArrecadados) {
+            relatorios.add(new Relatorio(produto.getNome(), produto.getVencido(), produto.getArrecadado()));
+        };
 
         String nomeArquivo;
 
         switch (tipoArquivo.toLowerCase(Locale.ROOT)) {
             case "csv":
-                nomeArquivo = "relatorio-" + dataInicio + "-" + dataFim;
+                nomeArquivo = "relatorio-" + periodo ;
                 gravarArquivoCsv(produtoRelatorios, nomeArquivo);
                 break;
             case "txt":
                 nomeArquivo = "relatorio-formato";
-                gravaArquivoTxtRelatorio(relatorios, nomeArquivo);
+                gravaArquivoTxtRelatorio(relatorios, nomeArquivo, periodo );
                 nomeArquivo = "produto-formato";
                 gravaArquivoTxtProduto(produtoRelatorios, nomeArquivo);
                 break;
@@ -109,13 +171,14 @@ public class RelatorioController {
     }
 
 
-    public static void gravaArquivoTxtRelatorio(List<Relatorio> lista, String nomeArq) {
+    public static void gravaArquivoTxtRelatorio(List<Relatorio> lista, String nomeArq, String periodo) {
         int contaRegDados = 0;
 
 
         String header = "00";
         header += "RELATORIO";
         header += LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss"));
+        header += periodo;
         header += "01";
         gravaRegistro(nomeArq, header);
 
@@ -123,10 +186,9 @@ public class RelatorioController {
         for (Relatorio r : lista) {
 
             corpo = "02";
-            corpo += String.format("%s",r.getProduto().getNome());
-            corpo += String.format("%s", r.getQtdVencido());
-            corpo += String.format("%s", r.getQtdArrecadado());
-            corpo += String.format("%s", r.getMesReferencia());
+            corpo += String.format("%30s",r.getProduto());
+            corpo += String.format("%3s", r.getQtdVencido());
+            corpo += String.format("%3s", r.getQtdArrecadado());
 
             gravaRegistro(nomeArq, corpo);
             contaRegDados++;
@@ -154,7 +216,7 @@ public class RelatorioController {
             corpo += String.format("%s",p.getProduto().getNome());
             corpo += String.format("%s", p.getDataValidade());
             corpo += String.format("%.2f", p.getPeso());
-            corpo += String.format("%s", p.getUnidadeMedida());
+            corpo += String.format("%s", p.getUnidadeMedida().getNome());
             corpo += String.format("%s", p.getOrigem());
             gravaRegistro(nomeArq, corpo);
             contaRegDados++;
@@ -170,15 +232,12 @@ public class RelatorioController {
     public static void gravaRegistro(String nomeArq, String registro) {
         BufferedWriter saida = null;
 
-        // Abre o arquivo
         try {
             saida = new BufferedWriter(new FileWriter(nomeArq, true));
         }
         catch (IOException erro) {
             System.out.println("Erro ao abrir o arquivo: " + erro.getMessage());
         }
-
-        // Grava o registro e fecha o arquivo
         try {
             saida.append(registro + "\n");
             saida.close();
@@ -187,7 +246,4 @@ public class RelatorioController {
             System.out.println("Erro na gravacao do arquivo: " + erro.getMessage());
         }
     }
-
-
-
 }

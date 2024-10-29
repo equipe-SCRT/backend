@@ -14,11 +14,9 @@ import school.sptech.backend.domain.produtounitario.repository.QtdProdutosVencid
 import school.sptech.backend.domain.produtounitario.repository.*;
 import school.sptech.backend.exception.NaoEncontradoException;
 import school.sptech.backend.service.BaseService;
+import school.sptech.backend.service.metrica.MetricaService;
 import school.sptech.backend.service.origem.OrigemService;
 import school.sptech.backend.service.produto.ProdutoService;
-import school.sptech.backend.service.produtounitario.dto.ProdutoUnitarioArrecadadoXVencidoDto;
-import school.sptech.backend.service.produtounitario.dto.ProdutoUnitarioCountMesDto;
-import school.sptech.backend.service.produtounitario.dto.ProdutoUnitarioVencimento15E30DiasDto;
 import school.sptech.backend.service.produtounitario.view.ProdutosConformeNaoConformeCampanhas;
 import school.sptech.backend.service.produtounitario.view.QtdProdutoPorCampanha;
 import school.sptech.backend.service.produtounitario.view.QtdProdutosVencidosPorCampanha;

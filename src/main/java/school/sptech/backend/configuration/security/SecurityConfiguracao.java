@@ -72,6 +72,7 @@ public class SecurityConfiguracao {
             new AntPathRequestMatcher("/produto-cesta/**"),
             new AntPathRequestMatcher("/historico-mudancas/**"),
             new AntPathRequestMatcher("/metricas/**"),
+            new AntPathRequestMatcher("/relatorio/**")
 
     };
 
