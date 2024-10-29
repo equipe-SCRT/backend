@@ -11,9 +11,9 @@ import school.sptech.backend.service.produto.dto.ProdutoAtualizacaoDto;
 import school.sptech.backend.service.produto.dto.ProdutoCriacaoDto;
 import school.sptech.backend.service.produto.dto.ProdutoListagemDto;
 import school.sptech.backend.service.produto.dto.ProdutoMapper;
-import school.sptech.backend.view.alimentosarrecadadospormes.AlimentosArrecadadosPorMes;
-import school.sptech.backend.view.alimentosarrecadadospormes.dto.AlimentosArrecadadosPorMesListagemDto;
-import school.sptech.backend.view.alimentosarrecadadospormes.dto.AlimentosArrecadadosPorMesMapper;
+import school.sptech.backend.service.campanha.view.AlimentosArrecadadosPorMes;
+import school.sptech.backend.service.campanha.dto.AlimentosArrecadadosPorMesListagemDto;
+import school.sptech.backend.service.campanha.dto.AlimentosArrecadadosPorMesMapper;
 
 import java.net.URI;
 import java.util.List;
@@ -91,7 +91,6 @@ public class ProdutoController implements BaseController<ProdutoCriacaoDto, Prod
     public ResponseEntity<List<AlimentosArrecadadosPorMesListagemDto>> alimentosArrecadadosPorMes(){
         List<AlimentosArrecadadosPorMes> alimentosArrecadadosPorMes = service.alimentosArrecadadosPorMes();
         List<AlimentosArrecadadosPorMesListagemDto> dto = alimentosArrecadadosPorMesMapper.toDto(alimentosArrecadadosPorMes);
-        dto.forEach(System.out::println);
         return ResponseEntity.ok(dto);
     }
 

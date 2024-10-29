@@ -8,6 +8,9 @@ import school.sptech.backend.api.BaseController;
 import school.sptech.backend.domain.produtounitario.ProdutoUnitario;
 import school.sptech.backend.service.produtounitario.ProdutoUnitarioService;
 import school.sptech.backend.service.produtounitario.dto.*;
+import school.sptech.backend.service.produtounitario.view.ProdutosConformeNaoConformeCampanhas;
+import school.sptech.backend.service.produtounitario.view.QtdProdutoPorCampanha;
+import school.sptech.backend.service.produtounitario.view.QtdProdutosVencidosPorCampanha;
 
 
 import java.net.URI;
@@ -21,6 +24,12 @@ public class ProdutoUnitarioController implements BaseController<ProdutoUnitario
     private final ProdutoUnitarioService service;
 
     private final ProdutoUnitarioMapper mapper;
+
+    private final QtdProdutosVencidosPorCampanhaMapper qtdProdutosVencidosPorCampanhaMapper;
+
+    private final QtdProdutoPorCampanhaMapper qtdProdutoPorCampanhaMapper;
+
+    private final ProdutosConformeNaoConformeCampanhasMapper produtosConformeNaoConformeCampanhasMapper;
 
     @PostMapping
     public ResponseEntity<ProdutoUnitarioListagemDto> criar(@RequestBody @Valid ProdutoUnitarioCriacaoDto novoProdutoUnitario){
@@ -100,5 +109,26 @@ public class ProdutoUnitarioController implements BaseController<ProdutoUnitario
     @GetMapping("/arrecadados-x-vencidos")
     public ResponseEntity<List<ProdutoUnitarioArrecadadoXVencidoDto>> countAtivoByNome(){
         return ResponseEntity.ok(service.countAtivoByNome());
+    }
+
+    @GetMapping("/{id}/produto-por-campanha")
+    public ResponseEntity<List<QtdProdutoPorCampanhaListagemDto>> qtdProdutoPorCampanha(@PathVariable Integer id){
+        List<QtdProdutoPorCampanha> qtdProdutoPorCampanhas = service.qtdProdutoPorCampanha(id);
+        List<QtdProdutoPorCampanhaListagemDto> dto = qtdProdutoPorCampanhaMapper.toDto(qtdProdutoPorCampanhas);
+        return ResponseEntity.ok(dto);
+    }
+
+    @GetMapping("/{id}/produtos-vencidos-por-campanha")
+    public ResponseEntity<List<QtdProdutosVencidosPorCampanhaListagemDto>> qtdProdutosVencidosPorCampanha(@PathVariable Integer id){
+        List<QtdProdutosVencidosPorCampanha> qtdProdutosVencidosPorCampanha = service.qtdProdutosVencidosPorCampanha(id);
+        List<QtdProdutosVencidosPorCampanhaListagemDto> dto = qtdProdutosVencidosPorCampanhaMapper.toDto(qtdProdutosVencidosPorCampanha);
+        return ResponseEntity.ok(dto);
+    }
+
+    @GetMapping("/produtos-conforme-nao-conforme-campanhas")
+    public ResponseEntity<List<ProdutosConformeNaoConformeCampanhasListagemDto>> produtosConformeNaoConformeCampanhas() {
+        List<ProdutosConformeNaoConformeCampanhas> produtosConformeNaoConformeCampanhas = service.produtosConformeNaoConformeCampanhas();
+        List<ProdutosConformeNaoConformeCampanhasListagemDto> dto = produtosConformeNaoConformeCampanhasMapper.toDto(produtosConformeNaoConformeCampanhas);
+        return ResponseEntity.ok(dto);
     }
 }
