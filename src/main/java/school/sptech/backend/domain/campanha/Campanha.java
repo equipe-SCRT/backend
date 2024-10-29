@@ -10,6 +10,7 @@ import lombok.Setter;
 import school.sptech.backend.domain.BaseEntity;
 import school.sptech.backend.domain.Timestamped;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 @Entity
@@ -19,7 +20,7 @@ public class Campanha extends BaseEntity {
 
     private String nome;
     private String localCampanha;
-    private Date dataCampanha;
+    private LocalDate dataCampanha;
     private Integer qtdArrecadada;
     private Integer meta;
 }

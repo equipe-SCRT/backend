@@ -1,7 +1,7 @@
-package school.sptech.backend.view.alimentosarrecadadospormes.dto;
+package school.sptech.backend.service.campanha.dto;
 
 import org.mapstruct.Mapper;
-import school.sptech.backend.view.alimentosarrecadadospormes.AlimentosArrecadadosPorMes;
+import school.sptech.backend.service.campanha.view.AlimentosArrecadadosPorMes;
 
 import java.util.List;
 

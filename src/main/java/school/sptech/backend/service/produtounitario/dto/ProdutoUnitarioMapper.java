@@ -27,6 +27,12 @@ public interface ProdutoUnitarioMapper {
     @Mapping(target = "produto", source = "produtoId", qualifiedByName = "produtoFromId")
     ProdutoUnitario toEntity(ProdutoUnitarioCriacaoDto dto);
 
+
+    @Mapping(target = "origem", source = "origemId", qualifiedByName = "origemFromId")
+    @Mapping(target = "produto", source = "produtoId", qualifiedByName = "produtoFromId")
+    ProdutoUnitario toEntity(ProdutoUnitarioAtualizacaoDto dto);
+
+
     List<ProdutoUnitarioListagemDto> toDto(List<ProdutoUnitario> entities);
 
     List<ProdutoUnitarioRelatorioDto> toDtoRelatorio(List<ProdutoUnitario> entities);
