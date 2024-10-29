@@ -83,7 +83,7 @@ public class ProdutoUnitarioController implements BaseController<ProdutoUnitario
     public ResponseEntity<ProdutoUnitarioListagemDto> atualizar(
             @PathVariable Integer id, @RequestBody @Valid ProdutoUnitarioAtualizacaoDto produtoUnitarioAtualizado
     ) {
-        ProdutoUnitario produtoUnitario = mapper.toDto(produtoUnitarioAtualizado);
+        ProdutoUnitario produtoUnitario = mapper.toEntity(produtoUnitarioAtualizado);
         ProdutoUnitario resposta = service.atualizar(produtoUnitario.getId(), produtoUnitario);
         ProdutoUnitarioListagemDto dto = mapper.toDto(resposta);
         return ResponseEntity.ok(dto);
