@@ -9,41 +9,42 @@ import java.time.LocalDate;
 
 @Data
 public class ProdutoUnitarioAtualizacaoDto {
-    @NotBlank
-    private String nome;
+    @PositiveOrZero
+    @NotNull
+    private int id;
 
     @NotNull
     @FutureOrPresent
     private LocalDate dataValidade;
 
-    @NotNull
-    @PositiveOrZero
-    private Double peso;
+//    @NotNull
+//    @PositiveOrZero
+//    private Double peso;
 
-    @NotNull
-    private boolean ativo;
+//    @NotNull
+//    private boolean ativo;
 
     @NotNull
     @Positive
     private Integer origemId;
 
-    @NotNull
-    @Positive
-    private Integer unidadeMedidaId;
+//    @NotNull
+//    @Positive
+//    private Integer unidadeMedidaId;
 
-    @NotNull
-    @Positive
-    private Integer cestaId;
+//    @NotNull
+//    @Positive
+//    private Integer cestaId;
 
     @NotNull
     @Positive
     private Integer produtoId;
 
-    @NotNull
-    @Positive
-    private Integer rotaId;
-
-    @NotNull
-    @Positive
-    private Integer metricaId;
+//    @NotNull
+//    @Positive
+//    private Integer rotaId;
+//
+//    @NotNull
+//    @Positive
+//    private Integer metricaId;
 }

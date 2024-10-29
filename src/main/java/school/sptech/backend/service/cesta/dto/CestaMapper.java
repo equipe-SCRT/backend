@@ -23,7 +23,8 @@ public interface CestaMapper {
     @Mapping(target = "tipoCesta", source = "tipoCestaId", qualifiedByName = "tipoCestaFromId")
     Cesta toEntity(CestaAtualizacaoTipoCestaIdDto dto);
 
-    CestaCountAtivoDto toDto(Integer count);
+    CestaCountDto toDto(Integer count);
+
 
     @Named("tipoCestaFromId")
     default TipoCesta tipoCestaFromId(Integer id) {

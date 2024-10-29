@@ -12,9 +12,7 @@ import school.sptech.backend.domain.usuario.Usuario;
 @Setter
 public class Metrica extends BaseEntity {
 
-    @ManyToOne
-    private Usuario usuario;
-
-
+    private Integer qtdCasas;
+    private Integer alertaVencimento;
 
 }

@@ -11,16 +11,16 @@ import java.time.LocalDate;
 
 @Data
 public class ProdutoUnitarioCriacaoDto {
-    @NotBlank
-    private String nome;
+//    @NotBlank
+//    private String nome;
 
     @NotNull
     @FutureOrPresent
     private LocalDate dataValidade;
 
-    @NotNull
-    @PositiveOrZero
-    private Double peso;
+//    @NotNull
+//    @PositiveOrZero
+//    private Double peso;
 
     @NotNull
     private boolean ativo;
@@ -29,23 +29,27 @@ public class ProdutoUnitarioCriacaoDto {
     @PositiveOrZero
     private Integer origemId;
 
-    @NotNull
-    @PositiveOrZero
-    private Integer unidadeMedidaId;
+//    @NotNull
+//    @PositiveOrZero
+//    private Integer unidadeMedidaId;
 
-    @NotNull
-    @PositiveOrZero
-    private Integer cestaId;
+//    @NotNull
+//    @PositiveOrZero
+//    private Integer cestaId;
 
     @NotNull
     @PositiveOrZero
     private Integer produtoId;
 
     @NotNull
-    @PositiveOrZero
-    private Integer rotaId;
+    @Positive
+    private Integer quantidade;
 
-    @NotNull
-    @PositiveOrZero
-    private Integer metricaId;
+//    @NotNull
+//    @PositiveOrZero
+//    private Integer rotaId;
+//
+//    @NotNull
+//    @PositiveOrZero
+//    private Integer metricaId;
 }

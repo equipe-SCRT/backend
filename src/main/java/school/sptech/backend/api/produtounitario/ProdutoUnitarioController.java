@@ -14,6 +14,8 @@ import school.sptech.backend.service.produtounitario.view.QtdProdutosVencidosPor
 
 
 import java.net.URI;
+import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -35,11 +37,22 @@ public class ProdutoUnitarioController implements BaseController<ProdutoUnitario
     public ResponseEntity<ProdutoUnitarioListagemDto> criar(@RequestBody @Valid ProdutoUnitarioCriacaoDto novoProdutoUnitario){
         ProdutoUnitario produtoUnitarioCriado = mapper.toEntity(novoProdutoUnitario);
         ProdutoUnitario resposta = service.criar(produtoUnitarioCriado);
-        ProdutoUnitarioListagemDto dto = mapper.toDto(resposta);
 
-        URI uri = URI.create("/produtos-unitario/" + dto.getId());
+        URI uri = URI.create("/produtos-unitario/" + resposta.getId());
 
-        return ResponseEntity.created(uri).body(dto);
+        return ResponseEntity.created(uri).body(mapper.toDto(resposta));
+    }
+
+    @PostMapping("/lotes")
+    public ResponseEntity<List<ProdutoUnitarioListagemDto>> criarEmLote(@RequestBody @Valid List<ProdutoUnitarioCriacaoDto> novoProdutoUnitario){
+        List<ProdutoUnitarioListagemDto> lista = new ArrayList<>();
+        for (int i = 0; i < novoProdutoUnitario.size(); i++) {
+            ProdutoUnitario produtoUnitarioCriado = mapper.toEntity(novoProdutoUnitario.get(i));
+            ProdutoUnitario resposta = service.criar(produtoUnitarioCriado);
+
+            lista.add(mapper.toDto(resposta));
+        }
+        return ResponseEntity.status(201).body(lista);
     }
 
     @GetMapping
@@ -76,8 +89,10 @@ public class ProdutoUnitarioController implements BaseController<ProdutoUnitario
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<ProdutoUnitarioListagemDto> atualizar(@PathVariable Integer id, @RequestBody @Valid ProdutoUnitarioAtualizacaoDto produtoUnitarioAtualizado) {
-        ProdutoUnitario produtoUnitario = mapper.atualizacaoDto(produtoUnitarioAtualizado);
+    public ResponseEntity<ProdutoUnitarioListagemDto> atualizar(
+            @PathVariable Integer id, @RequestBody @Valid ProdutoUnitarioAtualizacaoDto produtoUnitarioAtualizado
+    ) {
+        ProdutoUnitario produtoUnitario = mapper.toEntity(produtoUnitarioAtualizado);
         ProdutoUnitario resposta = service.atualizar(produtoUnitario.getId(), produtoUnitario);
         ProdutoUnitarioListagemDto dto = mapper.toDto(resposta);
         return ResponseEntity.ok(dto);
@@ -89,26 +104,52 @@ public class ProdutoUnitarioController implements BaseController<ProdutoUnitario
         return ResponseEntity.noContent().build();
     }
 
-    @GetMapping("/quantidade-produtos/mes")
-    public ResponseEntity<List<ProdutoUnitarioCountMesDto>> qtdAtivosPorMes(){
-        List<ProdutoUnitarioCountMesDto> dto = service.qtdAtivosPorMes();
+    @PostMapping("/lotes-delete")
+    public ResponseEntity<Void> deletar(@RequestBody List<ProdutoUnitarioListagemDto> listaProdutos){
+        for (ProdutoUnitarioListagemDto listaProduto : listaProdutos) {
+            service.deletar(listaProduto.getId());
+        }
+        return ResponseEntity.noContent().build();
+    }
+
+    @GetMapping("/{id}/quantidade-produtos/mes")
+    public ResponseEntity<List<QtdAtivoPorMesDto>> qtdAtivosPorMes(
+            @PathVariable Integer id, @RequestParam LocalDate inicio, @RequestParam LocalDate fim
+    ){
+        List<QtdAtivoPorMesDto> dto = mapper.qtdAtivoPorMesToDto(service.qtdAtivoPorMesPorIdDataEntre(id, inicio, fim));
         return ResponseEntity.ok(dto);
     }
 
-    @GetMapping("/quantidade-produtos/mes/vencidos")
-    public ResponseEntity<List<ProdutoUnitarioCountMesDto>> qtdVencidosPorMes(){
-        List<ProdutoUnitarioCountMesDto> dto = service.qtdVencidosPorMes();
+    @GetMapping("/{id}/quantidade-produtos/mes/vencidos")
+    public ResponseEntity<List<QtdVencidoPorMesDto>> qtdVencidosPorMes(
+            @PathVariable Integer id, @RequestParam LocalDate inicio, @RequestParam LocalDate fim
+    ){
+        List<QtdVencidoPorMesDto> dto = mapper.qtdVencidoPorMesToDto(service.qtdVencidoPorMesPorIdDataEntre(id, inicio, fim));
         return ResponseEntity.ok(dto);
     }
 
     @GetMapping("/vencimento-em-15-e-30-dias")
-    public ResponseEntity<ProdutoUnitarioVencimento15E30DiasDto> alimentosVencimento15E30Dias(){
-        return ResponseEntity.ok(service.alimentosVencimento15E30Dias());
+    public ResponseEntity<Vencimento15E30DiasDto> alimentosVencimento15E30Dias(){
+        return ResponseEntity.ok(mapper.vencimento15E30DiasToDto(service.vencimento15E30Dias()));
     }
 
-    @GetMapping("/arrecadados-x-vencidos")
-    public ResponseEntity<List<ProdutoUnitarioArrecadadoXVencidoDto>> countAtivoByNome(){
-        return ResponseEntity.ok(service.countAtivoByNome());
+    @GetMapping("/arrecadados-vencidos")
+    public ResponseEntity<List<VencidoArrecadadoDto>> arrecadadosVencidos(){
+        return ResponseEntity.ok(mapper.vencidoArrecadadoToDto(service.arrecadadosVencidos()));
+    }
+    @GetMapping("/total-estoque")
+    public ResponseEntity<Integer> totalEstoque(){
+        return ResponseEntity.ok(service.totalEstoque());
+    }
+
+    @GetMapping("/total-vencidos")
+    public ResponseEntity<Integer> totalVencidos(@RequestParam LocalDate inicio, @RequestParam LocalDate fim){
+        return ResponseEntity.ok(service.totalVencidos(inicio, fim));
+    }
+
+    @GetMapping("/data-vencimento")
+    public ResponseEntity<List<ProdutoUnitarioListagemDto>> listarPorDataEntre(@RequestParam LocalDate inicio, @RequestParam LocalDate fim){
+        return ResponseEntity.ok(mapper.toDto(service.listarPorDataEntre(inicio, fim)));
     }
 
     @GetMapping("/{id}/produto-por-campanha")

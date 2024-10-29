@@ -59,8 +59,13 @@ public class CestaController implements BaseController<CestaCriacaoDto, CestaAtu
     }
 
     @GetMapping("/quantidade-cestas")
-    public ResponseEntity<CestaCountAtivoDto> qtdCestaPorMes(){
+    public ResponseEntity<CestaCountDto> qtdCestaPorMes(){
         return ResponseEntity.ok(cestaMapper.toDto(cestaService.qtdMesAtual()));
+    }
+
+    @GetMapping("/quantidade/items/cesta-principal")
+    public ResponseEntity<CestaCountDto> qtdItemsCestaPrincipal(){
+        return ResponseEntity.ok(cestaMapper.toDto(cestaService.qtdItemsCestaPrincipal()));
     }
 
 
