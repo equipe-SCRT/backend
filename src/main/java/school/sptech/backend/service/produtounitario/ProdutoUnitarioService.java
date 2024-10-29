@@ -70,7 +70,14 @@ public class ProdutoUnitarioService implements BaseService<ProdutoUnitario, Inte
         if (!repository.existsById(id)){
             throw new NaoEncontradoException("ProdutoUnitario");
         }
+        Produto produto = produtoService.porId(produtoUnitarioAtualizado.getProduto().getId());
+
+        produtoUnitarioAtualizado.setNome(produto.getNome());
+        produtoUnitarioAtualizado.setProduto(produto);
         produtoUnitarioAtualizado.setId(id);
+        produtoUnitarioAtualizado.setUnidadeMedida(unidadeMedidaService.porId(
+                produto.getUnidadeMedida().getId()));
+
         return repository.save(produtoUnitarioAtualizado);
     }
 
