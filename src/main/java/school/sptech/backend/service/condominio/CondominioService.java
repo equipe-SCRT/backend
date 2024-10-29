@@ -5,9 +5,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 import school.sptech.backend.domain.condominio.Condominio;
-import school.sptech.backend.domain.condominio.repository.CondominioRepository;
+import school.sptech.backend.domain.condominio.repository.*;
 import school.sptech.backend.exception.NaoEncontradoException;
 import school.sptech.backend.service.BaseService;
+import school.sptech.backend.service.condominio.view.*;
 import school.sptech.backend.service.endereco.EnderecoService;
 
 import java.util.List;
@@ -17,6 +18,13 @@ import java.util.List;
 public class CondominioService implements BaseService<Condominio, Integer> {
 
     private final CondominioRepository repository;
+
+    private final QtdTotalArrecadadaRepository qtdTotalArrecadadaRepository;
+    private final QtdProdutosVencidosRepository qtdProdutosVencidosRepository;
+    private final QtdProdutosNaoConformeRepository qtdProdutosNaoConformeRepository;
+    private final ProdutosConformeENaoConformeRepository produtosConformeENaoConformeRepository;
+    private final ProdutosArrecadadosPorMesRepository produtosArrecadadosPorMesRepository;
+    private final ProdutosArrecadadosPorCondominioRepository produtosArrecadadosPorCondominioRepository;
 
     private final EnderecoService enderecoService;
 
@@ -57,5 +65,29 @@ public class CondominioService implements BaseService<Condominio, Integer> {
 
         this.repository.deleteById(id);
         return null;
+    }
+
+    public List<QtdTotalArrecadada> listarQtdArrecadada() {
+        return qtdTotalArrecadadaRepository.findAll();
+    }
+
+    public List<QtdProdutosVencidos> listarQtdVencidos() {
+        return qtdProdutosVencidosRepository.findAll();
+    }
+
+    public List<QtdProdutosNaoConforme> listarQtdNaoConforme() {
+        return qtdProdutosNaoConformeRepository.findAll();
+    }
+
+    public List<ProdutosConformeENaoConforme> listarProdutosConformeENaoConforme() {
+        return produtosConformeENaoConformeRepository.findAll();
+    }
+
+    public List<ProdutosArrecadadosPorMes> listarProdutosArrecadadosPorMes() {
+        return produtosArrecadadosPorMesRepository.findAll();
+    }
+
+    public List<ProdutosArrecadadosPorCondominio> listarProdutosArrecadadosPorCondominio() {
+        return produtosArrecadadosPorCondominioRepository.findAll();
     }
 }
