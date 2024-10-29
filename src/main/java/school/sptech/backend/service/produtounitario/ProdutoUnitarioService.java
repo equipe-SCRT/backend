@@ -18,8 +18,9 @@ import school.sptech.backend.service.produtounitario.view.VencidoArrecadado;
 import school.sptech.backend.service.produtounitario.view.Vencimento15E30Dias;
 import school.sptech.backend.service.unidademedida.UnidadeMedidaService;
 
-import java.time.LocalDate;
 import java.util.List;
+import java.time.LocalDate;
+import java.util.Date;
 
 @Service
 @RequiredArgsConstructor
@@ -69,7 +70,14 @@ public class ProdutoUnitarioService implements BaseService<ProdutoUnitario, Inte
         if (!repository.existsById(id)){
             throw new NaoEncontradoException("ProdutoUnitario");
         }
+        Produto produto = produtoService.porId(produtoUnitarioAtualizado.getProduto().getId());
+
+        produtoUnitarioAtualizado.setNome(produto.getNome());
+        produtoUnitarioAtualizado.setProduto(produto);
         produtoUnitarioAtualizado.setId(id);
+        produtoUnitarioAtualizado.setUnidadeMedida(unidadeMedidaService.porId(
+                produto.getUnidadeMedida().getId()));
+
         return repository.save(produtoUnitarioAtualizado);
     }
 
