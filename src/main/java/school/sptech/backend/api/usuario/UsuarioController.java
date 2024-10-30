@@ -34,6 +34,20 @@ public class UsuarioController {
 
     }
 
+    @PostMapping("/recuperar-senha/{email}")
+    public ResponseEntity<Void> recuperar(@PathVariable String email){
+        Boolean emailEnviado = usuarioService.enviarEmail(email);
+        return ResponseEntity.status(200).build();
+
+    }
+
+    @PatchMapping("/trocar-senha")
+    public ResponseEntity<Void> alterarSenha(@RequestParam String code, @RequestParam String senha){
+        Boolean emailEnviado = usuarioService.alterarSenha(code, senha);
+
+        return ResponseEntity.status(200).build();
+    }
+
 //    @PostMapping
 //    public ResponseEntity<UsuarioConsultaDto> usuarioConsultaDtoResponseEntity(@RequestBody UsuarioCriacaoDto usuarioCriacaoDto){
 //        UsuarioConsultaDto user = usuarioService.adicionarUsuario(usuarioCriacaoDto);
