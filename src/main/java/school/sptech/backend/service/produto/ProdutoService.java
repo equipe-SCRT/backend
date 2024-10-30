@@ -14,6 +14,7 @@ import school.sptech.backend.view.alimentosarrecadadospormes.AlimentosArrecadado
 import school.sptech.backend.view.alimentosarrecadadospormes.repository.AlimentosArrecadadosPorMesRepository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -46,9 +47,14 @@ public class ProdutoService implements BaseService<Produto, Integer> {
     }
 
     public Produto atualizar(Integer id, Produto produtoAtualizado){
-        if (!repository.existsById(id)) {
+        Optional<Produto> byId = repository.findById(id);
+        if(byId.isEmpty()){
             throw new NaoEncontradoException("Produto");
         }
+        Produto produto = byId.get();
+        produtoAtualizado.setTipoProduto(tipoProdutoService.porId(produtoAtualizado.getTipoProduto().getId()));
+        produtoAtualizado.setUnidadeMedida(produto.getUnidadeMedida());
+        produtoAtualizado.setQtdUnidadeMedida(produto.getQtdUnidadeMedida());
         produtoAtualizado.setId(id);
         return repository.save(produtoAtualizado);
     }

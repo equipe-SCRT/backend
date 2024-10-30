@@ -76,7 +76,7 @@ public class ProdutoController implements BaseController<ProdutoCriacaoDto, Prod
     @PutMapping("/{id}")
     public ResponseEntity<ProdutoListagemDto> atualizar(@PathVariable Integer id, @RequestBody @Valid ProdutoAtualizacaoDto produtoAtualizado) {
         Produto produto = mapper.atualizacaoDto(produtoAtualizado);
-        Produto resposta = service.atualizar(produto.getId(), produto);
+        Produto resposta = service.atualizar(id, produto);
         ProdutoListagemDto dto = mapper.toDto(resposta);
         return ResponseEntity.ok(dto);
     }
