@@ -4,7 +4,7 @@ import lombok.Data;
 
 @Data
 public class QtdTotalArrecadadaListagemDto {
-    private Integer qtdArrecadada;
+    private Integer produtoId;
     private String nomeCondominio;
-    private String nomeProduto;
+    private String qtdProdutos;
 }
