@@ -10,8 +10,8 @@ import school.sptech.backend.exception.NaoEncontradoException;
 import school.sptech.backend.service.BaseService;
 import school.sptech.backend.service.tipoproduto.TipoProdutoService;
 import school.sptech.backend.service.unidademedida.UnidadeMedidaService;
-import school.sptech.backend.view.alimentosarrecadadospormes.AlimentosArrecadadosPorMes;
-import school.sptech.backend.view.alimentosarrecadadospormes.repository.AlimentosArrecadadosPorMesRepository;
+import school.sptech.backend.service.campanha.view.AlimentosArrecadadosPorMes;
+import school.sptech.backend.domain.campanha.repository.AlimentosArrecadadosPorMesRepository;
 
 import java.util.List;
 

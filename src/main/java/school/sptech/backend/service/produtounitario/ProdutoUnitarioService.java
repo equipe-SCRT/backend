@@ -7,11 +7,22 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import school.sptech.backend.domain.produto.Produto;
 import school.sptech.backend.domain.produtounitario.ProdutoUnitario;
+import school.sptech.backend.domain.produtounitario.repository.ProdutoUnitarioRepository;
+import school.sptech.backend.domain.produtounitario.repository.ProdutosConformeNaoConformeCampanhasRepository;
+import school.sptech.backend.domain.produtounitario.repository.QtdProdutoPorCampanhaRepository;
+import school.sptech.backend.domain.produtounitario.repository.QtdProdutosVencidosPorCampanhaRepository;
 import school.sptech.backend.domain.produtounitario.repository.*;
 import school.sptech.backend.exception.NaoEncontradoException;
 import school.sptech.backend.service.BaseService;
 import school.sptech.backend.service.origem.OrigemService;
 import school.sptech.backend.service.produto.ProdutoService;
+import school.sptech.backend.service.produtounitario.dto.ProdutoUnitarioArrecadadoXVencidoDto;
+import school.sptech.backend.service.produtounitario.dto.ProdutoUnitarioCountMesDto;
+import school.sptech.backend.service.produtounitario.dto.ProdutoUnitarioVencimento15E30DiasDto;
+import school.sptech.backend.service.produtounitario.view.ProdutosConformeNaoConformeCampanhas;
+import school.sptech.backend.service.produtounitario.view.QtdProdutoPorCampanha;
+import school.sptech.backend.service.produtounitario.view.QtdProdutosVencidosPorCampanha;
+import school.sptech.backend.service.rota.RotaService;
 import school.sptech.backend.service.produtounitario.view.QtdAtivoPorMes;
 import school.sptech.backend.service.produtounitario.view.QtdVencidoPorMes;
 import school.sptech.backend.service.produtounitario.view.VencidoArrecadado;
@@ -36,8 +47,12 @@ public class ProdutoUnitarioService implements BaseService<ProdutoUnitario, Inte
     private final OrigemService origemService;
     private final UnidadeMedidaService unidadeMedidaService;
     private final ProdutoService produtoService;
-
-
+    private final RotaService rotaService;
+    private final MetricaService metricaService;
+    private final QtdProdutoPorCampanhaRepository qtdProdutoPorCampanhaRepository;
+    private final QtdProdutosVencidosPorCampanhaRepository qtdProdutosVencidosPorCampanhaRepository;
+    private final ProdutosConformeNaoConformeCampanhasRepository produtosConformeNaoConformeCampanhasRepository;
+  
     public ProdutoUnitario criar(ProdutoUnitario novoProdutoUnitario){
         Produto produto = produtoService.porId(novoProdutoUnitario.getProduto().getId());
         novoProdutoUnitario.setOrigem(origemService.porId(novoProdutoUnitario.getOrigem().getId()));
@@ -121,5 +136,15 @@ public class ProdutoUnitarioService implements BaseService<ProdutoUnitario, Inte
         repository.verificarProdutosForaDaValidade();
     }
 
+    public List<QtdProdutoPorCampanha> qtdProdutoPorCampanha(Integer id){
+        return qtdProdutoPorCampanhaRepository.findByProdutoId(id);
+    }
 
+    public List<QtdProdutosVencidosPorCampanha> qtdProdutosVencidosPorCampanha(Integer id){
+        return qtdProdutosVencidosPorCampanhaRepository.findByProdutoId(id);
+    }
+
+    public List<ProdutosConformeNaoConformeCampanhas> produtosConformeNaoConformeCampanhas(){
+        return produtosConformeNaoConformeCampanhasRepository.findTop5ByOrderByNomeDesc();
+    }
 }

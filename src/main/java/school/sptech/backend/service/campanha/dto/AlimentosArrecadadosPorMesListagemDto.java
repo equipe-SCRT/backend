@@ -1,4 +1,4 @@
-package school.sptech.backend.view.alimentosarrecadadospormes.dto;
+package school.sptech.backend.service.campanha.dto;
 
 import lombok.Data;
 
