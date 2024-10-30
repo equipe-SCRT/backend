@@ -114,7 +114,9 @@ public class UsuarioService {
     public Boolean alterarSenha(String code, String senha) {
         String decode = new String(Base64.getDecoder().decode(code.getBytes()));
         Integer id = Integer.parseInt(decode);
-        usuarioRepository.setNewPassword(senha, id);
+        String senhaCriptografada = passwordEncoder.encode(senha);
+
+        usuarioRepository.setNewPassword(senhaCriptografada, id);
         return true;
     }
 }
