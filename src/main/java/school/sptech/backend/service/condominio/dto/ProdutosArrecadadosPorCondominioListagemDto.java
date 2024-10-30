@@ -5,6 +5,6 @@ import lombok.Data;
 @Data
 public class ProdutosArrecadadosPorCondominioListagemDto {
 
-    private String mes;
+    private Integer condominioId;
     private Integer count;
 }

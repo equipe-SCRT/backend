@@ -17,6 +17,6 @@ import lombok.Setter;
 public class ProdutosArrecadadosPorCondominio {
 
     @Id
-    private String mes;
+    private Integer condominioId;
     private Integer count;
 }
