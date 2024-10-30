@@ -1,6 +1,9 @@
 package school.sptech.backend.service.usuario;
 
+import org.apache.logging.log4j.message.SimpleMessage;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -9,16 +12,20 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 import school.sptech.backend.configuration.security.jwt.GerenciadorTokenJwt;
+import school.sptech.backend.domain.usuario.Usuario;
+import school.sptech.backend.domain.usuario.repository.UsuarioRepository;
 import school.sptech.backend.exception.NaoEncontradoException;
 import school.sptech.backend.service.usuario.autenticacao.dto.UsuarioLoginDto;
 import school.sptech.backend.service.usuario.autenticacao.dto.UsuarioTokenDto;
 import school.sptech.backend.service.usuario.dto.UsuarioConsultaDtoJwt;
 import school.sptech.backend.service.usuario.dto.UsuarioCriacaoDtoJwt;
-import school.sptech.backend.domain.usuario.Usuario;
 import school.sptech.backend.service.usuario.dto.UsuarioMapper;
-import school.sptech.backend.domain.usuario.repository.UsuarioRepository;
 
+import java.nio.charset.StandardCharsets;
+import java.util.Arrays;
+import java.util.Base64;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class UsuarioService {
@@ -33,6 +40,12 @@ public class UsuarioService {
 
     @Autowired
     private AuthenticationManager authenticationManager;
+
+    private final JavaMailSender javaMailSender;
+
+    public UsuarioService(JavaMailSender javaMailSender) {
+        this.javaMailSender = javaMailSender;
+    }
 
     public void criar(UsuarioCriacaoDtoJwt usuarioCriacaoDto){
 
@@ -81,5 +94,27 @@ public class UsuarioService {
 
     public Usuario porId(Integer id) {
         return usuarioRepository.findById(id).orElseThrow(() -> new NaoEncontradoException("Usuario"));
+    }
+
+    public Boolean enviarEmail(String email) {
+        Optional<Usuario> byEmail = usuarioRepository.findByEmail(email);
+        if (byEmail.isEmpty()) return false;
+        Usuario usuario = byEmail.get();
+
+        SimpleMailMessage message = new SimpleMailMessage();
+        message.setFrom("techideas.org@gmail.com");
+        message.setTo(email);
+        message.setSubject("Recuperação de senha");
+        String textoCript = Base64.getEncoder().withoutPadding().encodeToString(String.valueOf(usuario.getId()).getBytes());
+        message.setText("http://localhost:3000/redefinir-senha-nova-senha?code="+textoCript);
+        javaMailSender.send(message);
+        return true;
+    }
+
+    public Boolean alterarSenha(String code, String senha) {
+        String decode = new String(Base64.getDecoder().decode(code.getBytes()));
+        Integer id = Integer.parseInt(decode);
+        usuarioRepository.setNewPassword(senha, id);
+        return true;
     }
 }
