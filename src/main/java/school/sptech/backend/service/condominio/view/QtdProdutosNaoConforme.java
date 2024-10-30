@@ -17,7 +17,7 @@ import lombok.Setter;
 public class QtdProdutosNaoConforme {
 
     @Id
+    private Integer condominioId;
     private String nomeCondominio;
-    private String nomeProduto;
     private Integer qtdProdutos;
 }

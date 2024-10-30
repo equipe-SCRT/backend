@@ -17,6 +17,7 @@ import lombok.Setter;
 public class QtdProdutosVencidos {
 
     @Id
+    private Integer condominioId;
     private String nomeCondominio;
     private Integer qtdVencidos;
 }

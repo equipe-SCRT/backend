@@ -4,6 +4,7 @@ import lombok.Data;
 
 @Data
 public class QtdProdutosVencidosListagemDto {
+    private Integer condominioId;
     private String nomeCondominio;
     private Integer qtdVencidos;
 }

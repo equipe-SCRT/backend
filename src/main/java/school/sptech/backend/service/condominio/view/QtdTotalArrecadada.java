@@ -18,6 +18,6 @@ public class QtdTotalArrecadada {
 
     @Id
     private Integer produtoId;
-    private String nomeCondominio;
+    private String nome;
     private String qtdProdutos;
 }
