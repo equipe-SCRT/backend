@@ -11,6 +11,7 @@ import school.sptech.backend.service.BaseService;
 import school.sptech.backend.service.condominio.view.*;
 import school.sptech.backend.service.endereco.EnderecoService;
 
+import java.util.Collections;
 import java.util.List;
 
 @Service
@@ -67,16 +68,16 @@ public class CondominioService implements BaseService<Condominio, Integer> {
         return null;
     }
 
-    public List<QtdTotalArrecadada> listarQtdArrecadada() {
-        return qtdTotalArrecadadaRepository.findAll();
+    public List<QtdTotalArrecadada> listarQtdArrecadada(Integer id) {
+        return qtdTotalArrecadadaRepository.findAllByProdutoId(id);
     }
 
-    public List<QtdProdutosVencidos> listarQtdVencidos() {
-        return qtdProdutosVencidosRepository.findAll();
+    public List<QtdProdutosVencidos> listarQtdVencidos(Integer id) {
+        return qtdProdutosVencidosRepository.findByCondominioId(id);
     }
 
-    public List<QtdProdutosNaoConforme> listarQtdNaoConforme() {
-        return qtdProdutosNaoConformeRepository.findAll();
+    public List<QtdProdutosNaoConforme> listarQtdNaoConforme(Integer id) {
+        return qtdProdutosNaoConformeRepository.findByCondominioId(id);
     }
 
     public List<ProdutosConformeENaoConforme> listarProdutosConformeENaoConforme() {
@@ -87,7 +88,7 @@ public class CondominioService implements BaseService<Condominio, Integer> {
         return produtosArrecadadosPorMesRepository.findAll();
     }
 
-    public List<ProdutosArrecadadosPorCondominio> listarProdutosArrecadadosPorCondominio() {
-        return produtosArrecadadosPorCondominioRepository.findAll();
+    public List<ProdutosArrecadadosPorCondominio> listarProdutosArrecadadosPorCondominio(Integer id) {
+        return produtosArrecadadosPorCondominioRepository.findByCondominioId(id);
     }
 }

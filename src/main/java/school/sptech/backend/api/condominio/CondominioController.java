@@ -66,25 +66,25 @@ public class CondominioController implements BaseController<CondominioCriacaoDto
         return ResponseEntity.noContent().build();
     }
 
-    @GetMapping("/qtd-total-arrecadada")
-    public ResponseEntity<List<QtdTotalArrecadadaListagemDto>> qtdTotalArrecadada() {
-        List<QtdTotalArrecadada> qtdTotalArrecadada = service.listarQtdArrecadada();
+    @GetMapping("/qtd-total-arrecadada/{id}")
+    public ResponseEntity<List<QtdTotalArrecadadaListagemDto>> qtdTotalArrecadada(@PathVariable Integer id) {
+        List<QtdTotalArrecadada> qtdTotalArrecadada = service.listarQtdArrecadada(id);
         List<QtdTotalArrecadadaListagemDto> dto = qtdTotalArrecadadaMapper.toDto(qtdTotalArrecadada);
         dto.forEach(System.out::println);
         return ResponseEntity.ok(dto);
     }
 
-    @GetMapping("/qtd-produtos-vencidos")
-    public ResponseEntity<List<QtdProdutosVencidosListagemDto>> qtdProdutosVencidos() {
-        List<QtdProdutosVencidos> qtdProdutosVencidos = service.listarQtdVencidos();
+    @GetMapping("/qtd-produtos-vencidos/{id}")
+    public ResponseEntity<List<QtdProdutosVencidosListagemDto>> qtdProdutosVencidos(@PathVariable Integer id) {
+        List<QtdProdutosVencidos> qtdProdutosVencidos = service.listarQtdVencidos(id);
         List<QtdProdutosVencidosListagemDto> dto = qtdProdutosVencidosMapper.toDto(qtdProdutosVencidos);
         dto.forEach(System.out::println);
         return ResponseEntity.ok(dto);
     }
 
-    @GetMapping("/qtd-produtos-nao-conforme")
-    public ResponseEntity<List<QtdProdutosNaoConformeListagemDto>> qtdProdutosNaoConforme() {
-        List<QtdProdutosNaoConforme> qtdProdutosNaoConforme = service.listarQtdNaoConforme();
+    @GetMapping("/qtd-produtos-nao-conforme/{id}")
+    public ResponseEntity<List<QtdProdutosNaoConformeListagemDto>> qtdProdutosNaoConforme(@PathVariable Integer id) {
+        List<QtdProdutosNaoConforme> qtdProdutosNaoConforme = service.listarQtdNaoConforme(id);
         List<QtdProdutosNaoConformeListagemDto> dto = qtdProdutosNaoConformeMapper.toDto(qtdProdutosNaoConforme);
         dto.forEach(System.out::println);
         return ResponseEntity.ok(dto);
@@ -106,9 +106,9 @@ public class CondominioController implements BaseController<CondominioCriacaoDto
         return ResponseEntity.ok(dto);
     }
 
-    @GetMapping("/produtos-arrecadados-por-condominio")
-    public ResponseEntity<List<ProdutosArrecadadosPorCondominioListagemDto>> produtosArrecadadosPorCondominio() {
-        List<ProdutosArrecadadosPorCondominio> produtosArrecadadosPorCondominio = service.listarProdutosArrecadadosPorCondominio();
+    @GetMapping("/produtos-arrecadados-por-condominio/{id}")
+    public ResponseEntity<List<ProdutosArrecadadosPorCondominioListagemDto>> produtosArrecadadosPorCondominio(@PathVariable Integer id) {
+        List<ProdutosArrecadadosPorCondominio> produtosArrecadadosPorCondominio = service.listarProdutosArrecadadosPorCondominio(id);
         List<ProdutosArrecadadosPorCondominioListagemDto> dto = produtosArrecadadosPorCondominioMapper.toDto(produtosArrecadadosPorCondominio);
         dto.forEach(System.out::println);
         return ResponseEntity.ok(dto);
