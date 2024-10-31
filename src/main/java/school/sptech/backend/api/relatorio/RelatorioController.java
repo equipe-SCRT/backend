@@ -19,6 +19,8 @@ import school.sptech.backend.service.produtounitario.dto.ProdutoUnitarioLeituraD
 import school.sptech.backend.service.produtounitario.dto.ProdutoUnitarioMapper;
 import school.sptech.backend.service.produtounitario.dto.ProdutoUnitarioRelatorioDto;
 import school.sptech.backend.service.produtounitario.view.VencidoArrecadado;
+
+import java.nio.file.Paths;
 import java.util.Map;
 import java.util.List;
 
@@ -33,6 +35,9 @@ import software.amazon.awssdk.services.lambda.LambdaClient;
 import software.amazon.awssdk.services.lambda.model.InvokeRequest;
 import software.amazon.awssdk.services.lambda.model.InvokeResponse;
 import software.amazon.awssdk.services.lambda.model.LambdaException;
+import software.amazon.awssdk.services.s3.S3Client;
+import software.amazon.awssdk.services.s3.model.GetObjectRequest;
+import software.amazon.awssdk.services.s3.model.PutObjectRequest;
 
 import java.io.BufferedReader;
 
@@ -60,6 +65,8 @@ public class RelatorioController {
     public ResponseEntity<Exception> importar(
             @RequestBody byte[] referenciaArquivo, @RequestHeader("fileName") String fileName
     ) {
+
+
 
        String funcao = "lambda_handler";
        Region region = Region.US_EAST_1;
