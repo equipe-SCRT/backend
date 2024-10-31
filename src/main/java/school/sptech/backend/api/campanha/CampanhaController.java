@@ -7,12 +7,20 @@ import org.springframework.web.bind.annotation.*;
 import school.sptech.backend.api.BaseController;
 import school.sptech.backend.domain.campanha.Campanha;
 import school.sptech.backend.service.campanha.CampanhaService;
+
 import school.sptech.backend.service.campanha.dto.CampanhaAtualizacaoDto;
 import school.sptech.backend.service.campanha.dto.CampanhaCriacaoDto;
 import school.sptech.backend.service.campanha.dto.CampanhaListagemDto;
 import school.sptech.backend.service.campanha.dto.CampanhaMapper;
 
+import school.sptech.backend.service.campanha.dto.*;
+import school.sptech.backend.service.campanha.view.QtdDoacoesPorCampanha;
+import school.sptech.backend.service.produto.dto.ProdutoAtualizacaoDto;
+import school.sptech.backend.service.produto.dto.ProdutoListagemDto;
+
+
 import java.net.URI;
+import java.time.LocalDate;
 import java.util.List;
 
 @RestController
@@ -22,6 +30,7 @@ public class CampanhaController implements BaseController<CampanhaCriacaoDto,Cam
 
     private final CampanhaService campanhaService;
     private final CampanhaMapper campanhaMapper;
+    private final QtdDoacoesPorCampanhaMapper qtdDoacoesPorCampanhaMapper;
 
     @PostMapping
     public ResponseEntity<CampanhaListagemDto> criar(@RequestBody @Valid CampanhaCriacaoDto campanhaCriacao) {
@@ -56,5 +65,20 @@ public class CampanhaController implements BaseController<CampanhaCriacaoDto,Cam
     public ResponseEntity<Void> deletar(@PathVariable Integer id){
         this.campanhaService.deletar(id);
         return ResponseEntity.noContent().build();
+    }
+
+    @GetMapping("/doacoes-por-campanhas")
+    public ResponseEntity<List<QtdDoacoesPorCampanhaListagemDto>> qtdDoacoesPorCampanha(@RequestParam String nome){
+        List<QtdDoacoesPorCampanha> qtdProdutosVencidosPorCampanha = campanhaService.qtdDoacoesPorCampanhas(nome);
+        List<QtdDoacoesPorCampanhaListagemDto> dto = qtdDoacoesPorCampanhaMapper.toDto(qtdProdutosVencidosPorCampanha);
+        return ResponseEntity.ok(dto);
+    }
+
+
+    @GetMapping("/dados-por-data")
+    public ResponseEntity<List<CampanhaListagemDto>> porData(@RequestParam LocalDate data){
+        List<Campanha> campanhas = campanhaService.porData(data);
+        List<CampanhaListagemDto> dto = campanhaMapper.toDto(campanhas);
+        return ResponseEntity.ok(dto);
     }
 }

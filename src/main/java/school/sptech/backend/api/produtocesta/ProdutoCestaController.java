@@ -19,12 +19,17 @@ import java.util.List;
 @RequestMapping("/produto-cestas")
 public class ProdutoCestaController{
 
+
     private final ProdutoCestaService service;
     private final ProdutoCestaMapper mapper;
 
     @PostMapping
-    public ResponseEntity<ProdutoCestaEntityDto> criar(@Valid @RequestBody ProdutoCestaCriacaoDto produtoCestaDto){
-        ProdutoCesta adicionado = service.criar(produtoCestaDto);
+    public ResponseEntity<ProdutoCestaEntityDto> criar(@Valid @RequestBody ProdutoCestaCriacaoDto produtoCestaCriacaoDto){
+
+        Integer produtoId = produtoCestaCriacaoDto.getProdutoId();
+        Integer tipoCestaId = produtoCestaCriacaoDto.getTipoCestaId();
+
+        ProdutoCesta adicionado = service.criar(mapper.toEntity(produtoCestaCriacaoDto), produtoId, tipoCestaId);
         ProdutoCestaEntityDto dto = mapper.toDto(adicionado);
         return ResponseEntity.status(201).body(dto);
     }

@@ -18,10 +18,10 @@ import school.sptech.backend.domain.tipocesta.TipoCesta;
 @AllArgsConstructor
 public class ProdutoCesta extends BaseEntity {
 
+    private Integer qtdProduto;
     @ManyToOne
     private Produto Produto;
     @ManyToOne
     private TipoCesta tipoCesta;
-
     private Integer qtdProduto;
 }

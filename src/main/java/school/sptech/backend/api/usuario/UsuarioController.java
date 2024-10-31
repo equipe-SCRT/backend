@@ -57,6 +57,18 @@ public class UsuarioController {
     public ResponseEntity<Void> deletarUsuario(@PathVariable int idUsuario){
       usuarioService.deleteUsuario(idUsuario);
       return ResponseEntity.status(204).build();
+    @PostMapping("/recuperar-senha/{email}")
+    public ResponseEntity<Void> recuperar(@PathVariable String email){
+        Boolean emailEnviado = usuarioService.enviarEmail(email);
+        return ResponseEntity.status(200).build();
+
+    }
+
+    @PatchMapping("/trocar-senha")
+    public ResponseEntity<Void> alterarSenha(@RequestParam String code, @RequestParam String senha){
+        Boolean emailEnviado = usuarioService.alterarSenha(code, senha);
+
+        return ResponseEntity.status(200).build();
     }
 
 //    @PostMapping

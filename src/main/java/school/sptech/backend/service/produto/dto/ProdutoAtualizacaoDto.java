@@ -13,13 +13,7 @@ public class ProdutoAtualizacaoDto {
     private String nome;
 
     @NotNull
-    private int qtdUnidadeMedida;
-
-    @NotNull
     @Positive
     private int tipoProdutoId;
 
-    @NotNull
-    @Positive
-    private int tipoUnidadeMedidaId;
 }

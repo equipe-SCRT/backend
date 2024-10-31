@@ -10,6 +10,7 @@ import school.sptech.backend.domain.BaseEntity;
 import school.sptech.backend.domain.produto.Produto;
 import school.sptech.backend.domain.tipocampanha.TipoCampanha;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 @Entity
@@ -20,7 +21,7 @@ import java.util.Date;
 public class Campanha extends BaseEntity {
 
     private String localCampanha;
-    private Date dataCampanha;
+    private LocalDate dataCampanha;
     private Integer qtdArrecadada;
     private Integer meta;
     @ManyToOne

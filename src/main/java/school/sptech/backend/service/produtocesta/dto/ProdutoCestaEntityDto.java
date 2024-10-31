@@ -6,6 +6,7 @@ import lombok.Data;
 public class ProdutoCestaEntityDto {
 
     private int id;
+    private int qtdProduto;
     private int idProduto;
     private int idCesta;
 }

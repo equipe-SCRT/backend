@@ -10,6 +10,10 @@ import school.sptech.backend.domain.produto.Produto;
 import school.sptech.backend.domain.produtounitario.ProdutoUnitario;
 import school.sptech.backend.domain.rota.Rota;
 import school.sptech.backend.domain.unidademedida.UnidadeMedida;
+import school.sptech.backend.service.produtounitario.view.QtdAtivoPorMes;
+import school.sptech.backend.service.produtounitario.view.QtdVencidoPorMes;
+import school.sptech.backend.service.produtounitario.view.VencidoArrecadado;
+import school.sptech.backend.service.produtounitario.view.Vencimento15E30Dias;
 
 
 import java.util.List;
@@ -23,11 +27,31 @@ public interface ProdutoUnitarioMapper {
     @Mapping(target = "produto", source = "produtoId", qualifiedByName = "produtoFromId")
     ProdutoUnitario toEntity(ProdutoUnitarioCriacaoDto dto);
 
-    List<ProdutoUnitarioListagemDto> toDto(List<ProdutoUnitario> entities);
 
     @Mapping(target = "origem", source = "origemId", qualifiedByName = "origemFromId")
     @Mapping(target = "produto", source = "produtoId", qualifiedByName = "produtoFromId")
-    ProdutoUnitario atualizacaoDto(ProdutoUnitarioAtualizacaoDto dto);
+    ProdutoUnitario toEntity(ProdutoUnitarioAtualizacaoDto dto);
+
+
+    List<ProdutoUnitarioListagemDto> toDto(List<ProdutoUnitario> entities);
+
+    List<ProdutoUnitarioRelatorioDto> toDtoRelatorio(List<ProdutoUnitario> entities);
+
+    @Mapping(target = "origem", source = "origemId", qualifiedByName = "origemFromId")
+    @Mapping(target = "produto", source = "produtoId", qualifiedByName = "produtoFromId")
+    ProdutoUnitario toDto(ProdutoUnitarioAtualizacaoDto dto);
+
+    QtdVencidoPorMesDto qtdVencidoPorMestoDto(QtdVencidoPorMes entity);
+    List<QtdVencidoPorMesDto> qtdVencidoPorMesToDto(List<QtdVencidoPorMes> entity);
+
+    QtdAtivoPorMesDto qtdAtivoPorMesToDto(QtdAtivoPorMes entity);
+    List<QtdAtivoPorMesDto> qtdAtivoPorMesToDto(List<QtdAtivoPorMes> entity);
+
+    Vencimento15E30DiasDto vencimento15E30DiasToDto(Vencimento15E30Dias entity);
+
+    VencidoArrecadadoDto vencidoArrecadadoToDto(VencidoArrecadado entity);
+    List<VencidoArrecadadoDto> vencidoArrecadadoToDto(List<VencidoArrecadado> entity);
+
 
     @Named("origemFromId")
     default Origem origemFromId(Integer id) {
@@ -83,4 +107,6 @@ public interface ProdutoUnitarioMapper {
         metrica.setId(id);
         return metrica;
     }
+    
+    
 }

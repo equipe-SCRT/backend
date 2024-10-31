@@ -10,8 +10,11 @@ import school.sptech.backend.exception.NaoEncontradoException;
 import school.sptech.backend.service.BaseService;
 import school.sptech.backend.service.tipoproduto.TipoProdutoService;
 import school.sptech.backend.service.unidademedida.UnidadeMedidaService;
+import school.sptech.backend.service.campanha.view.AlimentosArrecadadosPorMes;
+import school.sptech.backend.domain.campanha.repository.AlimentosArrecadadosPorMesRepository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -22,6 +25,8 @@ public class ProdutoService implements BaseService<Produto, Integer> {
     private final TipoProdutoService tipoProdutoService;
 
     private final UnidadeMedidaService unidadeMedidaService;
+
+    private final AlimentosArrecadadosPorMesRepository alimentosArrecadadosPorMesRepository;
 
     public Produto criar(Produto novoProduto){
         novoProduto.setTipoProduto(tipoProdutoService.porId(novoProduto.getTipoProduto().getId()));
@@ -42,9 +47,14 @@ public class ProdutoService implements BaseService<Produto, Integer> {
     }
 
     public Produto atualizar(Integer id, Produto produtoAtualizado){
-        if (!repository.existsById(id)) {
+        Optional<Produto> byId = repository.findById(id);
+        if(byId.isEmpty()){
             throw new NaoEncontradoException("Produto");
         }
+        Produto produto = byId.get();
+        produtoAtualizado.setTipoProduto(tipoProdutoService.porId(produtoAtualizado.getTipoProduto().getId()));
+        produtoAtualizado.setUnidadeMedida(produto.getUnidadeMedida());
+        produtoAtualizado.setQtdUnidadeMedida(produto.getQtdUnidadeMedida());
         produtoAtualizado.setId(id);
         return repository.save(produtoAtualizado);
     }
@@ -55,5 +65,9 @@ public class ProdutoService implements BaseService<Produto, Integer> {
         }
         repository.deleteById(id);
         return null;
+    }
+
+    public List<AlimentosArrecadadosPorMes>  alimentosArrecadadosPorMes(){
+        return alimentosArrecadadosPorMesRepository.findAll();
     }
 }

@@ -17,4 +17,7 @@ public class ProdutoCestaCriacaoDto {
         private int idProduto;
         private int qtdProduto;
     }
+    private int qtdProduto;
+    private int produtoId;
+    private int tipoCestaId;
 }

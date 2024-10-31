@@ -11,6 +11,9 @@ import school.sptech.backend.service.produto.dto.ProdutoAtualizacaoDto;
 import school.sptech.backend.service.produto.dto.ProdutoCriacaoDto;
 import school.sptech.backend.service.produto.dto.ProdutoListagemDto;
 import school.sptech.backend.service.produto.dto.ProdutoMapper;
+import school.sptech.backend.service.campanha.view.AlimentosArrecadadosPorMes;
+import school.sptech.backend.service.campanha.dto.AlimentosArrecadadosPorMesListagemDto;
+import school.sptech.backend.service.campanha.dto.AlimentosArrecadadosPorMesMapper;
 
 import java.net.URI;
 import java.util.List;
@@ -23,6 +26,8 @@ public class ProdutoController implements BaseController<ProdutoCriacaoDto, Prod
     private final ProdutoService service;
 
     private final ProdutoMapper mapper;
+
+    private final AlimentosArrecadadosPorMesMapper alimentosArrecadadosPorMesMapper;
 
     @PostMapping
     public ResponseEntity<ProdutoListagemDto> criar(@RequestBody @Valid ProdutoCriacaoDto novoProduto){
@@ -71,7 +76,7 @@ public class ProdutoController implements BaseController<ProdutoCriacaoDto, Prod
     @PutMapping("/{id}")
     public ResponseEntity<ProdutoListagemDto> atualizar(@PathVariable Integer id, @RequestBody @Valid ProdutoAtualizacaoDto produtoAtualizado) {
         Produto produto = mapper.atualizacaoDto(produtoAtualizado);
-        Produto resposta = service.atualizar(produto.getId(), produto);
+        Produto resposta = service.atualizar(id, produto);
         ProdutoListagemDto dto = mapper.toDto(resposta);
         return ResponseEntity.ok(dto);
     }
@@ -80,6 +85,13 @@ public class ProdutoController implements BaseController<ProdutoCriacaoDto, Prod
     public ResponseEntity<Void> deletar(@PathVariable Integer id){
         service.deletar(id);
         return ResponseEntity.noContent().build();
+    }
+
+    @GetMapping("/alimentos-arrecadados-por-mes")
+    public ResponseEntity<List<AlimentosArrecadadosPorMesListagemDto>> alimentosArrecadadosPorMes(){
+        List<AlimentosArrecadadosPorMes> alimentosArrecadadosPorMes = service.alimentosArrecadadosPorMes();
+        List<AlimentosArrecadadosPorMesListagemDto> dto = alimentosArrecadadosPorMesMapper.toDto(alimentosArrecadadosPorMes);
+        return ResponseEntity.ok(dto);
     }
 
 }

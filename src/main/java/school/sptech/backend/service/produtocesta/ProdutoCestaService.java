@@ -4,8 +4,11 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.HttpServerErrorException;
+import school.sptech.backend.domain.produto.Produto;
 import school.sptech.backend.domain.produtocesta.ProdutoCesta;
 import school.sptech.backend.domain.produtocesta.repository.ProdutoCestaRepository;
+import school.sptech.backend.domain.tipocesta.TipoCesta;
+import school.sptech.backend.service.BaseService;
 import school.sptech.backend.service.produto.ProdutoService;
 import school.sptech.backend.service.produtocesta.dto.ProdutoCestaCriacaoDto;
 import school.sptech.backend.service.tipocesta.TipoCestaService;
@@ -25,6 +28,14 @@ public class ProdutoCestaService {
         produtoCesta.setProduto(produtoService.porId(produtoCestaCriacaoDto.getProduto().getIdProduto()));
         produtoCesta.setTipoCesta(tipoCestaService.porId(produtoCestaCriacaoDto.getIdTipoCesta()));
         produtoCesta.setQtdProduto(produtoCestaCriacaoDto.getProduto().getQtdProduto());
+
+    public ProdutoCesta criar(ProdutoCesta produtoCesta, Integer produtoId, Integer tipoCestaId){
+
+        Produto produto = produtoService.porId(produtoId);
+        TipoCesta tipoCesta = tipoCestaService.porId(tipoCestaId);
+        produtoCesta.setProduto(produto);
+        produtoCesta.setTipoCesta(tipoCesta);
+
         return repository.save(produtoCesta);
     }
 
