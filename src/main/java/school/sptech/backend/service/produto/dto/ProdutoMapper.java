@@ -20,7 +20,6 @@ public interface ProdutoMapper {
     List<ProdutoListagemDto> toDto(List<Produto> entities);
 
     @Mapping(target = "tipoProduto", source = "tipoProdutoId", qualifiedByName = "tipoProdutoFromId")
-    @Mapping(target = "unidadeMedida", source = "tipoUnidadeMedidaId", qualifiedByName = "tipoUnidadeMedidaFromId")
     Produto atualizacaoDto(ProdutoAtualizacaoDto dto);
 
     @Named("tipoProdutoFromId")

@@ -12,7 +12,6 @@ import java.util.Date;
 public class CampanhaListagemDto {
 
     private Integer id;
-    private String nome;
     private String localCampanha;
     private LocalDate dataCampanha;
     private Integer qtdArrecadada;

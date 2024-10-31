@@ -27,6 +27,7 @@ public class UsuarioMapper {
         usuarioTokenDto.setUserId(usuario.getId());
         usuarioTokenDto.setEmail(usuario.getEmail());
         usuarioTokenDto.setNome(usuario.getNome());
+        usuarioTokenDto.setTipoUsuario(usuario.getTipoUsuario());
         usuarioTokenDto.setToken(token);
 
         return  usuarioTokenDto;
@@ -52,6 +53,7 @@ public class UsuarioMapper {
 
         for (Usuario usuario : usuarios) {
             UsuarioConsultaDtoJwt usuarioConsultaDto = new UsuarioConsultaDtoJwt();
+            usuarioConsultaDto.setId(usuario.getId());
             usuarioConsultaDto.setTipoUsuario(usuario.getTipoUsuario());
             usuarioConsultaDto.setNome(usuario.getNome());
             usuarioConsultaDto.setEmail(usuario.getEmail());

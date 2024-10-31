@@ -30,7 +30,6 @@ public class OrigemListagemDto {
     @Data
     public static class CampanhaDto {
         private Integer id;
-        private String nome;
         private String local_campanha;
         private Date data_campanha;
         private Integer qtd_arrecadada;

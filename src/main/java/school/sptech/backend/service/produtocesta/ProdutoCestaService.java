@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.HttpServerErrorException;
+import org.springframework.web.server.ResponseStatusException;
 import school.sptech.backend.domain.produto.Produto;
 import school.sptech.backend.domain.produtocesta.ProdutoCesta;
 import school.sptech.backend.domain.produtocesta.repository.ProdutoCestaRepository;
@@ -37,13 +38,13 @@ public class ProdutoCestaService {
         return repository.findAll();
     }
 
-    public ProdutoCesta porId(Integer id){
-        Optional<ProdutoCesta> prod = repository.findById(id);
+    public List<ProdutoCesta> porId(Integer id){
+        List<ProdutoCesta> prod = repository.findByTipoCestaId(id);
 
         if(prod.isEmpty())
             throw new HttpServerErrorException(HttpStatus.NOT_FOUND);
 
-        return prod.get();
+        return prod;
     }
 
     public Void deletar(Integer id){
@@ -54,15 +55,22 @@ public class ProdutoCestaService {
         return null;
     }
 
+    private ProdutoCesta produtoCestaPorId(Integer id){
+        var pd = repository.findById(id).orElseThrow(
+                () -> new ResponseStatusException(HttpStatus.NOT_FOUND)
+        );
+
+        return pd;
+    }
+
     public ProdutoCesta atualizar(Integer id, ProdutoCesta produtoCesta){
         if (!repository.existsById(id))
             throw new HttpServerErrorException(HttpStatus.NOT_FOUND);
 
-        produtoCesta.setId(id);
-        return repository.save(produtoCesta);
+        var produtoCestaAtual = produtoCestaPorId(id);
+        produtoCestaAtual.setId(id);
+        produtoCestaAtual.setQtdProduto(produtoCesta.getQtdProduto());
+
+        return repository.save(produtoCestaAtual);
     }
-
-
-
-
 }
