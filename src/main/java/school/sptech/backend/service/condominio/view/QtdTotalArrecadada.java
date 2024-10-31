@@ -17,7 +17,8 @@ import lombok.Setter;
 public class QtdTotalArrecadada {
 
     @Id
-    private Integer produtoId;
+    private Integer condominioId;
     private String nome;
+    private Integer produtoId;
     private String qtdProdutos;
 }
