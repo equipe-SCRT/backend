@@ -6,6 +6,7 @@ import lombok.Setter;
 import school.sptech.backend.domain.BaseEntity;
 import school.sptech.backend.domain.Timestamped;
 import school.sptech.backend.domain.tipoproduto.TipoProduto;
+//import school.sptech.backend.service.tipoprodutocesta.TipoProdutoCesta;
 
 import java.util.List;
 
@@ -15,6 +16,6 @@ import java.util.List;
 public class TipoCesta extends BaseEntity {
 
     private String nome;
-    @OneToMany
-    private List<TipoProduto> tipoProduto;
+//    @OneToMany(mappedBy = "tipo_cesta")
+//    private List<TipoProdutoCesta> tipoProdutoCestas;
 }
