@@ -1,4 +1,4 @@
-package school.sptech.backend.view.alimentosarrecadadospormes;
+package school.sptech.backend.service.campanha.view;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
