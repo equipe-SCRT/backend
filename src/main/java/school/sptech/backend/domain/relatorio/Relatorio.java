@@ -1,20 +1,17 @@
 package school.sptech.backend.domain.relatorio;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import school.sptech.backend.service.produtounitario.dto.ProdutoUnitarioListagemDto;
 
 @Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class Relatorio {
 
-    private ProdutoUnitarioListagemDto.Produto produto;
+    private String produto;
     private Integer qtdVencido;
     private Integer qtdArrecadado;
-    private String mesReferencia;
-
-    @Data
-    public static class Produto {
-        private Integer id;
-        private String nome;
-    }
 
 }
