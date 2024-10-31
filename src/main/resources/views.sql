@@ -187,3 +187,78 @@ GROUP BY
     condominio.nome, DATE_FORMAT(produto_unitario.criado_em, '%Y-%m')
 ORDER BY
     condominio.nome, mes;
+
+DROP VIEW IF EXISTS v_qtd_total_alimentos_arrecadados_por_mes;
+CREATE VIEW v_qtd_total_alimentos_arrecadados_por_mes AS
+SELECT
+    SUM(qtd_arrecadada) AS qtd_arrecadada,
+        MONTH(data_campanha) AS mes,
+        YEAR(data_campanha) AS ano
+        FROM
+        campanha
+        GROUP BY YEAR(data_campanha) , MONTH(data_campanha)
+        ORDER BY mes;
+
+DROP VIEW IF EXISTS v_qtd_produto_por_campanha;
+CREATE VIEW v_qtd_produto_por_campanha AS
+SELECT
+    campanha.id AS campanha_id,
+    campanha.nome AS nome,
+    produto_unitario.produto_id,
+    COUNT(produto_unitario.id) AS qtd_produtos
+FROM
+    produto_unitario
+        JOIN
+    origem ON origem.id = produto_unitario.origem_id
+        JOIN
+    campanha ON campanha.id = origem.campanha_id
+GROUP BY
+    campanha.id, produto_unitario.produto_id
+ORDER BY
+    campanha.nome;
+
+DROP VIEW IF EXISTS v_qtd_produtos_vencidos_por_campanha;
+CREATE VIEW v_qtd_produtos_vencidos_por_campanha AS
+SELECT
+    campanha.id as campanha_id,
+    campanha.nome AS nome,
+    produto_unitario.produto_id,
+    COUNT(produto_unitario.id) AS qtd_produtos_vencidos
+FROM
+    produto_unitario
+        JOIN
+    origem ON origem.id = produto_unitario.origem_id
+        JOIN
+    campanha ON campanha.id = origem.campanha_id
+WHERE
+    produto_unitario.vencido = TRUE
+GROUP BY
+    campanha.id, produto_unitario.produto_id
+ORDER BY
+    campanha.id;
+
+DROP VIEW IF EXISTS v_qtd_doacoes_por_campanha;
+CREATE VIEW v_qtd_doacoes_por_campanha AS
+SELECT
+    SUM(campanha.qtd_arrecadada) AS qtd_arrecadada,
+    campanha.nome,
+        MONTH(campanha.data_campanha) AS mes,
+        YEAR(campanha.data_campanha) AS ano
+        FROM
+        campanha
+        GROUP BY campanha.nome, YEAR(campanha.data_campanha), MONTH(campanha.data_campanha)
+        ORDER BY nome, ano, mes;
+
+DROP VIEW IF EXISTS v_produtos_conforme_nao_conforme_campanhas;
+CREATE VIEW v_produtos_conforme_nao_conforme_campanhas AS
+SELECT
+    c.nome,
+    SUM(CASE WHEN pu.vencido = false THEN 1 ELSE 0 END) AS conforme,
+    SUM(CASE WHEN pu.vencido = true THEN 1 ELSE 0 END) AS nao_conforme
+FROM
+    produto_unitario pu
+        JOIN produto p on pu.produto_id = p.id
+        JOIN origem o on pu.origem_id = o.id
+        JOIN campanha c on o.campanha_id = c.id
+GROUP BY
+    c.id;

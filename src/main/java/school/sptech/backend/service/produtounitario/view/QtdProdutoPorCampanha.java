@@ -13,7 +13,8 @@ import lombok.*;
 @Table(name = "v_qtd_produto_por_campanha")
 public class QtdProdutoPorCampanha {
     @Id
-    private Integer produtoId;
+    private Integer campanhaId;
     private String nome;
+    private Integer produtoId;
     private Integer qtdProdutos;
 }
