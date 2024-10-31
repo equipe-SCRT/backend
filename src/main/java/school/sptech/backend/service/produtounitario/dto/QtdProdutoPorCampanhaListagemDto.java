@@ -4,7 +4,8 @@ import lombok.Data;
 
 @Data
 public class QtdProdutoPorCampanhaListagemDto {
-    private Integer produtoId;
+    private Integer campanhaId;
     private String nome;
+    private Integer produtoId;
     private Integer qtdProdutos;
 }

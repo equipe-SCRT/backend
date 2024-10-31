@@ -14,11 +14,10 @@ import school.sptech.backend.domain.produtounitario.repository.QtdProdutosVencid
 import school.sptech.backend.domain.produtounitario.repository.*;
 import school.sptech.backend.exception.NaoEncontradoException;
 import school.sptech.backend.service.BaseService;
+import school.sptech.backend.service.metrica.MetricaService;
 import school.sptech.backend.service.origem.OrigemService;
 import school.sptech.backend.service.produto.ProdutoService;
-import school.sptech.backend.service.produtounitario.dto.ProdutoUnitarioArrecadadoXVencidoDto;
-import school.sptech.backend.service.produtounitario.dto.ProdutoUnitarioCountMesDto;
-import school.sptech.backend.service.produtounitario.dto.ProdutoUnitarioVencimento15E30DiasDto;
+import school.sptech.backend.service.produtounitario.dto.QtdProdutoPorCampanhaListagemDto;
 import school.sptech.backend.service.produtounitario.view.ProdutosConformeNaoConformeCampanhas;
 import school.sptech.backend.service.produtounitario.view.QtdProdutoPorCampanha;
 import school.sptech.backend.service.produtounitario.view.QtdProdutosVencidosPorCampanha;
@@ -145,6 +144,6 @@ public class ProdutoUnitarioService implements BaseService<ProdutoUnitario, Inte
     }
 
     public List<ProdutosConformeNaoConformeCampanhas> produtosConformeNaoConformeCampanhas(){
-        return produtosConformeNaoConformeCampanhasRepository.findTop5ByOrderByNomeDesc();
+        return produtosConformeNaoConformeCampanhasRepository.findTop4ByOrderByNaoConformeDesc();
     }
 }

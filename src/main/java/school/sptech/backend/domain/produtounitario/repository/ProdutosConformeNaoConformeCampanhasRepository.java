@@ -6,5 +6,5 @@ import school.sptech.backend.service.produtounitario.view.ProdutosConformeNaoCon
 import java.util.List;
 
 public interface ProdutosConformeNaoConformeCampanhasRepository extends JpaRepository<ProdutosConformeNaoConformeCampanhas, Integer> {
-    List<ProdutosConformeNaoConformeCampanhas> findTop5ByOrderByNomeDesc();
+    List<ProdutosConformeNaoConformeCampanhas> findTop4ByOrderByNaoConformeDesc();
 }

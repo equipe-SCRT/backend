@@ -4,7 +4,7 @@ import jakarta.validation.constraints.*;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.util.Date;
+import java.time.LocalDate;
 
 @Setter
 @Getter
@@ -17,7 +17,7 @@ public class CampanhaCriacaoDto {
     @Size(min = 2, max = 40)
     private String localCampanha;
     @PastOrPresent
-    private Date dataCampanha;
+    private LocalDate dataCampanha;
     @NotNull
     @Positive
     private Integer qtdArrecadada;
