@@ -12,5 +12,6 @@ public interface CestaRepository extends JpaRepository<Cesta, Integer> {
     @Query("SELECT coalesce(count(c), 0) FROM Cesta c WHERE MONTH(c.dataMontagem)= :mes AND YEAR(c.dataMontagem) = :ano")
     Integer qtdPorMesAno(@Param("mes") Integer mes, @Param("ano") Integer ano);
 
-
+    @Query("SELECT coalesce(count(*), 1) qtd FROM Cesta c group by c.tipoCesta.id order by qtd desc limit 1")
+    Integer qtdItemsCestaPrincipal();
 }

@@ -50,4 +50,10 @@ public class CestaService implements BaseService<Cesta, Integer> {
         return cestaRepository.qtdPorMesAno(LocalDate.now().getMonthValue(), LocalDate.now().getYear());
     }
 
+    public Integer qtdItemsCestaPrincipal(){
+        return cestaRepository.qtdItemsCestaPrincipal();
+    }
+
+
+
 }
