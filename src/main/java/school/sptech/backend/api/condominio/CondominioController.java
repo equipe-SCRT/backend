@@ -26,6 +26,7 @@ public class CondominioController implements BaseController<CondominioCriacaoDto
     private final ProdutosConformeENaoConformeMapper produtosConformeENaoConformeMapper;
     private final ProdutosArrecadadosPorMesMapper produtosArrecadadosPorMesMapper;
     private final ProdutosArrecadadosPorCondominioMapper produtosArrecadadosPorCondominioMapper;
+    private final QtdProdutosPorNomeCondominioMapper qtdProdutosPorNomeCondominioMapper;
 
     @PostMapping
     public ResponseEntity<CondominioListagemDto> criar(@RequestBody @Valid CondominioCriacaoDto dto) {
@@ -113,4 +114,14 @@ public class CondominioController implements BaseController<CondominioCriacaoDto
         dto.forEach(System.out::println);
         return ResponseEntity.ok(dto);
     }
+
+    @GetMapping("/produtos-por-nome-condominio/{nomeCondominio}")
+    public ResponseEntity<List<QtdProdutosPorNomeCondominioListagemDto>> produtosPorNomeCondominio(@PathVariable String nomeCondominio) {
+        List<QtdProdutosPorNomeCondominio> produtosPorNomeCondominio = service.listarProdutosPorNomeCondominio(nomeCondominio);
+        List<QtdProdutosPorNomeCondominioListagemDto> dto = qtdProdutosPorNomeCondominioMapper.toDto(produtosPorNomeCondominio);
+        dto.forEach(System.out::println);
+        return ResponseEntity.ok(dto);
+    }
+
+
 }

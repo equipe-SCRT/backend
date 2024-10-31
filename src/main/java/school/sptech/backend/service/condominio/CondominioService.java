@@ -1,9 +1,7 @@
 package school.sptech.backend.service.condominio;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
-import org.springframework.web.server.ResponseStatusException;
 import school.sptech.backend.domain.condominio.Condominio;
 import school.sptech.backend.domain.condominio.repository.*;
 import school.sptech.backend.exception.NaoEncontradoException;
@@ -11,7 +9,6 @@ import school.sptech.backend.service.BaseService;
 import school.sptech.backend.service.condominio.view.*;
 import school.sptech.backend.service.endereco.EnderecoService;
 
-import java.util.Collections;
 import java.util.List;
 
 @Service
@@ -26,6 +23,7 @@ public class CondominioService implements BaseService<Condominio, Integer> {
     private final ProdutosConformeENaoConformeRepository produtosConformeENaoConformeRepository;
     private final ProdutosArrecadadosPorMesRepository produtosArrecadadosPorMesRepository;
     private final ProdutosArrecadadosPorCondominioRepository produtosArrecadadosPorCondominioRepository;
+    private final QtdProdutosPorNomeCondominioRepository qtdProdutosPorNomeCondominioRepository;
 
     private final EnderecoService enderecoService;
 
@@ -90,5 +88,9 @@ public class CondominioService implements BaseService<Condominio, Integer> {
 
     public List<ProdutosArrecadadosPorCondominio> listarProdutosArrecadadosPorCondominio(Integer id) {
         return produtosArrecadadosPorCondominioRepository.findByCondominioId(id);
+    }
+
+    public List<QtdProdutosPorNomeCondominio> listarProdutosPorNomeCondominio(String nomeCondominio) {
+        return qtdProdutosPorNomeCondominioRepository.findAllByNomeCondominio(nomeCondominio);
     }
 }
