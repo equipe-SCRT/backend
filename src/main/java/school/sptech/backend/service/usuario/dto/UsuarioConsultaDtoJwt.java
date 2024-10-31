@@ -6,6 +6,7 @@ import lombok.Setter;
 @Getter
 @Setter
 public class UsuarioConsultaDtoJwt {
+    private Integer id;
     private String nome;
     private String email;
 

@@ -84,18 +84,32 @@ public class UsuarioService {
 //        return usuarioConsultaDto;
 //    }
 
-    public List<UsuarioConsultaDtoJwt> getUsuarios() {
+    public List<Usuario> getUsuarios() {
         List<Usuario> all = usuarioRepository.findAll();
 
-        List<UsuarioConsultaDtoJwt> lista = UsuarioMapper.toDto(all);
-
-        return lista;
+        return all;
     }
 
     public Usuario porId(Integer id) {
         return usuarioRepository.findById(id).orElseThrow(() -> new NaoEncontradoException("Usuario"));
     }
 
+    public Usuario atualizarUsuario(UsuarioConsultaDtoJwt usuarioConsultaDtoJwt){
+       Optional<Usuario> usuario = usuarioRepository.findById(usuarioConsultaDtoJwt.getId());
+       usuario.get().setTipoUsuario(usuarioConsultaDtoJwt.getTipoUsuario());
+       usuario.get().setNome(usuarioConsultaDtoJwt.getNome());
+       usuario.get().setEmail(usuarioConsultaDtoJwt.getEmail());
+       usuarioRepository.save(usuario.get());
+
+       return usuario.get();
+    }
+
+    public boolean deleteUsuario(int idUsuario){
+        if(usuarioRepository.existsById(idUsuario)){
+            usuarioRepository.deleteById(idUsuario);
+            return true;
+        }
+        throw new NaoEncontradoException("Usuario");
     public Boolean enviarEmail(String email) {
         Optional<Usuario> byEmail = usuarioRepository.findByEmail(email);
         if (byEmail.isEmpty()) return false;

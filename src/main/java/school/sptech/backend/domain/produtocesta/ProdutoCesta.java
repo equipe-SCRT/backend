@@ -23,4 +23,5 @@ public class ProdutoCesta extends BaseEntity {
     private Produto Produto;
     @ManyToOne
     private TipoCesta tipoCesta;
+    private Integer qtdProduto;
 }
