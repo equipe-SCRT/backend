@@ -104,12 +104,14 @@ public class UsuarioService {
        return usuario.get();
     }
 
-    public boolean deleteUsuario(int idUsuario){
-        if(usuarioRepository.existsById(idUsuario)){
+    public boolean deleteUsuario(int idUsuario) {
+        if (usuarioRepository.existsById(idUsuario)) {
             usuarioRepository.deleteById(idUsuario);
             return true;
         }
         throw new NaoEncontradoException("Usuario");
+    }
+
     public Boolean enviarEmail(String email) {
         Optional<Usuario> byEmail = usuarioRepository.findByEmail(email);
         if (byEmail.isEmpty()) return false;

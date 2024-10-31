@@ -2,7 +2,6 @@ package school.sptech.backend.api.relatorio;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import io.swagger.v3.oas.annotations.parameters.RequestBody;
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.io.ByteArrayResource;
 import org.springframework.core.io.Resource;
@@ -61,88 +60,106 @@ public class RelatorioController {
     private final ProdutoUnitarioService produtoService;
     private final ProdutoUnitarioMapper mapper;
 
-    @PostMapping("/importar")
-    public ResponseEntity<Exception> importar(
-            @RequestBody byte[] referenciaArquivo, @RequestHeader("fileName") String fileName
+    @PostMapping("/importar/{fileName}")
+    public ResponseEntity<List<ProdutoUnitarioLeituraDto>> importar(
+            @RequestBody byte[] referenciaArquivo, @PathVariable String fileName
     ) {
 
+//       String funcao = "lambda_handler";
+//       Region region = Region.US_EAST_1;
 
-
-       String funcao = "lambda_handler";
-       Region region = Region.US_EAST_1;
-
-       List<ProdutoUnitarioLeituraDto> listaProdutos;
+        List<ProdutoUnitarioLeituraDto> listaProdutos;
 
 
         try {
             if (fileName.endsWith(".csv")) {
-                listaProdutos = lerArquivoCsv(referenciaArquivo);
+                listaProdutos = lerArquivoCsv(referenciaArquivo, fileName);
             } else {
                 listaProdutos = lerArquivoTxt(referenciaArquivo);
             }
         } catch (Exception e) {
-            return ResponseEntity.badRequest().body(e);
+            return ResponseEntity.notFound().build();
         }
 
-        LambdaClient awsLambda = LambdaClient.builder()
-                .region(region)
-                .build();
-
-
-        ObjectMapper objectMapper = new ObjectMapper();
-
-        try {
-
-            Map<String, Object> parametros = Map.of(
-                    "nomeArquivo", fileName,
-                    "dadosArquivo", listaProdutos
-            );
-
-           SdkBytes payload = SdkBytes.fromUtf8String(objectMapper.writeValueAsString(parametros));
-
-
-           InvokeRequest request = InvokeRequest.builder()
-                    .functionName(funcao)
-                    .payload(payload)
-                    .build();
-
-
-           InvokeResponse res = awsLambda.invoke(request);
-
-            String responseJson = res.payload().asUtf8String();
-
-            if (responseJson != null) {
-                return ResponseEntity.ok().build();
-            } else {
-                return  ResponseEntity.internalServerError().build();
-            }
-
-        } catch (LambdaException | JsonProcessingException e) {
-            System.err.println(e.getMessage());
-            return  ResponseEntity.noContent().build();
-        } finally {
-            awsLambda.close();
-        }
+        return ResponseEntity.ok().body(listaProdutos);
     }
 
+//        LambdaClient awsLambda = LambdaClient.builder()
+//                .region(region)
+//                .build();
+//
+//
+//        ObjectMapper objectMapper = new ObjectMapper();
+//
+//        try {
+//
+//            Map<String, Object> parametros = Map.of(
+//                    "nomeArquivo", fileName,
+//                    "dadosArquivo", listaProdutos
+//            );
+//
+//           SdkBytes payload = SdkBytes.fromUtf8String(objectMapper.writeValueAsString(parametros));
+//
+//
+//           InvokeRequest request = InvokeRequest.builder()
+//                    .functionName(funcao)
+//                    .payload(payload)
+//                    .build();
+//
+//
+//           InvokeResponse res = awsLambda.invoke(request);
+//
+//            String responseJson = res.payload().asUtf8String();
+//
+//            if (responseJson != null) {
+//                return ResponseEntity.ok().build();
+//            } else {
+//                return  ResponseEntity.internalServerError().build();
+//            }
+//
+//        } catch (LambdaException | JsonProcessingException e) {
+//            System.err.println(e.getMessage());
+//            return  ResponseEntity.noContent().build();
+//        } finally {
+//            awsLambda.close();
+//        }
+    // }
 
 
 
-    public static List<ProdutoUnitarioLeituraDto> lerArquivoCsv(byte[] referenciaArquivo) throws Exception {
 
-        List<ProdutoUnitarioLeituraDto> listaLida = new ArrayList<>();
+    public static List<ProdutoUnitarioLeituraDto> lerArquivoCsv(byte[] referenciaArquivo, String fileName) throws Exception {
 
-        try (BufferedReader reader = new BufferedReader(new InputStreamReader(new ByteArrayInputStream(referenciaArquivo)))) {
-            String linha;
+        List<ProdutoUnitarioLeituraDto> listaProdutos = new ArrayList<>();
+
+        ByteArrayInputStream inputStream = new ByteArrayInputStream(referenciaArquivo);
+        BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
+
+        String linha;
+
+        try {
             while ((linha = reader.readLine()) != null) {
-                String[] campos = linha.split(";");
-                ProdutoUnitarioLeituraDto produto = new ProdutoUnitarioLeituraDto(
-                        campos[0], campos[1], Double.parseDouble(campos[2]), campos[3], campos[4]
-                );
-                listaLida.add(produto);
+                String[] valores = linha.split(";");
+
+                ProdutoUnitarioLeituraDto produto = new ProdutoUnitarioLeituraDto();
+
+                produto.setProduto(valores[0]);
+                produto.setData(valores[1]);
+                produto.setPeso(Double.parseDouble(valores[2]));
+                produto.setUnidade(valores[3]);
+                produto.setOrigem(valores[4]);
+
+                listaProdutos.add(produto);
+            }
+
+            for (ProdutoUnitarioLeituraDto produto : listaProdutos) {
+                System.out.println(produto);
             }
         }
-        return listaLida;
+        catch (Exception e) {
+            System.err.println(e.getMessage());
+        }
+        return listaProdutos;
     }
 
     public static List<ProdutoUnitarioLeituraDto> lerArquivoTxt(byte[] referenciaArquivo) throws Exception {
