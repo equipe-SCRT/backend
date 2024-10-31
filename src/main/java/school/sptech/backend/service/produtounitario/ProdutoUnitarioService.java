@@ -58,6 +58,10 @@ public class ProdutoUnitarioService implements BaseService<ProdutoUnitario, Inte
         return repository.findByDataValidadeBetween(inicio, fim);
     }
 
+    public List<ProdutoUnitario> listarPorDataMenorQue(LocalDate data){
+        return repository.findByDataValidadeBefore(data);
+    }
+
     public ProdutoUnitario porId(Integer id){
         return repository.findById(id).orElseThrow(()-> new NaoEncontradoException("Produto Unitário"));
     }

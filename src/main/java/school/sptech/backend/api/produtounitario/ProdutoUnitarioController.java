@@ -139,7 +139,11 @@ public class ProdutoUnitarioController implements BaseController<ProdutoUnitario
     }
 
     @GetMapping("/data-vencimento")
-    public ResponseEntity<List<ProdutoUnitarioListagemDto>> listarPorDataEntre(@RequestParam LocalDate inicio, @RequestParam LocalDate fim){
+    public ResponseEntity<List<ProdutoUnitarioListagemDto>> listarPorDataMaiorQue(@RequestParam LocalDate inicio, @RequestParam LocalDate fim){
         return ResponseEntity.ok(mapper.toDto(service.listarPorDataEntre(inicio, fim)));
+    }
+    @GetMapping("/data-vencimento/menor-que")
+    public ResponseEntity<List<ProdutoUnitarioListagemDto>> listarPorDataMenorQue(@RequestParam LocalDate data){
+        return ResponseEntity.ok(mapper.toDto(service.listarPorDataMenorQue(data)));
     }
 }
