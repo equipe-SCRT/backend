@@ -11,9 +11,6 @@ import java.time.LocalDate;
 public class CampanhaCriacaoDto {
 
     @NotBlank
-    @Size(min = 2, max = 20)
-    private String nome;
-    @NotBlank
     @Size(min = 2, max = 40)
     private String localCampanha;
     @PastOrPresent
@@ -24,6 +21,10 @@ public class CampanhaCriacaoDto {
     @NotNull
     @Positive
     private Integer meta;
+    @NotNull
+    private Integer fkTipoCampanha;
+    @NotNull
+    private Integer fkProduto;
 
 
 }

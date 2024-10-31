@@ -9,6 +9,7 @@ import school.sptech.backend.domain.BaseEntity;
 import school.sptech.backend.domain.Timestamped;
 import school.sptech.backend.domain.cesta.Cesta;
 import school.sptech.backend.domain.produto.Produto;
+import school.sptech.backend.domain.tipocesta.TipoCesta;
 
 @Entity
 @Getter
@@ -17,8 +18,10 @@ import school.sptech.backend.domain.produto.Produto;
 @AllArgsConstructor
 public class ProdutoCesta extends BaseEntity {
 
+    private Integer qtdProduto;
     @ManyToOne
     private Produto Produto;
     @ManyToOne
-    private Cesta Cesta;
+    private TipoCesta tipoCesta;
+    private Integer qtdProduto;
 }

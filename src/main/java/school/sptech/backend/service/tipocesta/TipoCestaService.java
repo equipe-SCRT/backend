@@ -5,13 +5,14 @@ import org.springframework.stereotype.Service;
 import school.sptech.backend.domain.tipocesta.TipoCesta;
 import school.sptech.backend.domain.tipocesta.repository.TipoCestaRepository;
 import school.sptech.backend.exception.NaoEncontradoException;
-import school.sptech.backend.service.BaseService;
+import school.sptech.backend.service.produtocesta.ProdutoCestaService;
+import school.sptech.backend.service.tipocesta.dto.TipoCestaCriacaoDto;
 
 import java.util.List;
 
 @Service
 @RequiredArgsConstructor
-public class TipoCestaService implements BaseService<TipoCesta, Integer> {
+public class TipoCestaService {
     private final TipoCestaRepository tipoCestaRepository;
     public TipoCesta porId(Integer id){
         return tipoCestaRepository.findById(id).orElseThrow(

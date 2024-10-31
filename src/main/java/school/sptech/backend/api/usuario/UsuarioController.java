@@ -5,11 +5,13 @@ import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import school.sptech.backend.domain.usuario.Usuario;
 import school.sptech.backend.service.usuario.autenticacao.dto.UsuarioLoginDto;
 import school.sptech.backend.service.usuario.autenticacao.dto.UsuarioTokenDto;
 import school.sptech.backend.service.usuario.dto.UsuarioConsultaDtoJwt;
 import school.sptech.backend.service.usuario.dto.UsuarioCriacaoDtoJwt;
 import school.sptech.backend.service.usuario.UsuarioService;
+import school.sptech.backend.service.usuario.dto.UsuarioMapper;
 
 import java.util.List;
 
@@ -32,6 +34,41 @@ public class UsuarioController {
         UsuarioTokenDto usuarioToken = usuarioService.autenticar(usuarioLoginDto);
         return ResponseEntity.status(200).body(usuarioToken);
 
+    }
+
+    @GetMapping
+    public ResponseEntity<List<UsuarioConsultaDtoJwt>> listagem(){
+        List<Usuario> usuarios = usuarioService.getUsuarios();
+
+        List<UsuarioConsultaDtoJwt> lista = UsuarioMapper.toDto(usuarios);
+
+        return ResponseEntity.ok(lista);
+    }
+
+    @PatchMapping("atualizar-usuario")
+    public ResponseEntity<UsuarioConsultaDtoJwt> atualziarUsuario(@RequestBody UsuarioConsultaDtoJwt usuarioConsultaDtoJwt){
+        Usuario usuario = usuarioService.atualizarUsuario(usuarioConsultaDtoJwt);
+
+        return ResponseEntity.status(200).body(UsuarioMapper.toDto(usuario));
+
+    }
+
+    @DeleteMapping("/{idUsuario}")
+    public ResponseEntity<Void> deletarUsuario(@PathVariable int idUsuario){
+      usuarioService.deleteUsuario(idUsuario);
+      return ResponseEntity.status(204).build();
+    @PostMapping("/recuperar-senha/{email}")
+    public ResponseEntity<Void> recuperar(@PathVariable String email){
+        Boolean emailEnviado = usuarioService.enviarEmail(email);
+        return ResponseEntity.status(200).build();
+
+    }
+
+    @PatchMapping("/trocar-senha")
+    public ResponseEntity<Void> alterarSenha(@RequestParam String code, @RequestParam String senha){
+        Boolean emailEnviado = usuarioService.alterarSenha(code, senha);
+
+        return ResponseEntity.status(200).build();
     }
 
 //    @PostMapping
