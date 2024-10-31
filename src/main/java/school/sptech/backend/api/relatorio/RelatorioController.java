@@ -1,93 +1,167 @@
 package school.sptech.backend.api.relatorio;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import io.swagger.v3.oas.annotations.parameters.RequestBody;
 import lombok.RequiredArgsConstructor;
+import org.springframework.core.io.ByteArrayResource;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.UrlResource;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-import school.sptech.backend.domain.produto.Produto;
 import school.sptech.backend.domain.produtounitario.ProdutoUnitario;
 import school.sptech.backend.domain.relatorio.Relatorio;
-import school.sptech.backend.service.produto.ProdutoService;
 import school.sptech.backend.service.produtounitario.ProdutoUnitarioService;
-import school.sptech.backend.service.produtounitario.dto.ProdutoUnitarioListagemDto;
+import school.sptech.backend.service.produtounitario.dto.ProdutoUnitarioLeituraDto;
 import school.sptech.backend.service.produtounitario.dto.ProdutoUnitarioMapper;
 import school.sptech.backend.service.produtounitario.dto.ProdutoUnitarioRelatorioDto;
 import school.sptech.backend.service.produtounitario.view.VencidoArrecadado;
+import java.util.Map;
+import java.util.List;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
+import software.amazon.awssdk.core.SdkBytes;
+import software.amazon.awssdk.regions.Region;
+import software.amazon.awssdk.services.lambda.LambdaClient;
+import software.amazon.awssdk.services.lambda.model.InvokeRequest;
+import software.amazon.awssdk.services.lambda.model.InvokeResponse;
+import software.amazon.awssdk.services.lambda.model.LambdaException;
+
+import java.io.BufferedReader;
 
 import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.StandardOpenOption;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipOutputStream;
 
 @RestController
 @RequestMapping("/relatorio")
 @RequiredArgsConstructor
 public class RelatorioController {
 
-    private final ProdutoUnitarioService service;
+
     private final ProdutoUnitarioService produtoService;
     private final ProdutoUnitarioMapper mapper;
 
     @PostMapping("/importar")
-    public ResponseEntity<Void> inserir(@RequestParam MultipartFile file) {
-        String funcao = "";
-//        Region region = Region.US_EAST_1;
-//
-//        LambdaClient awsLambda = LambdaClient.builder()
-//                .region(region)
-//                .build();
-//
-//        // Objeto para serializar/deserializar JSON
-//        ObjectMapper objectMapper = new ObjectMapper();
-//
-//        InvokeResponse res = null;
-//        try {
-//            // "json" para enviar ao Lambda
-//            Map<String, String> parametros = Map.of("", "");
-//
-//            // Serializa o objeto para JSON e cria um SdkBytes (que é o payload)
-//            SdkBytes payload = SdkBytes.fromUtf8String(objectMapper.writeValueAsString(parametros));
-//
-//            // Configura a requisição para a Lambda
-//            InvokeRequest request = InvokeRequest.builder()
-//                    .functionName(funcao)
-//                    .payload(payload)
-//                    .build();
-//
-//            // Invoca a Lambda
-//            res = awsLambda.invoke(request);
-//
-//            // Deserializa o JSON de resposta (convertendo para String)
-//            String value = res.payload().asUtf8String();
-//
-//            // Deserializa o JSON de resposta (convertendo para objeto do tipo RespostaCpf)
-//            RespostaCpf respostaCpf =
-//                    objectMapper.readValue(value, RespostaCpf.class);
-//
-////			System.out.println(respostaCpf);
-//
-//            System.out.println();
-//            if (respostaCpf.valido()) {
-//                return  ResponseEntity.ok().build();
-//            } else {
-//                return  ResponseEntity.badRequest().build();
-//            }
-//
-//        } catch (LambdaException | JsonProcessingException e) {
-//            System.err.println(e.getMessage());
-//            return  ResponseEntity.badRequest().build();
-//        }
-//        finally {
-//            awsLambda.close();
-//        }
+    public ResponseEntity<Exception> importar(
+            @RequestBody byte[] referenciaArquivo, @RequestHeader("fileName") String fileName
+    ) {
 
-        return ResponseEntity.ok().build();
+       String funcao = "lambda_handler";
+       Region region = Region.US_EAST_1;
+
+       List<ProdutoUnitarioLeituraDto> listaProdutos;
+
+
+        try {
+            if (fileName.endsWith(".csv")) {
+                listaProdutos = lerArquivoCsv(referenciaArquivo);
+            } else {
+                listaProdutos = lerArquivoTxt(referenciaArquivo);
+            }
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(e);
+        }
+
+        LambdaClient awsLambda = LambdaClient.builder()
+                .region(region)
+                .build();
+
+
+        ObjectMapper objectMapper = new ObjectMapper();
+
+        try {
+
+            Map<String, Object> parametros = Map.of(
+                    "nomeArquivo", fileName,
+                    "dadosArquivo", listaProdutos
+            );
+
+           SdkBytes payload = SdkBytes.fromUtf8String(objectMapper.writeValueAsString(parametros));
+
+
+           InvokeRequest request = InvokeRequest.builder()
+                    .functionName(funcao)
+                    .payload(payload)
+                    .build();
+
+
+           InvokeResponse res = awsLambda.invoke(request);
+
+            String responseJson = res.payload().asUtf8String();
+
+            if (responseJson != null) {
+                return ResponseEntity.ok().build();
+            } else {
+                return  ResponseEntity.internalServerError().build();
+            }
+
+        } catch (LambdaException | JsonProcessingException e) {
+            System.err.println(e.getMessage());
+            return  ResponseEntity.noContent().build();
+        } finally {
+            awsLambda.close();
+        }
     }
 
-    @GetMapping("exportar/{dataInicio}/{dataFim}/{tipoArquivo}")
-    public ResponseEntity<List<ProdutoUnitarioRelatorioDto>> download(@PathVariable LocalDate dataInicio, @PathVariable LocalDate dataFim, @PathVariable String tipoArquivo) {
+
+
+
+    public static List<ProdutoUnitarioLeituraDto> lerArquivoCsv(byte[] referenciaArquivo) throws Exception {
+
+        List<ProdutoUnitarioLeituraDto> listaLida = new ArrayList<>();
+
+        try (BufferedReader reader = new BufferedReader(new InputStreamReader(new ByteArrayInputStream(referenciaArquivo)))) {
+            String linha;
+            while ((linha = reader.readLine()) != null) {
+                String[] campos = linha.split(";");
+                ProdutoUnitarioLeituraDto produto = new ProdutoUnitarioLeituraDto(
+                        campos[0], campos[1], Double.parseDouble(campos[2]), campos[3], campos[4]
+                );
+                listaLida.add(produto);
+            }
+        }
+        return listaLida;
+    }
+
+    public static List<ProdutoUnitarioLeituraDto> lerArquivoTxt(byte[] referenciaArquivo) throws Exception {
+        List<ProdutoUnitarioLeituraDto> listaLida = new ArrayList<>();
+        try (BufferedReader reader = new BufferedReader(new InputStreamReader(new ByteArrayInputStream(referenciaArquivo)))) {
+            String linha;
+            while ((linha = reader.readLine()) != null) {
+                String tipoRegistro = linha.substring(0, 2);
+                if (tipoRegistro.equals("02")) {
+                    ProdutoUnitarioLeituraDto produto = new ProdutoUnitarioLeituraDto(
+                            linha.substring(2, 3).trim(),
+                            linha.substring(3, 34).trim(),
+                            Double.parseDouble(linha.substring(45, 50).replace(',', '.')),
+                            linha.substring(50, 61).trim(),
+                            linha.substring(61, 110).trim()
+                    );
+                    listaLida.add(produto);
+                }
+            }
+        }
+        return listaLida;
+    }
+
+
+    @GetMapping("/exportar/{dataInicio}/{dataFim}/{tipoArquivo}")
+    public ResponseEntity<Resource> download(@PathVariable LocalDate dataInicio, @PathVariable LocalDate dataFim, @PathVariable String tipoArquivo) throws IOException {
 
         List<VencidoArrecadado> produtosArrecadados = produtoService.arrecadadosVencidos();
         List<ProdutoUnitario> produtoUnitarios = produtoService.listarPorDataEntre(dataInicio, dataFim);
@@ -97,51 +171,67 @@ public class RelatorioController {
 
         String periodo = dataInicio + "-" + dataFim;
 
-            for (VencidoArrecadado produto : produtosArrecadados) {
+        for (VencidoArrecadado produto : produtosArrecadados) {
             relatorios.add(new Relatorio(produto.getNome(), produto.getVencido(), produto.getArrecadado()));
-        };
+        }
+        ;
+
 
         String nomeArquivo;
 
         switch (tipoArquivo.toLowerCase(Locale.ROOT)) {
             case "csv":
-                nomeArquivo = "relatorio-" + periodo ;
-                gravarArquivoCsv(produtoRelatorios, nomeArquivo);
-                break;
+                nomeArquivo = "relatorio-" + periodo;
+
+                return ResponseEntity.ok()
+                        .contentType(MediaType.parseMediaType("text/csv"))
+                        .header(HttpHeaders.CONTENT_DISPOSITION, "attachement; filename=\"" + nomeArquivo + ".csv\"")
+                        .body(gravarArquivoCsv(produtoRelatorios, nomeArquivo));
+
             case "txt":
                 nomeArquivo = "relatorio-formato";
-                gravaArquivoTxtRelatorio(relatorios, nomeArquivo, periodo );
-                nomeArquivo = "produto-formato";
-                gravaArquivoTxtProduto(produtoRelatorios, nomeArquivo);
-                break;
+                Resource conteudoRelatorio = gravaArquivoTxtRelatorio(relatorios, nomeArquivo, periodo);
+
+                ByteArrayOutputStream byteArrayOutputStream = null;
+                byteArrayOutputStream = new ByteArrayOutputStream();
+
+                try (ZipOutputStream zipOutputStream = new ZipOutputStream(byteArrayOutputStream)) {
+                    // Adicionar o primeiro arquivo ao ZIP
+                    ZipEntry zipEntry1 = new ZipEntry(nomeArquivo + ".txt");
+                    zipOutputStream.putNextEntry(zipEntry1);
+                    copiarConteudoResourceParaZip(conteudoRelatorio, zipOutputStream);
+                    zipOutputStream.closeEntry();
+
+                    nomeArquivo = "produto-formato";
+                    Resource conteudoProduto = gravaArquivoTxtProduto(produtoRelatorios, nomeArquivo);
+
+                    ZipEntry zipEntry2 = new ZipEntry(nomeArquivo + ".txt");
+                    zipOutputStream.putNextEntry(zipEntry2);
+                    copiarConteudoResourceParaZip(conteudoProduto, zipOutputStream);
+                    zipOutputStream.closeEntry();
+                }
+
+                ByteArrayResource resource = new ByteArrayResource(byteArrayOutputStream.toByteArray());
+                return ResponseEntity.ok()
+                        .contentType(MediaType.parseMediaType("application/zip"))
+                        .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"arquivos-relatorio.zip\"")
+                        .body(resource);
+
+
             default:
                 return ResponseEntity.notFound().build();
         }
-
-        return ResponseEntity.ok().body(produtoRelatorios);
     }
 
-    public static void gravarArquivoCsv(List<ProdutoUnitarioRelatorioDto> lista, String nomeArq) {
-        FileWriter arq = null;
-        Formatter saida = null;
-        Boolean deuRuim = false;
 
-        nomeArq += ".csv";
+    public static Resource gravarArquivoCsv(List<ProdutoUnitarioRelatorioDto> lista, String nomeArq) throws IOException {
 
-        try {
-            arq = new FileWriter(nomeArq);
-            saida = new Formatter(arq);
-        }
-        catch (IOException erro) {
-            System.out.println("Erro ao abrir o arquivo");
-            System.exit(1);
-        }
+        Path tempFile = Files.createTempFile(nomeArq, ".csv");
 
-        try {
+        try (FileWriter arq = new FileWriter(String.valueOf(tempFile));
+             Formatter saida = new Formatter(arq)) {
             for (ProdutoUnitarioRelatorioDto produto : lista) {
-
-
-                String origem = produto.getOrigem().getItapora() == 1? "Itapora" : "Auto de Suuza";
+                String origem = produto.getOrigem().getItapora() == 1 ? "Itapora" : "Auto de Suuza";
 
                 saida.format("%30s;%10s;%4.2f;%10s,%50s\n",
                         produto.getProduto().getNome(),
@@ -150,28 +240,19 @@ public class RelatorioController {
                         produto.getUnidadeMedida().getNome(),
                         origem);
             }
+        } catch (IOException e) {
+
+            System.err.println("Erro ao gravar o arquivo: " + e.getMessage());
+            throw e;
         }
-        catch (FormatterClosedException erro) {
-            System.out.println("Erro ao gravar o arquivo");
-            deuRuim = true;
-        }
-        finally {
-            saida.close();
-            try {
-                arq.close();
-            }
-            catch (IOException erro) {
-                System.out.println("Erro ao fechar o arquivo");
-                deuRuim = true;
-            }
-            if (deuRuim) {
-                System.exit(1);
-            }
-        }
+
+        return new UrlResource(tempFile.toUri());
     }
 
+    public static Resource gravaArquivoTxtRelatorio(List<Relatorio> lista, String nomeArq, String periodo) throws IOException {
 
-    public static void gravaArquivoTxtRelatorio(List<Relatorio> lista, String nomeArq, String periodo) {
+        Path tempFile = Files.createTempFile(nomeArq, ".txt");
+
         int contaRegDados = 0;
 
 
@@ -179,8 +260,7 @@ public class RelatorioController {
         header += "RELATORIO";
         header += LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss"));
         header += periodo;
-        header += "01";
-        gravaRegistro(nomeArq, header);
+        gravaRegistro(tempFile, header);
 
         String corpo = "";
         for (Relatorio r : lista) {
@@ -190,60 +270,63 @@ public class RelatorioController {
             corpo += String.format("%3s", r.getQtdVencido());
             corpo += String.format("%3s", r.getQtdArrecadado());
 
-            gravaRegistro(nomeArq, corpo);
+            gravaRegistro(tempFile, corpo);
             contaRegDados++;
         }
 
         String trailer = "01";
         trailer += String.format("%010d", contaRegDados);
-        gravaRegistro(nomeArq, trailer);
+        gravaRegistro(tempFile, trailer);
+
+        return new UrlResource(tempFile.toUri());
     }
 
-    public static void gravaArquivoTxtProduto(List<ProdutoUnitarioRelatorioDto> lista, String nomeArq) {
+
+    public static Resource gravaArquivoTxtProduto(List<ProdutoUnitarioRelatorioDto> lista, String nomeArq) throws IOException {
         int contaRegDados = 0;
+
+        Path tempFile = Files.createTempFile(nomeArq, ".txt");
 
 
         String header = "00PRODUTO";
         header += LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss"));
-        header += "01";
-        gravaRegistro(nomeArq, header);
+        gravaRegistro(tempFile, header);
 
 
         String corpo = "";
         for (ProdutoUnitarioRelatorioDto p : lista) {
+
+            String origem = p.getOrigem().getItapora() == 1? "Itapora" : "Auto de Souza";
 
             corpo = "02";
             corpo += String.format("%s",p.getProduto().getNome());
             corpo += String.format("%s", p.getDataValidade());
             corpo += String.format("%.2f", p.getPeso());
             corpo += String.format("%s", p.getUnidadeMedida().getNome());
-            corpo += String.format("%s", p.getOrigem());
-            gravaRegistro(nomeArq, corpo);
+            corpo += String.format("%s", origem);
+            gravaRegistro(tempFile, corpo);
             contaRegDados++;
         }
 
         String trailer = "01";
         trailer += String.format("%010d", contaRegDados);
-        gravaRegistro(nomeArq, trailer);
+        gravaRegistro(tempFile, trailer);
+
+        return new UrlResource(tempFile.toUri());
     }
 
 
+    public static void gravaRegistro(Path file, String registro) throws IOException {
+        Files.write(file, (registro + System.lineSeparator()).getBytes(), StandardOpenOption.APPEND);
+    }
 
-    public static void gravaRegistro(String nomeArq, String registro) {
-        BufferedWriter saida = null;
-
-        try {
-            saida = new BufferedWriter(new FileWriter(nomeArq, true));
-        }
-        catch (IOException erro) {
-            System.out.println("Erro ao abrir o arquivo: " + erro.getMessage());
-        }
-        try {
-            saida.append(registro + "\n");
-            saida.close();
-        }
-        catch (IOException erro) {
-            System.out.println("Erro na gravacao do arquivo: " + erro.getMessage());
+    private void copiarConteudoResourceParaZip(Resource resource, ZipOutputStream zipOutputStream) throws IOException {
+        try (InputStream inputStream = resource.getInputStream()) {
+            byte[] buffer = new byte[1024];
+            int bytesRead;
+            while ((bytesRead = inputStream.read(buffer)) != -1) {
+                zipOutputStream.write(buffer, 0, bytesRead);
+            }
         }
     }
 }
