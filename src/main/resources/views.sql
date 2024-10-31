@@ -60,8 +60,9 @@ CREATE VIEW IF NOT EXISTS tech_for_good.v_produto_unitario_vencido_arrecadado  A
 DROP VIEW IF EXISTS v_qtd_produto_por_condominio;
 CREATE VIEW v_qtd_produto_por_condominio AS
 SELECT
-    produto_unitario.produto_id,
+    condominio.id AS condominio_id,
     condominio.nome AS nome,
+    produto_unitario.produto_id,
     COUNT(produto_unitario.id) AS qtd_produtos
 FROM
     produto_unitario
@@ -117,10 +118,10 @@ CREATE VIEW v_qtd_discrepancia_condominios AS
 SELECT
     condominio.nome AS nome_condominio,
     produto_unitario.nome AS nome_produto,
-    COUNT(CASE WHEN produto_unitario.conforme = 0 THEN 1 END) AS qtd_conforme,
-    COUNT(CASE WHEN produto_unitario.conforme = 1 THEN 1 END) AS qtd_nao_conforme,
-    (COUNT(CASE WHEN produto_unitario.conforme = 1 THEN 1 END) -
-     COUNT(CASE WHEN produto_unitario.conforme = 0 THEN 1 END)) AS discrepancia
+    COUNT(CASE WHEN produto_unitario.conforme = 0 THEN 1 ELSE NULL END) AS qtd_conforme,
+    COUNT(CASE WHEN produto_unitario.conforme = 1 THEN 1 ELSE NULL END) AS qtd_nao_conforme,
+    (COUNT(CASE WHEN produto_unitario.conforme = 1 THEN 1 ELSE NULL END) -
+     COUNT(CASE WHEN produto_unitario.conforme = 0 THEN 1 ELSE NULL END)) AS discrepancia
 FROM
     produto_unitario
         JOIN
@@ -130,7 +131,7 @@ FROM
 GROUP BY
     condominio.id, produto_unitario.nome
 ORDER BY
-    discrepancia
+    discrepancia DESC
     LIMIT 4;
 
 DROP VIEW IF EXISTS v_total_produtos_arrecadados_por_mes;
@@ -139,15 +140,15 @@ SELECT
     DATE_FORMAT(produto_unitario.criado_em, '%Y-%m') AS mes,
     COUNT(produto_unitario.id) AS count
 FROM
-    produto_unitario
+	produto_unitario
 JOIN
-    origem ON origem.id = produto_unitario.origem_id
+	origem ON origem.id = produto_unitario.origem_id
 JOIN
-    condominio ON condominio.id = origem.condominio_id
+	condominio ON condominio.id = origem.condominio_id
 GROUP BY
-    DATE_FORMAT(produto_unitario.criado_em, '%Y-%m')
+	DATE_FORMAT(produto_unitario.criado_em, '%Y-%m')
 ORDER BY
-    mes;
+	mes;
 
 DROP VIEW IF EXISTS v_total_produtos_arrecadados_por_mes_condominio;
 CREATE VIEW v_total_produtos_arrecadados_por_mes_condominio AS
@@ -156,20 +157,20 @@ SELECT
     DATE_FORMAT(produto_unitario.criado_em, '%Y-%m') AS mes,
     COUNT(produto_unitario.id) AS count
 FROM
-    produto_unitario
+	produto_unitario
 JOIN
-    origem ON origem.id = produto_unitario.origem_id
+	origem ON origem.id = produto_unitario.origem_id
 JOIN
-    condominio ON condominio.id = origem.condominio_id
+	condominio ON condominio.id = origem.condominio_id
 WHERE
-    DATE_FORMAT(produto_unitario.criado_em, '%Y-%m') = (
-        SELECT DATE_FORMAT(MAX(criado_em), '%Y-%m')
-        FROM produto_unitario
-    )
+	DATE_FORMAT(produto_unitario.criado_em, '%Y-%m') = (
+		SELECT DATE_FORMAT(MAX(criado_em), '%Y-%m')
+		FROM produto_unitario
+	)
 GROUP BY
-    DATE_FORMAT(produto_unitario.criado_em, '%Y-%m'), condominio.id
+	DATE_FORMAT(produto_unitario.criado_em, '%Y-%m'), condominio.id
 ORDER BY
-    condominio.id;
+	condominio.id;
 
 DROP VIEW IF EXISTS v_qtd_produtos_por_nome_condominio;
 CREATE VIEW v_qtd_produtos_por_nome_condominio AS
@@ -178,15 +179,15 @@ SELECT
     DATE_FORMAT(produto_unitario.criado_em, '%Y-%m') AS mes,
     COUNT(produto_unitario.id) AS count
 FROM
-    produto_unitario
+	produto_unitario
 JOIN
-    origem ON origem.id = produto_unitario.origem_id
+	origem ON origem.id = produto_unitario.origem_id
 JOIN
-    condominio ON condominio.id = origem.condominio_id
+	condominio ON condominio.id = origem.condominio_id
 GROUP BY
-    condominio.nome, DATE_FORMAT(produto_unitario.criado_em, '%Y-%m')
+	condominio.nome, DATE_FORMAT(produto_unitario.criado_em, '%Y-%m')
 ORDER BY
-    condominio.nome, mes;
+	condominio.nome, mes;
 
 DROP VIEW IF EXISTS v_qtd_total_alimentos_arrecadados_por_mes;
 CREATE VIEW v_qtd_total_alimentos_arrecadados_por_mes AS
