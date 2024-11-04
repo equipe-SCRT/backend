@@ -132,6 +132,43 @@ public class RelatorioController {
 
         List<ProdutoUnitarioLeituraDto> listaProdutos = new ArrayList<>();
 
+        FileWriter arq = null;  // objeto que representa o arquivo
+        Formatter saida = null; // objeto que sera usado para escrever no arquivo
+        Boolean deuRuim = false;
+
+        try {
+            arq = new FileWriter(fileName);
+            saida = new Formatter(arq);
+        }
+        catch (IOException erro) {
+            System.out.println("Erro ao abrir o arquivo");
+            System.exit(1);
+        }
+
+        try {
+
+
+        }
+
+        catch (FormatterClosedException erro) {
+            System.out.println("Erro ao gravar o arquivo");
+            deuRuim = true;
+        }
+        finally {
+            saida.close();
+            try {
+                arq.close();
+            }
+            catch (IOException erro) {
+                System.out.println("Erro ao fechar o arquivo");
+                deuRuim = true;
+            }
+            if (deuRuim) {
+                System.exit(1);
+            }
+        }
+
+
         ByteArrayInputStream inputStream = new ByteArrayInputStream(referenciaArquivo);
         BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
 
@@ -147,7 +184,8 @@ public class RelatorioController {
                 produto.setData(valores[1]);
                 produto.setPeso(Double.parseDouble(valores[2]));
                 produto.setUnidade(valores[3]);
-                produto.setOrigem(valores[4]);
+                produto.setOrigem(valores[4]);\,00,,0
+                        0,0
 
                 listaProdutos.add(produto);
             }
@@ -257,7 +295,7 @@ public class RelatorioController {
             for (ProdutoUnitarioRelatorioDto produto : lista) {
                 String origem = produto.getOrigem().getItapora() == 1 ? "Itapora" : "Auto de Suuza";
 
-                saida.format("%30s;%10s;%4.2f;%10s,%50s\n",
+                saida.format("%30s;%10s;%4.2f;%10s;%50s\n",
                         produto.getProduto().getNome(),
                         produto.getDataValidade(),
                         produto.getPeso(),
