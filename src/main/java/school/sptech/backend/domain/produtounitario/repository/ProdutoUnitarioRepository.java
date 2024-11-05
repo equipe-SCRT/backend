@@ -26,4 +26,7 @@ public interface ProdutoUnitarioRepository extends JpaRepository<ProdutoUnitario
     void verificarProdutosForaDaValidade();
 
     List<ProdutoUnitario> findByDataValidadeBetween(LocalDate inicio, LocalDate fim);
+
+    List<ProdutoUnitario> findByDataValidadeBefore(LocalDate data);
+
 }
