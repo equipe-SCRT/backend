@@ -73,8 +73,8 @@ public class SecurityConfiguracao {
             new AntPathRequestMatcher("/produto-cestas/**"),
             new AntPathRequestMatcher("/historico-mudancas/**"),
             new AntPathRequestMatcher("/metricas/**"),
+            new AntPathRequestMatcher("/tipo-campanhas/**"),
             new AntPathRequestMatcher("/relatorio/**")
-
     };
 
     @Bean
