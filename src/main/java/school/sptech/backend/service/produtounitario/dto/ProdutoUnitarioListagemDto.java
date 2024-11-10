@@ -24,6 +24,8 @@ public class ProdutoUnitarioListagemDto {
     private Double peso;
 
     private boolean ativo;
+    private boolean vencido;
+    private boolean confome;
 
     private Origem origem;
 

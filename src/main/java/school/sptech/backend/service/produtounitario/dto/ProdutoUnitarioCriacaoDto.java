@@ -26,6 +26,9 @@ public class ProdutoUnitarioCriacaoDto {
     private boolean ativo;
 
     @NotNull
+    private boolean confome;
+
+    @NotNull
     @PositiveOrZero
     private Integer origemId;
 
