@@ -8,6 +8,8 @@ import school.sptech.backend.domain.origem.Origem;
 import school.sptech.backend.domain.origem.repository.OrigemRepository;
 import school.sptech.backend.exception.NaoEncontradoException;
 import school.sptech.backend.service.BaseService;
+import school.sptech.backend.service.campanha.CampanhaService;
+import school.sptech.backend.service.condominio.CondominioService;
 
 import java.util.List;
 
@@ -16,8 +18,15 @@ import java.util.List;
 public class OrigemService implements BaseService<Origem, Integer> {
 
     private final OrigemRepository repository;
+    private final CampanhaService campanhaService;
+    private final CondominioService condominioService;
 
     public Origem criar(Origem origem) {
+        if(origem.getCampanha() != null){
+            origem.setCampanha(campanhaService.porId(origem.getCampanha().getId()));
+        } else if (origem.getCondominio() != null){
+            origem.setCondominio(condominioService.porId(origem.getCondominio().getId()));
+        }
         return this.repository.save(origem);
     }
 
