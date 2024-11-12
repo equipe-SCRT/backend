@@ -65,8 +65,8 @@ public class RelatorioController {
             @RequestBody byte[] referenciaArquivo, @PathVariable String fileName
     ) {
 
-//       String funcao = "lambda_handler";
-//       Region region = Region.US_EAST_1;
+      String funcao = "lambda_handler";
+      Region region = Region.US_EAST_1;
 
         List<ProdutoUnitarioLeituraDto> listaProdutos;
 
