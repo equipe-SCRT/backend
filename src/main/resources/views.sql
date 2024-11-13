@@ -1,25 +1,25 @@
-DROP TABLE IF EXISTS tech_for_good.v_produto_unitario_qtd_ativo_por_mes;
-CREATE VIEW tech_for_good.v_produto_unitario_qtd_ativo_por_mes AS
+DROP VIEW IF EXISTS v_produto_unitario_qtd_ativo_por_mes;DROP TABLE IF EXISTS v_produto_unitario_qtd_ativo_por_mes;
+CREATE VIEW v_produto_unitario_qtd_ativo_por_mes AS
 select
     date(pu.criado_em) as 'criado_em',
     COUNT(*) as 'qtd',
     pu.produto_id
 from
-    tech_for_good.produto_unitario pu
+    produto_unitario pu
 group by
     date(pu.criado_em),
     pu.produto_id
 order by
     date(pu.criado_em);
-
-DROP TABLE IF EXISTS tech_for_good.v_produto_unitario_qtd_vencido_por_mes;
-CREATE VIEW tech_for_good.v_produto_unitario_qtd_vencido_por_mes AS
+DROP VIEW IF EXISTS v_produto_unitario_qtd_vencido_por_mes;
+DROP TABLE IF EXISTS v_produto_unitario_qtd_vencido_por_mes;
+CREATE VIEW v_produto_unitario_qtd_vencido_por_mes AS
 select
     date(pu.data_validade) as 'data_validade',
     COUNT(*) as 'qtd',
     pu.produto_id
 from
-    tech_for_good.produto_unitario pu
+    produto_unitario pu
 where
     pu.vencido = 1
 group by
@@ -27,36 +27,36 @@ group by
     pu.produto_id
 order by
     pu.data_validade;
-
-DROP TABLE IF EXISTS tech_for_good.v_produto_unitario_vencimento_15_e_30_dias;
-CREATE VIEW tech_for_good.v_produto_unitario_vencimento_15_e_30_dias AS
+DROP VIEW IF EXISTS v_produto_unitario_vencimento_15_e_30_dias;
+DROP TABLE IF EXISTS v_produto_unitario_vencimento_15_e_30_dias;
+CREATE VIEW v_produto_unitario_vencimento_15_e_30_dias AS
 select
     (
         select
             count(*)
         from
-            tech_for_good.produto_unitario pu
+            produto_unitario pu
         where
             pu.data_validade between curdate() and curdate() + interval 15 day) AS vencimento15,
     (
         select
             count(*)
         from
-            tech_for_good.produto_unitario pu
+            produto_unitario pu
         where
             pu.data_validade > curdate() + interval 16 day) AS vencimento30;
-
-DROP TABLE IF EXISTS tech_for_good.v_produto_unitario_vencido_arrecadado ;
-CREATE VIEW tech_for_good.v_produto_unitario_vencido_arrecadado  AS SELECT
-                                                                                      p.nome,
-                                                                                      SUM(CASE WHEN pu.vencido = false THEN 1 ELSE 0 END) AS arrecadado,
-                                                                                      SUM(CASE WHEN pu.vencido = true THEN 1 ELSE 0 END) AS vencido
-                                                                                  FROM
-                                                                                      tech_for_good.produto_unitario pu
-                                                                                          JOIN tech_for_good.produto p on pu.produto_id = p.id
-                                                                                  GROUP BY
-                                                                                      p.id;
-
+DROP VIEW IF EXISTS v_produto_unitario_vencido_arrecadado;
+DROP TABLE IF EXISTS v_produto_unitario_vencido_arrecadado;
+CREATE VIEW v_produto_unitario_vencido_arrecadado  AS SELECT
+                                                          p.nome,
+                                                          SUM(CASE WHEN pu.vencido = false THEN 1 ELSE 0 END) AS arrecadado,
+                                                          SUM(CASE WHEN pu.vencido = true THEN 1 ELSE 0 END) AS vencido
+                                                      FROM
+                                                          produto_unitario pu
+                                                              JOIN produto p on pu.produto_id = p.id
+                                                      GROUP BY
+                                                          p.id;
+DROP VIEW IF EXISTS v_qtd_produto_por_condominio;
 DROP TABLE IF EXISTS v_qtd_produto_por_condominio;
 CREATE VIEW v_qtd_produto_por_condominio AS
 SELECT
@@ -74,7 +74,7 @@ GROUP BY
     condominio.id, produto_unitario.produto_id
 ORDER BY
     condominio.nome;
-
+DROP VIEW IF EXISTS v_qtd_produtos_n_conforme_por_condominio;
 DROP TABLE IF EXISTS v_qtd_produtos_n_conforme_por_condominio;
 CREATE VIEW v_qtd_produtos_n_conforme_por_condominio AS
 SELECT
@@ -93,7 +93,7 @@ GROUP BY
     condominio.id
 ORDER BY
     condominio.nome;
-
+DROP VIEW IF EXISTS v_qtd_produtos_vencidos_por_condominio;
 DROP TABLE IF EXISTS v_qtd_produtos_vencidos_por_condominio;
 CREATE VIEW v_qtd_produtos_vencidos_por_condominio AS
 SELECT
@@ -112,7 +112,7 @@ GROUP BY
     condominio.id
 ORDER BY
     condominio.id;
-
+DROP VIEW IF EXISTS v_qtd_discrepancia_condominios;
 DROP TABLE IF EXISTS v_qtd_discrepancia_condominios;
 CREATE VIEW v_qtd_discrepancia_condominios AS
 SELECT
@@ -120,7 +120,7 @@ SELECT
     produto_unitario.nome AS nome_produto,
     COUNT(CASE WHEN produto_unitario.conforme = 0 THEN 1 ELSE NULL END) AS qtd_conforme,
     COUNT(CASE WHEN produto_unitario.conforme = 1 THEN 1 ELSE NULL END) AS qtd_nao_conforme,
-     COUNT(CASE WHEN produto_unitario.conforme = 0 THEN 1 ELSE NULL END) AS discrepancia
+    COUNT(CASE WHEN produto_unitario.conforme = 0 THEN 1 ELSE NULL END) AS discrepancia
 FROM
     produto_unitario
         JOIN
@@ -132,7 +132,7 @@ GROUP BY
 ORDER BY
     discrepancia DESC
 LIMIT 4;
-
+DROP VIEW IF EXISTS v_total_produtos_arrecadados_por_mes;
 DROP TABLE IF EXISTS v_total_produtos_arrecadados_por_mes;
 CREATE VIEW v_total_produtos_arrecadados_por_mes AS
 SELECT
@@ -148,7 +148,7 @@ GROUP BY
     DATE_FORMAT(produto_unitario.criado_em, '%Y-%m')
 ORDER BY
     mes;
-
+DROP VIEW IF EXISTS v_total_produtos_arrecadados_por_mes_condominio;
 DROP TABLE IF EXISTS v_total_produtos_arrecadados_por_mes_condominio;
 CREATE VIEW v_total_produtos_arrecadados_por_mes_condominio AS
 SELECT
@@ -170,7 +170,7 @@ GROUP BY
     DATE_FORMAT(produto_unitario.criado_em, '%Y-%m'), condominio.id
 ORDER BY
     condominio.id;
-
+DROP VIEW IF EXISTS v_qtd_produtos_por_nome_condominio;
 DROP TABLE IF EXISTS v_qtd_produtos_por_nome_condominio;
 CREATE VIEW v_qtd_produtos_por_nome_condominio AS
 SELECT
@@ -187,7 +187,7 @@ GROUP BY
     condominio.nome, DATE_FORMAT(produto_unitario.criado_em, '%Y-%m')
 ORDER BY
     condominio.nome, mes;
-
+DROP VIEW IF EXISTS v_qtd_total_alimentos_arrecadados_por_mes;
 DROP TABLE IF EXISTS v_qtd_total_alimentos_arrecadados_por_mes;
 CREATE VIEW v_qtd_total_alimentos_arrecadados_por_mes AS
 SELECT
@@ -198,7 +198,7 @@ FROM
     campanha
 GROUP BY YEAR(data_campanha) , MONTH(data_campanha)
 ORDER BY mes;
-
+DROP VIEW IF EXISTS v_qtd_produto_por_campanha;
 DROP TABLE IF EXISTS v_qtd_produto_por_campanha;
 CREATE VIEW v_qtd_produto_por_campanha AS
 SELECT
@@ -216,7 +216,7 @@ GROUP BY
     campanha.id, produto_unitario.produto_id
 ORDER BY
     nome;
-
+DROP VIEW IF EXISTS v_qtd_produtos_vencidos_por_campanha;
 DROP TABLE IF EXISTS v_qtd_produtos_vencidos_por_campanha;
 CREATE VIEW v_qtd_produtos_vencidos_por_campanha AS
 SELECT
@@ -236,7 +236,7 @@ GROUP BY
     campanha.id, produto_unitario.produto_id
 ORDER BY
     campanha.id;
-
+DROP VIEW IF EXISTS v_qtd_doacoes_por_campanha;
 DROP TABLE IF EXISTS v_qtd_doacoes_por_campanha;
 CREATE VIEW v_qtd_doacoes_por_campanha AS
 SELECT
@@ -252,7 +252,7 @@ FROM
     campanha ON campanha.id = origem.campanha_id
 GROUP BY nome, YEAR(campanha.data_campanha), MONTH(campanha.data_campanha)
 ORDER BY nome, ano, mes;
-
+DROP VIEW IF EXISTS v_produtos_conforme_nao_conforme_campanhas;
 DROP TABLE IF EXISTS v_produtos_conforme_nao_conforme_campanhas;
 CREATE VIEW v_produtos_conforme_nao_conforme_campanhas AS
 SELECT
