@@ -198,24 +198,26 @@ FROM
     campanha
 GROUP BY YEAR(data_campanha) , MONTH(data_campanha)
 ORDER BY mes;
+
 DROP VIEW IF EXISTS v_qtd_produto_por_campanha;
 DROP TABLE IF EXISTS v_qtd_produto_por_campanha;
 CREATE VIEW v_qtd_produto_por_campanha AS
-SELECT
-    campanha.id AS campanha_id,
-    campanha.local_campanha + produto_unitario.nome AS nome,
+    SELECT
+        campanha.id AS campanha_id,
+    campanha.local_campanha AS nome,
     produto_unitario.produto_id,
     COUNT(produto_unitario.id) AS qtd_produtos
-FROM
+    FROM
     produto_unitario
-        JOIN
+    JOIN
     origem ON origem.id = produto_unitario.origem_id
-        JOIN
+    JOIN
     campanha ON campanha.id = origem.campanha_id
-GROUP BY
+    GROUP BY
     campanha.id, produto_unitario.produto_id
-ORDER BY
-    nome;
+    ORDER BY
+    campanha.local_campanha;
+
 DROP VIEW IF EXISTS v_qtd_produtos_vencidos_por_campanha;
 DROP TABLE IF EXISTS v_qtd_produtos_vencidos_por_campanha;
 CREATE VIEW v_qtd_produtos_vencidos_por_campanha AS
@@ -236,22 +238,20 @@ GROUP BY
     campanha.id, produto_unitario.produto_id
 ORDER BY
     campanha.id;
+
 DROP VIEW IF EXISTS v_qtd_doacoes_por_campanha;
 DROP TABLE IF EXISTS v_qtd_doacoes_por_campanha;
 CREATE VIEW v_qtd_doacoes_por_campanha AS
 SELECT
     SUM(campanha.qtd_arrecadada) AS qtd_arrecadada,
-    campanha.local_campanha + produto_unitario.nome AS nome,
-    MONTH(campanha.data_campanha) AS mes,
-    YEAR(campanha.data_campanha) AS ano
-FROM
-    produto_unitario
-        JOIN
-    origem ON origem.id = produto_unitario.origem_id
-        JOIN
-    campanha ON campanha.id = origem.campanha_id
-GROUP BY nome, YEAR(campanha.data_campanha), MONTH(campanha.data_campanha)
-ORDER BY nome, ano, mes;
+    campanha.local_campanha as nome,
+        MONTH(campanha.data_campanha) AS mes,
+        YEAR(campanha.data_campanha) AS ano
+        FROM
+        campanha
+        GROUP BY campanha.local_campanha, YEAR(campanha.data_campanha), MONTH(campanha.data_campanha)
+        ORDER BY nome, ano, mes;
+
 DROP VIEW IF EXISTS v_produtos_conforme_nao_conforme_campanhas;
 DROP TABLE IF EXISTS v_produtos_conforme_nao_conforme_campanhas;
 CREATE VIEW v_produtos_conforme_nao_conforme_campanhas AS
