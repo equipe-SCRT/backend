@@ -5,6 +5,7 @@ import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.event.EventListener;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
+import school.sptech.backend.domain.origem.Origem;
 import school.sptech.backend.domain.produto.Produto;
 import school.sptech.backend.domain.produtounitario.ProdutoUnitario;
 import school.sptech.backend.domain.produtounitario.repository.ProdutoUnitarioRepository;
@@ -17,6 +18,7 @@ import school.sptech.backend.service.BaseService;
 import school.sptech.backend.service.metrica.MetricaService;
 import school.sptech.backend.service.origem.OrigemService;
 import school.sptech.backend.service.produto.ProdutoService;
+import school.sptech.backend.service.produtounitario.dto.ProdutoUnitarioListagemDto;
 import school.sptech.backend.service.produtounitario.dto.QtdProdutoPorCampanhaListagemDto;
 import school.sptech.backend.service.produtounitario.view.ProdutosConformeNaoConformeCampanhas;
 import school.sptech.backend.service.produtounitario.view.QtdProdutoPorCampanha;
@@ -28,6 +30,7 @@ import school.sptech.backend.service.produtounitario.view.VencidoArrecadado;
 import school.sptech.backend.service.produtounitario.view.Vencimento15E30Dias;
 import school.sptech.backend.service.unidademedida.UnidadeMedidaService;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.time.LocalDate;
 import java.util.Date;
@@ -149,5 +152,20 @@ public class ProdutoUnitarioService implements BaseService<ProdutoUnitario, Inte
 
     public List<ProdutosConformeNaoConformeCampanhas> produtosConformeNaoConformeCampanhas(){
         return produtosConformeNaoConformeCampanhasRepository.findTop4ByOrderByNaoConformeDesc();
+    }
+
+    public List<ProdutoUnitarioListagemDto> dtoComOrigem(List<ProdutoUnitarioListagemDto> dtos) {
+        List<ProdutoUnitarioListagemDto> produtoUnitarioListagemDtos = new ArrayList<>();
+        for (ProdutoUnitarioListagemDto dto : dtos) {
+            Origem origem = origemService.porId(dto.getOrigem().getId());
+            dto.getOrigem().setItapora(origem.getItapora());
+            dto.getOrigem().setCampanha(origem.getCampanha());
+            dto.getOrigem().setAutaDeSouzaRua(origem.getAutaDeSouzaRua());
+            dto.getOrigem().setCondominio(origem.getCondominio());
+
+
+            produtoUnitarioListagemDtos.add(dto);
+        }
+        return produtoUnitarioListagemDtos;
     }
 }
