@@ -3,7 +3,9 @@ package school.sptech.backend.service.produtounitario.dto;
 import jakarta.persistence.ManyToOne;
 import jakarta.validation.constraints.PastOrPresent;
 import lombok.Data;
+import school.sptech.backend.domain.campanha.Campanha;
 import school.sptech.backend.domain.cesta.Cesta;
+import school.sptech.backend.domain.condominio.Condominio;
 import school.sptech.backend.domain.metrica.Metrica;
 import school.sptech.backend.domain.origem.Origem;
 import school.sptech.backend.domain.produto.Produto;
@@ -44,6 +46,8 @@ public class ProdutoUnitarioListagemDto {
         private Integer id;
         private Integer autaDeSouzaRua;
         private Integer itapora;
+        private Condominio condominio;
+        private Campanha campanha;
     }
 
     @Data
