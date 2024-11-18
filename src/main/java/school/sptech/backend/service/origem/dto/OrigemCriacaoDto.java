@@ -9,15 +9,12 @@ import lombok.Setter;
 @Data
 public class OrigemCriacaoDto   {
 
-    @NotNull
-    @Positive
     private Integer autaDeSouzaRua;
-    @NotNull
-    @Positive
+
     private Integer itapora;
-    @Positive
+
     private int condominioId;
-    @Positive
+
     private int campanhaId;
 
 }

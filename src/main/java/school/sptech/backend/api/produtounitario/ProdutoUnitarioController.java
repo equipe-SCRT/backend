@@ -64,7 +64,7 @@ public class ProdutoUnitarioController implements BaseController<ProdutoUnitario
         }
 
         List<ProdutoUnitarioListagemDto> dtos = mapper.toDto(produtoUnitarios);
-
+        List<ProdutoUnitarioListagemDto> dtosComOrigem = service.dtoComOrigem(dtos);
         return ResponseEntity.ok(dtos);
     }
 
@@ -148,9 +148,15 @@ public class ProdutoUnitarioController implements BaseController<ProdutoUnitario
     }
 
     @GetMapping("/data-vencimento")
-    public ResponseEntity<List<ProdutoUnitarioListagemDto>> listarPorDataEntre(@RequestParam LocalDate inicio, @RequestParam LocalDate fim){
+    public ResponseEntity<List<ProdutoUnitarioListagemDto>> listarPorDataMaiorQue(@RequestParam LocalDate inicio, @RequestParam LocalDate fim){
         return ResponseEntity.ok(mapper.toDto(service.listarPorDataEntre(inicio, fim)));
     }
+
+    @GetMapping("/data-vencimento/menor-que")
+    public ResponseEntity<List<ProdutoUnitarioListagemDto>> listarPorDataMenorQue(@RequestParam LocalDate data){
+        return ResponseEntity.ok(mapper.toDto(service.listarPorDataMenorQue(data)));
+    }
+
 
     @GetMapping("/{id}/produto-por-campanha")
     public ResponseEntity<List<QtdProdutoPorCampanhaListagemDto>> qtdProdutoPorCampanha(@PathVariable Integer id){
@@ -171,5 +177,6 @@ public class ProdutoUnitarioController implements BaseController<ProdutoUnitario
         List<ProdutosConformeNaoConformeCampanhas> produtosConformeNaoConformeCampanhas = service.produtosConformeNaoConformeCampanhas();
         List<ProdutosConformeNaoConformeCampanhasListagemDto> dto = produtosConformeNaoConformeCampanhasMapper.toDto(produtosConformeNaoConformeCampanhas);
         return ResponseEntity.ok(dto);
+
     }
 }

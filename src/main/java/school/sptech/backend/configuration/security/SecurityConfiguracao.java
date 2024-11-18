@@ -53,11 +53,12 @@ public class SecurityConfiguracao {
             new AntPathRequestMatcher("/webjars/**"),
             new AntPathRequestMatcher("/v3/api-docs/**"),
             new AntPathRequestMatcher("/actuator/*"),
-            new AntPathRequestMatcher("/usuarios/**"),
-            new AntPathRequestMatcher("/usuarios/login/**"),
             new AntPathRequestMatcher("/h2-console/**"),
             new AntPathRequestMatcher("/h2-console/**/**"),
             new AntPathRequestMatcher("/error/**"),
+            new AntPathRequestMatcher("/usuarios/"),
+            new AntPathRequestMatcher("/usuarios/login/**"),
+            new AntPathRequestMatcher("/usuarios/**"),
             new AntPathRequestMatcher("/condominios/**"),
             new AntPathRequestMatcher("/cestas/**"),
             new AntPathRequestMatcher("/tipos-cestas/**"),
@@ -67,13 +68,14 @@ public class SecurityConfiguracao {
             new AntPathRequestMatcher("/origens/**"),
             new AntPathRequestMatcher("/produtos-unitario/**"),
             new AntPathRequestMatcher("/campanhas/**"),
+            new AntPathRequestMatcher("/tipo-campanhas/**"),
             new AntPathRequestMatcher("/enderecos/**"),
             new AntPathRequestMatcher("/unidades-medidas/**"),
             new AntPathRequestMatcher("/produto-cestas/**"),
             new AntPathRequestMatcher("/historico-mudancas/**"),
             new AntPathRequestMatcher("/metricas/**"),
+            new AntPathRequestMatcher("/tipo-campanhas/**"),
             new AntPathRequestMatcher("/relatorio/**")
-
     };
 
     @Bean

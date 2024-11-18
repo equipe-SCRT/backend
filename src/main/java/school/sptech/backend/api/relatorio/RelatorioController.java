@@ -2,7 +2,6 @@ package school.sptech.backend.api.relatorio;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import io.swagger.v3.oas.annotations.parameters.RequestBody;
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.io.ByteArrayResource;
 import org.springframework.core.io.Resource;
@@ -15,10 +14,13 @@ import org.springframework.web.multipart.MultipartFile;
 import school.sptech.backend.domain.produtounitario.ProdutoUnitario;
 import school.sptech.backend.domain.relatorio.Relatorio;
 import school.sptech.backend.service.produtounitario.ProdutoUnitarioService;
+import school.sptech.backend.service.produtounitario.dto.ProdutoUnitarioCriacaoDto;
 import school.sptech.backend.service.produtounitario.dto.ProdutoUnitarioLeituraDto;
 import school.sptech.backend.service.produtounitario.dto.ProdutoUnitarioMapper;
 import school.sptech.backend.service.produtounitario.dto.ProdutoUnitarioRelatorioDto;
 import school.sptech.backend.service.produtounitario.view.VencidoArrecadado;
+
+import java.nio.file.Paths;
 import java.util.Map;
 import java.util.List;
 
@@ -33,6 +35,9 @@ import software.amazon.awssdk.services.lambda.LambdaClient;
 import software.amazon.awssdk.services.lambda.model.InvokeRequest;
 import software.amazon.awssdk.services.lambda.model.InvokeResponse;
 import software.amazon.awssdk.services.lambda.model.LambdaException;
+import software.amazon.awssdk.services.s3.S3Client;
+import software.amazon.awssdk.services.s3.model.GetObjectRequest;
+import software.amazon.awssdk.services.s3.model.PutObjectRequest;
 
 import java.io.BufferedReader;
 
@@ -53,118 +58,163 @@ import java.util.zip.ZipOutputStream;
 public class RelatorioController {
 
 
-    private final ProdutoUnitarioService produtoService;
+    private final ProdutoUnitarioService produtoUnitarioService;
     private final ProdutoUnitarioMapper mapper;
 
-    @PostMapping("/importar")
-    public ResponseEntity<Exception> importar(
-            @RequestBody byte[] referenciaArquivo, @RequestHeader("fileName") String fileName
+    @PostMapping("/importar/{fileName}")
+    public ResponseEntity<Void> importar(
+            @RequestBody byte[] referenciaArquivo, @PathVariable String fileName
     ) {
 
-       String funcao = "lambda_handler";
-       Region region = Region.US_EAST_1;
-
-       List<ProdutoUnitarioLeituraDto> listaProdutos;
-
+//      String funcao = "lambda_handler";
+//      Region region = Region.US_EAST_1;
+//
+//      LambdaClient awsLambda = LambdaClient.builder()
+//                .region(region)
+//                .build();
+//
+//      ObjectMapper objectMapper = new ObjectMapper();
+//
+//        try {
+//
+//            Map<String, Object> parametros = Map.of(
+//                    "nomeArquivo", fileName,
+//                    "Arquivo", referenciaArquivo
+//            );
+//
+//           SdkBytes payload = SdkBytes.fromUtf8String(objectMapper.writeValueAsString(parametros));
+//
+//
+//           InvokeRequest request = InvokeRequest.builder()
+//                    .functionName(funcao)
+//                    .payload(payload)
+//                    .build();
+//
+//           InvokeResponse res = awsLambda.invoke(request);
+//
+//            String responseJson = res.payload().asUtf8String();
+//
+//            if (responseJson != null) {
+//                System.out.println(responseJson);
+//            } else {
+//                System.out.println(responseJson);
+//            }
+//
+//        } catch (LambdaException | JsonProcessingException e) {
+//            System.err.println(e.getMessage());
+//        } finally {
+//            awsLambda.close();
+//        }
 
         try {
             if (fileName.endsWith(".csv")) {
-                listaProdutos = lerArquivoCsv(referenciaArquivo);
+                return lerArquivoCsv(referenciaArquivo, fileName);
             } else {
-                listaProdutos = lerArquivoTxt(referenciaArquivo);
+                return lerArquivoTxt(referenciaArquivo);
             }
         } catch (Exception e) {
-            return ResponseEntity.badRequest().body(e);
+            return ResponseEntity.badRequest().build();
         }
-
-        LambdaClient awsLambda = LambdaClient.builder()
-                .region(region)
-                .build();
+    }
 
 
-        ObjectMapper objectMapper = new ObjectMapper();
+    public ResponseEntity<Void> lerArquivoCsv(byte[] referenciaArquivo, String fileName) throws Exception {
+
+
+        ByteArrayInputStream inputStream = new ByteArrayInputStream(referenciaArquivo);
+        BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
+
+        String linha;
 
         try {
-
-            Map<String, Object> parametros = Map.of(
-                    "nomeArquivo", fileName,
-                    "dadosArquivo", listaProdutos
-            );
-
-           SdkBytes payload = SdkBytes.fromUtf8String(objectMapper.writeValueAsString(parametros));
-
-
-           InvokeRequest request = InvokeRequest.builder()
-                    .functionName(funcao)
-                    .payload(payload)
-                    .build();
-
-
-           InvokeResponse res = awsLambda.invoke(request);
-
-            String responseJson = res.payload().asUtf8String();
-
-            if (responseJson != null) {
-                return ResponseEntity.ok().build();
-            } else {
-                return  ResponseEntity.internalServerError().build();
-            }
-
-        } catch (LambdaException | JsonProcessingException e) {
-            System.err.println(e.getMessage());
-            return  ResponseEntity.noContent().build();
-        } finally {
-            awsLambda.close();
-        }
-    }
-
-
-
-
-    public static List<ProdutoUnitarioLeituraDto> lerArquivoCsv(byte[] referenciaArquivo) throws Exception {
-
-        List<ProdutoUnitarioLeituraDto> listaLida = new ArrayList<>();
-
-        try (BufferedReader reader = new BufferedReader(new InputStreamReader(new ByteArrayInputStream(referenciaArquivo)))) {
-            String linha;
             while ((linha = reader.readLine()) != null) {
-                String[] campos = linha.split(";");
-                ProdutoUnitarioLeituraDto produto = new ProdutoUnitarioLeituraDto(
-                        campos[0], campos[1], Double.parseDouble(campos[2]), campos[3], campos[4]
-                );
-                listaLida.add(produto);
-            }
-        }
-        return listaLida;
-    }
+                String[] valores = linha.split(",");
 
-    public static List<ProdutoUnitarioLeituraDto> lerArquivoTxt(byte[] referenciaArquivo) throws Exception {
-        List<ProdutoUnitarioLeituraDto> listaLida = new ArrayList<>();
-        try (BufferedReader reader = new BufferedReader(new InputStreamReader(new ByteArrayInputStream(referenciaArquivo)))) {
-            String linha;
-            while ((linha = reader.readLine()) != null) {
-                String tipoRegistro = linha.substring(0, 2);
-                if (tipoRegistro.equals("02")) {
-                    ProdutoUnitarioLeituraDto produto = new ProdutoUnitarioLeituraDto(
-                            linha.substring(2, 3).trim(),
-                            linha.substring(3, 34).trim(),
-                            Double.parseDouble(linha.substring(45, 50).replace(',', '.')),
-                            linha.substring(50, 61).trim(),
-                            linha.substring(61, 110).trim()
-                    );
-                    listaLida.add(produto);
+
+                for (int i = 0; i < valores.length; i++) {
+                    valores[i] = valores[i].trim();
+                    System.out.println(valores[i]);
                 }
+
+                ProdutoUnitarioCriacaoDto novoProdutoUnitario = new ProdutoUnitarioCriacaoDto();
+
+                novoProdutoUnitario.setDataValidade(LocalDate.parse(valores[0]));
+                novoProdutoUnitario.setAtivo(Boolean.parseBoolean(valores[1].toLowerCase()));
+                novoProdutoUnitario.setConfome(Boolean.parseBoolean(valores[2].toLowerCase()));
+                novoProdutoUnitario.setProdutoId(Integer.parseInt(valores[3]));
+                novoProdutoUnitario.setOrigemId(Integer.parseInt(valores[4]));
+                novoProdutoUnitario.setQuantidade(Integer.parseInt(valores[5]));
+
+                ProdutoUnitario produtoUnitarioCriado = mapper.toEntity(novoProdutoUnitario);
+                produtoUnitarioService.criar(produtoUnitarioCriado);
+
             }
         }
-        return listaLida;
+        catch (Exception e) {
+            return ResponseEntity.badRequest().build();
+        }
+
+        return ResponseEntity.ok().build();
+    }
+
+    public ResponseEntity<Void> lerArquivoTxt(byte[] referenciaArquivo) throws Exception {
+
+        ByteArrayInputStream inputStream = new ByteArrayInputStream(referenciaArquivo);
+        BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
+
+        try {
+            String linha;
+
+
+
+            while ((linha = reader.readLine()) != null && linha.length() > 10) {
+
+                if (linha.startsWith("\uFEFF")) {
+                    linha = linha.substring(1);
+                }
+
+                ProdutoUnitarioCriacaoDto novoProdutoUnitario = new ProdutoUnitarioCriacaoDto();
+
+                System.out.println(linha);
+
+                String data = linha.substring(0,11).trim();
+
+                String ativo = linha.substring(11,16).trim().toLowerCase();
+
+                String conforme = linha.substring(16,20).trim().toLowerCase();
+
+                String origem = linha.substring(20,23).trim();
+
+                String produto = linha.substring(24,26).trim();
+
+                String quantidade = linha.substring(25,27).trim();
+
+                novoProdutoUnitario.setDataValidade(LocalDate.parse(data));
+                novoProdutoUnitario.setAtivo(Boolean.parseBoolean(ativo));
+                novoProdutoUnitario.setConfome(Boolean.parseBoolean(conforme));
+                novoProdutoUnitario.setProdutoId(Integer.parseInt(origem));
+                novoProdutoUnitario.setOrigemId(Integer.parseInt(produto));
+                novoProdutoUnitario.setQuantidade(Integer.parseInt(quantidade));
+
+                ProdutoUnitario produtoUnitarioCriado = mapper.toEntity(novoProdutoUnitario);
+                produtoUnitarioService.criar(produtoUnitarioCriado);
+
+            }
+        }
+        catch (Exception e) {
+            System.out.println(e);
+            return ResponseEntity.badRequest().build();
+        }
+
+        return ResponseEntity.ok().build();
     }
 
 
     @GetMapping("/exportar/{dataInicio}/{dataFim}/{tipoArquivo}")
     public ResponseEntity<Resource> download(@PathVariable LocalDate dataInicio, @PathVariable LocalDate dataFim, @PathVariable String tipoArquivo) throws IOException {
 
-        List<VencidoArrecadado> produtosArrecadados = produtoService.arrecadadosVencidos();
-        List<ProdutoUnitario> produtoUnitarios = produtoService.listarPorDataEntre(dataInicio, dataFim);
+        List<VencidoArrecadado> produtosArrecadados = produtoUnitarioService.arrecadadosVencidos();
+        List<ProdutoUnitario> produtoUnitarios = produtoUnitarioService.listarPorDataEntre(dataInicio, dataFim);
         List<ProdutoUnitarioRelatorioDto> produtoRelatorios = mapper.toDtoRelatorio(produtoUnitarios);
 
         List<Relatorio> relatorios = new ArrayList<>();
@@ -233,7 +283,7 @@ public class RelatorioController {
             for (ProdutoUnitarioRelatorioDto produto : lista) {
                 String origem = produto.getOrigem().getItapora() == 1 ? "Itapora" : "Auto de Suuza";
 
-                saida.format("%30s;%10s;%4.2f;%10s,%50s\n",
+                saida.format("%30s;%10s;%4.2f;%10s;%50s\n",
                         produto.getProduto().getNome(),
                         produto.getDataValidade(),
                         produto.getPeso(),

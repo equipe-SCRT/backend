@@ -37,7 +37,7 @@ public class HistoricoMudanca extends BaseEntity {
         this.dataHora = dataHora;
     }
 
-    public HistoricoMudanca() {
+        public HistoricoMudanca() {
     }
 
     @Override
