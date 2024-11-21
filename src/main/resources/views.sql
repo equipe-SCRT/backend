@@ -26,7 +26,7 @@ group by
     date(pu.data_validade),
     pu.produto_id
 order by
-    pu.data_validade;
+    'data_validade';
 DROP VIEW IF EXISTS v_produto_unitario_vencimento_15_e_30_dias;
 DROP TABLE IF EXISTS v_produto_unitario_vencimento_15_e_30_dias;
 CREATE VIEW v_produto_unitario_vencimento_15_e_30_dias AS
