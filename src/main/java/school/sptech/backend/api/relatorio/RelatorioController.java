@@ -66,45 +66,45 @@ public class RelatorioController {
             @RequestBody byte[] referenciaArquivo, @PathVariable String fileName
     ) {
 
-//      String funcao = "lambda_handler";
-//      Region region = Region.US_EAST_1;
-//
-//      LambdaClient awsLambda = LambdaClient.builder()
-//                .region(region)
-//                .build();
-//
-//      ObjectMapper objectMapper = new ObjectMapper();
-//
-//        try {
-//
-//            Map<String, Object> parametros = Map.of(
-//                    "nomeArquivo", fileName,
-//                    "Arquivo", referenciaArquivo
-//            );
-//
-//           SdkBytes payload = SdkBytes.fromUtf8String(objectMapper.writeValueAsString(parametros));
-//
-//
-//           InvokeRequest request = InvokeRequest.builder()
-//                    .functionName(funcao)
-//                    .payload(payload)
-//                    .build();
-//
-//           InvokeResponse res = awsLambda.invoke(request);
-//
-//            String responseJson = res.payload().asUtf8String();
-//
-//            if (responseJson != null) {
-//                System.out.println(responseJson);
-//            } else {
-//                System.out.println(responseJson);
-//            }
-//
-//        } catch (LambdaException | JsonProcessingException e) {
-//            System.err.println(e.getMessage());
-//        } finally {
-//            awsLambda.close();
-//        }
+      String funcao = "lambda_function";
+      Region region = Region.US_EAST_1;
+
+      LambdaClient awsLambda = LambdaClient.builder()
+                .region(region)
+                .build();
+
+      ObjectMapper objectMapper = new ObjectMapper();
+
+        try {
+
+            Map<String, Object> parametros = Map.of(
+                    "nomeArquivo", fileName,
+                    "dadosArquivo", referenciaArquivo
+            );
+
+           SdkBytes payload = SdkBytes.fromUtf8String(objectMapper.writeValueAsString(parametros));
+
+
+           InvokeRequest request = InvokeRequest.builder()
+                    .functionName(funcao)
+                    .payload(payload)
+                    .build();
+
+           InvokeResponse res = awsLambda.invoke(request);
+
+            String responseJson = res.payload().asUtf8String();
+
+            if (responseJson != null) {
+                System.out.println(responseJson);
+            } else {
+                System.out.println(responseJson);
+            }
+
+        } catch (LambdaException | JsonProcessingException e) {
+            System.err.println(e.getMessage());
+        } finally {
+            awsLambda.close();
+        }
 
         try {
             if (fileName.endsWith(".csv")) {
