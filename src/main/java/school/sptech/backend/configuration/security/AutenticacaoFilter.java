@@ -39,7 +39,9 @@ public class AutenticacaoFilter extends OncePerRequestFilter {
         String requestTokenHeader = request.getHeader("Authorization");
 
         if (Objects.nonNull(requestTokenHeader) && requestTokenHeader.startsWith("Bearer ")) {
+            
             jwtToken = requestTokenHeader.substring(7);
+            LOGGER.debug("Token recebido: '{}'", jwtToken);
 
             try {
                 username = jwtTokenManager.getUsernameFromToken(jwtToken);
@@ -55,7 +57,7 @@ public class AutenticacaoFilter extends OncePerRequestFilter {
 
         }
 
-        if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
+        if (username != null && SecurityContextHolder.getContext().getAuthentication() != null) {
             addUsernameInContext(request, username, jwtToken);
         }
 
