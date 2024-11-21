@@ -2,6 +2,7 @@ package school.sptech.backend.api.produtounitario;
 
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import school.sptech.backend.api.BaseController;
@@ -86,6 +87,15 @@ public class ProdutoUnitarioController implements BaseController<ProdutoUnitario
         List<ProdutoUnitarioListagemDto> dtos = mapper.toDto(produtoUnitarios);
 
         return ResponseEntity.ok(dtos);
+    }
+
+    @GetMapping("/paginado")
+    public ResponseEntity<Page<ProdutoUnitario>> paginado(@RequestParam
+                                                                     Integer paginaAtual,
+                                                          @RequestParam
+                                                                     Integer tamanho){
+        Page<ProdutoUnitario> page = service.listarPaginado(paginaAtual, tamanho);
+        return ResponseEntity.ok(page);
     }
 
     @PutMapping("/{id}")

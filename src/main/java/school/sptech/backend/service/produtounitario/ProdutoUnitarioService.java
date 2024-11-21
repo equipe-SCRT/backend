@@ -3,6 +3,9 @@ package school.sptech.backend.service.produtounitario;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.event.EventListener;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import school.sptech.backend.domain.origem.Origem;
@@ -167,5 +170,14 @@ public class ProdutoUnitarioService implements BaseService<ProdutoUnitario, Inte
             produtoUnitarioListagemDtos.add(dto);
         }
         return produtoUnitarioListagemDtos;
+    }
+
+    public Page<ProdutoUnitario> listarPaginado(Integer paginaAtual, Integer tamanho) {
+        Sort sort = Sort.by(Sort.Order.asc("Id"));
+        PageRequest pageable = PageRequest.of(paginaAtual, tamanho, sort);
+        Page<ProdutoUnitario> page = this.repository.findAll(pageable);
+
+
+        return page;
     }
 }
