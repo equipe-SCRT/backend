@@ -8,15 +8,16 @@ import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import school.sptech.backend.domain.BaseEntity;
 import school.sptech.backend.domain.Timestamped;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-public class Usuario extends BaseEntity {
-
+public class Usuario extends Timestamped {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id;
     @NotNull
     private String nome;
     @NotNull

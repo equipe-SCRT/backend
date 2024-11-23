@@ -5,7 +5,6 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import school.sptech.backend.domain.BaseEntity;
 import school.sptech.backend.domain.Timestamped;
 import school.sptech.backend.domain.endereco.Endereco;
 
@@ -14,8 +13,10 @@ import school.sptech.backend.domain.endereco.Endereco;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class Condominio extends BaseEntity {
-
+public class Condominio extends Timestamped {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id;
     private String nome;
 
     @ManyToOne

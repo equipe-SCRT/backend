@@ -72,9 +72,9 @@ class CondominioServiceTest {
         Condominio novoCondominio = new Condominio(null, "teste", endereco);
 
         Mockito.when(enderecoService.porId(endereco.getId())).thenReturn(endereco);
-        Mockito.when(service.criar(novoCondominio, condominio.getEndereco().getId())).thenReturn(condominio);
+        Mockito.when(service.criar(novoCondominio)).thenReturn(condominio);
 
-        Condominio condominioSalvo = service.criar(novoCondominio, novoCondominio.getEndereco().getId());
+        Condominio condominioSalvo = service.criar(novoCondominio);
 
         assertEquals(condominio.getId(), condominioSalvo.getId());
         Mockito.verify(repository, Mockito.times(1)).save(novoCondominio);
@@ -146,7 +146,7 @@ class CondominioServiceTest {
         Mockito.when(repository.save(condominioAtualizacao)).thenReturn(condominioRetorno);
         Mockito.when(repository.existsById(idInformado)).thenReturn(Boolean.TRUE);
 
-        Condominio resposta = service.atualizar(condominioAtualizacao, idInformado);
+        Condominio resposta = service.atualizar(idInformado, condominioAtualizacao);
 
         assertEquals(idInformado, resposta.getId());
         assertEquals(condominioAtualizacao.getNome(), resposta.getNome());
@@ -161,7 +161,7 @@ class CondominioServiceTest {
         Mockito.when(repository.existsById(Mockito.any())).thenReturn(Boolean.FALSE);
 
         assertThrows(NaoEncontradoException.class,
-                () -> service.atualizar(Mockito.any(), 1));
+                () -> service.atualizar(1, Mockito.any()));
     }
 
     @Test

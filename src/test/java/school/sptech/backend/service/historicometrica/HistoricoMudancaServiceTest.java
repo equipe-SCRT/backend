@@ -97,7 +97,7 @@ class HistoricoMudancaServiceTest {
         HistoricoMudanca historicoEncontrado = service.porId(id);
 
         // ASSERT
-        assertEquals(historicoEncontrado.getIdHistoricoMudanca(), historicoEncontrado.getIdHistoricoMudanca());
+        assertEquals(historicoEncontrado.getId(), historicoEncontrado.getId());
 
         Mockito.verify(repository, Mockito.times(1)).findById(id);
     }
