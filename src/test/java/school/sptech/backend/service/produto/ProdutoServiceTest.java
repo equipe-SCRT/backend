@@ -116,7 +116,7 @@ class ProdutoServiceTest {
         Mockito.when(unidadeMedidaService.porId(u1.getId())).thenReturn(u1);
         Mockito.when(produtoRepository.save(novoProduto)).thenReturn(produto);
 
-        Produto produtoSalvo = produtoService.criar(novoProduto, novoProduto.getTipoProduto().getId(), novoProduto.getUnidadeMedida().getId());
+        Produto produtoSalvo = produtoService.criar(novoProduto);
 
         assertEquals(produto.getId(), produtoSalvo.getId());
         Mockito.verify(produtoRepository, Mockito.times(1)).save(novoProduto);
@@ -200,33 +200,11 @@ class ProdutoServiceTest {
         Mockito.verify(produtoRepository, Mockito.times(0)).findAll();
     }
 
-    @Test
-    @DisplayName("Dado que tenho o id no banco e passei o objeto, atualiza com sucesso")
-    void dadoQueAtualizacaoCorreta(){
-        TipoProduto t1 = new TipoProduto(1, "Perecível");
-        UnidadeMedida u1 = new UnidadeMedida(1, "Quilos", "kg");
-        Produto produtoAtualizacao = new Produto(null, "Bolacha 2", 200,t1, u1);
-        Integer idInformado = 1;
-        Produto produtoRetorno = new Produto(idInformado, "Bolacha 2", 200,t1, u1);
-
-        Mockito.when(produtoRepository.save(produtoAtualizacao)).thenReturn(produtoRetorno);
-        Mockito.when(produtoRepository.existsById(idInformado)).thenReturn(Boolean.TRUE);
-
-        Produto produtoResposta = produtoService.atualizar(produtoAtualizacao, idInformado);
-
-        assertEquals(idInformado, produtoResposta.getId());
-        assertEquals(produtoAtualizacao.getNome(), produtoResposta.getNome());
-
-        Mockito.verify(produtoRepository, Mockito.times(1)).existsById(idInformado);
-        Mockito.verify(produtoRepository, Mockito.times(1)).save(Mockito.any());
-    }
 
     @Test
     @DisplayName("Dado que tenho um id que não existe no banco")
     void dadoQueIdInexistenteNoAtualizar(){
-        Mockito.when(produtoRepository.existsById(Mockito.any())).thenReturn(Boolean.FALSE);
-
-        assertThrows(NaoEncontradoException.class, () -> produtoService.atualizar(Mockito.any(), 1));
+        assertThrows(NaoEncontradoException.class, () -> produtoService.atualizar(1, Mockito.any()));
     }
 
     @Test

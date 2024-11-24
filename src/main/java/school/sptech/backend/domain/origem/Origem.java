@@ -5,21 +5,19 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import school.sptech.backend.domain.BaseEntity;
 import school.sptech.backend.domain.Timestamped;
 import school.sptech.backend.domain.campanha.Campanha;
 import school.sptech.backend.domain.condominio.Condominio;
-
-import java.util.Date;
 
 @Entity
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class Origem extends BaseEntity {
-
-
+public class Origem extends Timestamped {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id;
     private Integer autaDeSouzaRua;
     private Integer itapora;
 

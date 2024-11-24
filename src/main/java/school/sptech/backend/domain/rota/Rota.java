@@ -8,7 +8,6 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import school.sptech.backend.domain.BaseEntity;
 import school.sptech.backend.domain.Timestamped;
 
 import java.sql.Time;
@@ -19,9 +18,10 @@ import java.time.LocalDate;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class Rota extends BaseEntity {
-
-
+public class Rota extends Timestamped {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id;
     private String nome;
     private Integer kmRodados;
     private Integer qtdColaboradores;

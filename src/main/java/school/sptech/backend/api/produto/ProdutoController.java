@@ -16,6 +16,7 @@ import school.sptech.backend.service.campanha.dto.AlimentosArrecadadosPorMesList
 import school.sptech.backend.service.campanha.dto.AlimentosArrecadadosPorMesMapper;
 
 import java.net.URI;
+import java.time.LocalDate;
 import java.util.List;
 
 @RestController
@@ -88,8 +89,8 @@ public class ProdutoController implements BaseController<ProdutoCriacaoDto, Prod
     }
 
     @GetMapping("/alimentos-arrecadados-por-mes")
-    public ResponseEntity<List<AlimentosArrecadadosPorMesListagemDto>> alimentosArrecadadosPorMes(){
-        List<AlimentosArrecadadosPorMes> alimentosArrecadadosPorMes = service.alimentosArrecadadosPorMes();
+    public ResponseEntity<List<AlimentosArrecadadosPorMesListagemDto>> alimentosArrecadadosPorMes(@RequestParam LocalDate inicio, @RequestParam LocalDate fim){
+        List<AlimentosArrecadadosPorMes> alimentosArrecadadosPorMes = service.alimentosArrecadadosPorMes(inicio, fim);
         List<AlimentosArrecadadosPorMesListagemDto> dto = alimentosArrecadadosPorMesMapper.toDto(alimentosArrecadadosPorMes);
         return ResponseEntity.ok(dto);
     }

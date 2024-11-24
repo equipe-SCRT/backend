@@ -5,15 +5,17 @@ import java.time.LocalDate;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
-import school.sptech.backend.domain.BaseEntity;
 import school.sptech.backend.domain.Timestamped;
 import school.sptech.backend.domain.usuario.Usuario;
 
 @Entity
 @Getter
 @Setter
-public class HistoricoMudanca extends BaseEntity {
+public class HistoricoMudanca extends Timestamped {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id;
 
     private LocalDate dataHora;
     @ManyToOne

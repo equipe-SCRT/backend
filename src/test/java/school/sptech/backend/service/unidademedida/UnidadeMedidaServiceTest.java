@@ -142,7 +142,7 @@ class UnidadeMedidaServiceTest {
         Mockito.when(unidadeMedidaRepository.save(unidadeMedidaAtualizacao)).thenReturn(unidadeMedidaRetorno);
         Mockito.when(unidadeMedidaRepository.existsById(idInformado)).thenReturn(Boolean.TRUE);
 
-        UnidadeMedida unidadeMedidaResposta = unidadeMedidaService.atualizar(unidadeMedidaAtualizacao, idInformado);
+        UnidadeMedida unidadeMedidaResposta = unidadeMedidaService.atualizar(idInformado, unidadeMedidaAtualizacao);
 
         assertEquals(idInformado, unidadeMedidaResposta.getId());
         assertEquals(unidadeMedidaAtualizacao.getNome(), unidadeMedidaResposta.getNome());
@@ -156,7 +156,7 @@ class UnidadeMedidaServiceTest {
     void dadoQueIdInexistenteNoAtualizar(){
         Mockito.when(unidadeMedidaRepository.existsById(Mockito.any())).thenReturn(Boolean.FALSE);
 
-        assertThrows(NaoEncontradoException.class, () -> unidadeMedidaService.atualizar(Mockito.any(), 1));
+        assertThrows(NaoEncontradoException.class, () -> unidadeMedidaService.atualizar(1, Mockito.any()));
     }
 
     @Test

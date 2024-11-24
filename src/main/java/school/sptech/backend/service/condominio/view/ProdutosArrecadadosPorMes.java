@@ -8,6 +8,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.time.LocalDate;
+
 @Entity
 @Getter
 @Setter
@@ -17,6 +19,6 @@ import lombok.Setter;
 public class ProdutosArrecadadosPorMes {
 
     @Id
-    private String mes;
+    private LocalDate criadoEm;
     private Integer count;
 }

@@ -147,7 +147,7 @@ class TipoProdutoServiceTest {
         Mockito.when(tipoProdutoRepository.save(tipoProdutoAtualizacao)).thenReturn(tipoProdutoRetorno);
         Mockito.when(tipoProdutoRepository.existsById(idInformado)).thenReturn(Boolean.TRUE);
 
-        TipoProduto tipoProdutoResposta = tipoProdutoService.atualizar(tipoProdutoAtualizacao, idInformado);
+        TipoProduto tipoProdutoResposta = tipoProdutoService.atualizar(idInformado, tipoProdutoAtualizacao);
 
         assertEquals(idInformado, tipoProdutoResposta.getId());
         assertEquals(tipoProdutoAtualizacao.getNome(), tipoProdutoResposta.getNome());
@@ -161,7 +161,7 @@ class TipoProdutoServiceTest {
     void dadoQueIdInexistenteNoAtualizar(){
         Mockito.when(tipoProdutoRepository.existsById(Mockito.any())).thenReturn(Boolean.FALSE);
 
-        assertThrows(NaoEncontradoException.class, () -> tipoProdutoService.atualizar(Mockito.any(), 1));
+        assertThrows(NaoEncontradoException.class, () -> tipoProdutoService.atualizar(1, Mockito.any()));
     }
 
     @Test

@@ -11,6 +11,7 @@ import school.sptech.backend.service.condominio.dto.*;
 import school.sptech.backend.service.condominio.view.*;
 
 import java.net.URI;
+import java.time.LocalDate;
 import java.util.List;
 
 @RestController
@@ -100,8 +101,8 @@ public class CondominioController implements BaseController<CondominioCriacaoDto
     }
 
     @GetMapping("/produtos-arrecadados-por-mes")
-    public ResponseEntity<List<ProdutosArrecadadosPorMesListagemDto>> produtosArrecadadosPorMes() {
-        List<ProdutosArrecadadosPorMes> produtosArrecadadosPorMes = service.listarProdutosArrecadadosPorMes();
+    public ResponseEntity<List<ProdutosArrecadadosPorMesListagemDto>> produtosArrecadadosPorMes(@RequestParam LocalDate inicio, @RequestParam LocalDate fim) {
+        List<ProdutosArrecadadosPorMes> produtosArrecadadosPorMes = service.listarProdutosArrecadadosPorMes(inicio, fim);
         List<ProdutosArrecadadosPorMesListagemDto> dto = produtosArrecadadosPorMesMapper.toDto(produtosArrecadadosPorMes);
         dto.forEach(System.out::println);
         return ResponseEntity.ok(dto);
@@ -116,8 +117,8 @@ public class CondominioController implements BaseController<CondominioCriacaoDto
     }
 
     @GetMapping("/produtos-por-nome-condominio/{nomeCondominio}")
-    public ResponseEntity<List<QtdProdutosPorNomeCondominioListagemDto>> produtosPorNomeCondominio(@PathVariable String nomeCondominio) {
-        List<QtdProdutosPorNomeCondominio> produtosPorNomeCondominio = service.listarProdutosPorNomeCondominio(nomeCondominio);
+    public ResponseEntity<List<QtdProdutosPorNomeCondominioListagemDto>> produtosPorNomeCondominio(@PathVariable String nomeCondominio, @RequestParam LocalDate inicio, @RequestParam LocalDate fim) {
+        List<QtdProdutosPorNomeCondominio> produtosPorNomeCondominio = service.listarProdutosPorNomeCondominio(nomeCondominio, inicio, fim);
         List<QtdProdutosPorNomeCondominioListagemDto> dto = qtdProdutosPorNomeCondominioMapper.toDto(produtosPorNomeCondominio);
         dto.forEach(System.out::println);
         return ResponseEntity.ok(dto);

@@ -8,7 +8,6 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import school.sptech.backend.domain.BaseEntity;
 import school.sptech.backend.domain.Timestamped;
 
 @Entity
@@ -16,7 +15,9 @@ import school.sptech.backend.domain.Timestamped;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class TipoProduto extends BaseEntity {
-
+public class TipoProduto extends Timestamped {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id;
     private String nome;
 }

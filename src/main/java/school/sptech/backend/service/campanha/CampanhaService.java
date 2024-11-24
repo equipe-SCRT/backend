@@ -77,8 +77,8 @@ public class CampanhaService {
         return null;
     }
 
-    public List<QtdDoacoesPorCampanha> qtdDoacoesPorCampanhas(String nome){
-        return qtdDoacoesPorCampanhaRepository.findByNome(nome);
+    public List<QtdDoacoesPorCampanha> qtdDoacoesPorCampanhas(String nome, LocalDate inicio, LocalDate fim){
+        return qtdDoacoesPorCampanhaRepository.findByNomeAndDataCampanhaBetween(nome, inicio, fim);
     }
 
     public List<Campanha> porData(LocalDate data){
