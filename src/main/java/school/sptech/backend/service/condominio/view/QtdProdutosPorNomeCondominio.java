@@ -8,6 +8,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.time.LocalDate;
+
 @Entity
 @Getter
 @Setter
@@ -18,6 +20,6 @@ public class QtdProdutosPorNomeCondominio {
 
     @Id
     private String nomeCondominio;
-    private String mes;
+    private LocalDate criadoEm;
     private Integer count;
 }

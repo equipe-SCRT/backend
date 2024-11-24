@@ -8,6 +8,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.time.LocalDate;
+
 @Entity
 @Getter
 @Setter
@@ -18,6 +20,5 @@ public class QtdDoacoesPorCampanha {
     @Id
     private Integer qtdArrecadada;
     private String nome;
-    private Integer mes;
-    private Integer ano;
+    private LocalDate dataCampanha;
 }

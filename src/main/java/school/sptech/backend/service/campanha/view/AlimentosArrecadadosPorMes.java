@@ -5,6 +5,8 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import lombok.*;
 
+import java.time.LocalDate;
+
 @Entity
 @Getter
 @Setter
@@ -14,6 +16,5 @@ import lombok.*;
 public class AlimentosArrecadadosPorMes {
     @Id
     private Integer qtdArrecadada;
-    private Integer mes;
-    private Integer ano;
+    private LocalDate dataCampanha;
 }

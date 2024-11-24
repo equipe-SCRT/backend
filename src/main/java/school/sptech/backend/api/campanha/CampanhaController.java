@@ -68,8 +68,8 @@ public class CampanhaController implements BaseController<CampanhaCriacaoDto,Cam
     }
 
     @GetMapping("/doacoes-por-campanhas")
-    public ResponseEntity<List<QtdDoacoesPorCampanhaListagemDto>> qtdDoacoesPorCampanha(@RequestParam String nome){
-        List<QtdDoacoesPorCampanha> qtdProdutosVencidosPorCampanha = campanhaService.qtdDoacoesPorCampanhas(nome);
+    public ResponseEntity<List<QtdDoacoesPorCampanhaListagemDto>> qtdDoacoesPorCampanha(@RequestParam String nome, @RequestParam LocalDate inicio, @RequestParam LocalDate fim){
+        List<QtdDoacoesPorCampanha> qtdProdutosVencidosPorCampanha = campanhaService.qtdDoacoesPorCampanhas(nome, inicio, fim);
         List<QtdDoacoesPorCampanhaListagemDto> dto = qtdDoacoesPorCampanhaMapper.toDto(qtdProdutosVencidosPorCampanha);
         return ResponseEntity.ok(dto);
     }

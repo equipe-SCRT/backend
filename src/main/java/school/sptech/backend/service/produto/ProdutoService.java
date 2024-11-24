@@ -13,6 +13,7 @@ import school.sptech.backend.service.unidademedida.UnidadeMedidaService;
 import school.sptech.backend.service.campanha.view.AlimentosArrecadadosPorMes;
 import school.sptech.backend.domain.campanha.repository.AlimentosArrecadadosPorMesRepository;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -67,7 +68,7 @@ public class ProdutoService implements BaseService<Produto, Integer> {
         return null;
     }
 
-    public List<AlimentosArrecadadosPorMes>  alimentosArrecadadosPorMes(){
-        return alimentosArrecadadosPorMesRepository.findAll();
+    public List<AlimentosArrecadadosPorMes>  alimentosArrecadadosPorMes(LocalDate inicio, LocalDate fim){
+        return alimentosArrecadadosPorMesRepository.findAllByDataCampanhaBetween(inicio, fim);
     }
 }
