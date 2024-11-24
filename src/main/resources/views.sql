@@ -1,3 +1,4 @@
+
 DROP VIEW IF EXISTS v_produto_unitario_qtd_ativo_por_mes;
 DROP TABLE IF EXISTS v_produto_unitario_qtd_ativo_por_mes;
 CREATE VIEW v_produto_unitario_qtd_ativo_por_mes AS
