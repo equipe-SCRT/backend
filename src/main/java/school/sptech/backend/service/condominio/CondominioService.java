@@ -9,6 +9,7 @@ import school.sptech.backend.service.BaseService;
 import school.sptech.backend.service.condominio.view.*;
 import school.sptech.backend.service.endereco.EnderecoService;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @Service
@@ -82,15 +83,15 @@ public class CondominioService implements BaseService<Condominio, Integer> {
         return produtosConformeENaoConformeRepository.findAll();
     }
 
-    public List<ProdutosArrecadadosPorMes> listarProdutosArrecadadosPorMes() {
-        return produtosArrecadadosPorMesRepository.findAll();
+    public List<ProdutosArrecadadosPorMes> listarProdutosArrecadadosPorMes(LocalDate inicio, LocalDate fim) {
+        return produtosArrecadadosPorMesRepository.findAllByCriadoEmBetween(inicio, fim);
     }
 
     public List<ProdutosArrecadadosPorCondominio> listarProdutosArrecadadosPorCondominio(Integer id) {
         return produtosArrecadadosPorCondominioRepository.findByCondominioId(id);
     }
 
-    public List<QtdProdutosPorNomeCondominio> listarProdutosPorNomeCondominio(String nomeCondominio) {
-        return qtdProdutosPorNomeCondominioRepository.findAllByNomeCondominio(nomeCondominio);
+    public List<QtdProdutosPorNomeCondominio> listarProdutosPorNomeCondominio(String nomeCondominio, LocalDate inicio, LocalDate fim) {
+        return qtdProdutosPorNomeCondominioRepository.findAllByNomeCondominioAndCriadoEmBetween(nomeCondominio, inicio, fim);
     }
 }
