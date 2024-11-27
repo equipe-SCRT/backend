@@ -15,7 +15,7 @@ jobs:
         run: echo Hello, world!
 
       - name: Definindo a versão da JDK 
-        uses: actions/setup-java@v2
+        uses: actions/setup-java@v3
         with:
           distribution: 'oracle' 
           java-version: '17.0.13'
