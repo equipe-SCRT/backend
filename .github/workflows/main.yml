@@ -17,8 +17,8 @@ jobs:
       - name: Definindo a versão da JDK 
         uses: actions/setup-java@v2
         with:
-          distribution: 'temurin' 
-          java-version: '17'
+          distribution: 'oracle' 
+          java-version: '17.0.13'
 
       - name: Build com Maven
         run: mvn -f ./pom.xml clean package
