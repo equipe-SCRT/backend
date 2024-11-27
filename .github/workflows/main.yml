@@ -17,7 +17,7 @@ jobs:
       - name: Definindo a versão da JDK 
         uses: actions/setup-java@v2
         with:
-          distribution: 'oracle' 
+          distribution: 'temurin' 
           java-version: '17'
 
       - name: Build com Maven
