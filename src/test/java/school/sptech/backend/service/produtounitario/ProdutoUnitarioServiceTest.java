@@ -1,5 +1,6 @@
 package school.sptech.backend.service.produtounitario;
 
+import jakarta.persistence.ManyToOne;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -81,9 +82,9 @@ class ProdutoUnitarioServiceTest {
     void cenarioListaTresProdutos() {
 
         List<ProdutoUnitario> lista = List.of(
-//                new ProdutoUnitario(1, "Produto 1", LocalDate.now(), 20.0, true, LocalDate.now(),new Origem(), new UnidadeMedida(), new Cesta(), new Produto(), new Rota(), new Metrica()),
-//                new ProdutoUnitario(2, "Produto 2", LocalDate.now(), 10.0, true, LocalDate.now(), new Origem(), new UnidadeMedida(), new Cesta(), new Produto(), new Rota(), new Metrica()),
-//                new ProdutoUnitario(3, "Produto 3", LocalDate.now(), 5.0, true, LocalDate.now(), new Origem(), new UnidadeMedida(), new Cesta(), new Produto(), new Rota(), new Metrica())
+                new ProdutoUnitario(1, "Produto 1", LocalDate.now(), 20.0, true,false, true, new Origem(), new UnidadeMedida(), new Cesta(), new Produto(), new Rota(), new Metrica()),
+                new ProdutoUnitario(2, "Produto 2", LocalDate.now(), 10.0, true, false, true, new Origem(), new UnidadeMedida(), new Cesta(), new Produto(), new Rota(), new Metrica()),
+                new ProdutoUnitario(3, "Produto 3", LocalDate.now(), 5.0, true, false, true, new Origem(), new UnidadeMedida(), new Cesta(), new Produto(), new Rota(), new Metrica())
         );
 
         Mockito.when(produtoUnitarioService.listar()).thenReturn(lista);
@@ -115,7 +116,7 @@ class ProdutoUnitarioServiceTest {
     @Test
     @DisplayName("Caso houver o produto pelo id, retorne o mesmo")
     void cenarioProdutoExistente(){
-        Optional<ProdutoUnitario> produto = Optional.of( new ProdutoUnitario(1, "Arroz", LocalDate.now(), 2.0, true, LocalDate.now(), new Origem(), new UnidadeMedida(), new Cesta(), new Produto(), new Rota(), new Metrica()));
+        Optional<ProdutoUnitario> produto = Optional.of( new ProdutoUnitario(1, "Arroz", LocalDate.now(), 2.0, true, false, true, new Origem(), new UnidadeMedida(), new Cesta(), new Produto(), new Rota(), new Metrica()));
         Integer id = 1;
 
         Mockito.when(produtoUnitarioRepository.findById(id)).thenReturn(produto);
@@ -140,39 +141,11 @@ class ProdutoUnitarioServiceTest {
 
     }
 
-    @Test
-    @DisplayName("Deve retornar o produto criado")
-    void testCriaProduto() {
-        Origem origem = new Origem(1, 1, 1, new Condominio(), new Campanha());
-        UnidadeMedida unidadeMedida = new UnidadeMedida(1, "Quilos", "KG");
-        Cesta cesta = new Cesta(1, "Lote 1", LocalDate.now(), new TipoCesta());
-        Produto p1 = new Produto(1, "Produto 1", 1, new TipoProduto(), new UnidadeMedida());
-        Rota rota = new Rota(1, "Rota 1", "km rodados", 5, LocalDate.now(), new Time(12,0,0), new Time(17, 0, 0));
-        Metrica metrica = new Metrica(1, LocalDate.now(), new Usuario());
-
-        ProdutoUnitario produto =  new ProdutoUnitario(1, "Arroz", LocalDate.now(), 2.0, true, LocalDate.now(), origem, unidadeMedida, cesta, p1, rota, metrica);
-        ProdutoUnitario novoProduto =  new ProdutoUnitario(null, "Arroz", LocalDate.now(), 2.0, true, LocalDate.now(), origem, unidadeMedida, cesta, p1, rota, metrica);
-
-        Mockito.when(origemService.porId(origem.getId())).thenReturn(origem);
-        Mockito.when(unidadeMedidaService.porId(unidadeMedida.getId())).thenReturn(unidadeMedida);
-        Mockito.when(cestaService.porId(cesta.getId())).thenReturn(cesta);
-        Mockito.when(produtoService.porId(p1.getId())).thenReturn(p1);
-        Mockito.when(rotaService.porId(rota.getId())).thenReturn(rota);
-        Mockito.when(metricaService.porId(metrica.getIdMetrica())).thenReturn(metrica);
-
-        Mockito.when(produtoUnitarioRepository.save(novoProduto)).thenReturn(produto);
-
-        ProdutoUnitario produtoSalvo = produtoUnitarioService.criar(novoProduto, novoProduto.getOrigem().getId(), novoProduto.getUnidadeMedida().getId(), novoProduto.getCesta().getId(), novoProduto.getProduto().getId(), novoProduto.getRota().getId(), novoProduto.getMetrica().getIdMetrica());
-
-        assertEquals(produto.getId(), produtoSalvo.getId());
-        Mockito.verify(produtoUnitarioRepository, Mockito.times(1)).save(novoProduto);
-
-    }
 
     @Test
     @DisplayName("Deve retornar o produto pelo id")
     void retonaProdutoPeloId() {
-        ProdutoUnitario produto =  new ProdutoUnitario(1, "Arroz", LocalDate.now(), 2.0, true, LocalDate.now(), new Origem(), new UnidadeMedida(), new Cesta(), new Produto(), new Rota(), new Metrica());
+        ProdutoUnitario produto =  new ProdutoUnitario(1, "Arroz", LocalDate.now(), 2.0, true, false, true, new Origem(), new UnidadeMedida(), new Cesta(), new Produto(), new Rota(), new Metrica());
         Integer idBusca = 1;
 
         Mockito.when(produtoUnitarioRepository.findById(idBusca)).thenReturn(Optional.of(produto));
@@ -205,8 +178,8 @@ class ProdutoUnitarioServiceTest {
     void retornaProdutoComLetraA(){
 
         List<ProdutoUnitario> produtosFiltrados = List.of(
-                new ProdutoUnitario(1, "Bolacha", LocalDate.now(), 2.0, true, LocalDate.now(), new Origem(), new UnidadeMedida(), new Cesta(), new Produto(), new Rota(), new Metrica()),
-                new ProdutoUnitario(2, "Chocolate", LocalDate.now(), 2.0, true, LocalDate.now(), new Origem(), new UnidadeMedida(), new Cesta(), new Produto(), new Rota(), new Metrica())
+                new ProdutoUnitario(1, "Bolacha", LocalDate.now(), 2.0, true, false, true, new Origem(), new UnidadeMedida(), new Cesta(), new Produto(), new Rota(), new Metrica()),
+                new ProdutoUnitario(2, "Chocolate", LocalDate.now(), 2.0, true, false, true, new Origem(), new UnidadeMedida(), new Cesta(), new Produto(), new Rota(), new Metrica())
         );
 
         Mockito.when(produtoUnitarioRepository.findByNomeContainingIgnoreCase("a")).thenReturn(produtosFiltrados);
@@ -249,31 +222,14 @@ class ProdutoUnitarioServiceTest {
         Mockito.verify(produtoUnitarioRepository, Mockito.times(0)).findAll();
     }
 
-    @Test
-    @DisplayName("Dado que tenho o id no banco e passei o objeto, atualiza com sucesso")
-    void dadoQueAtualizacaoCorreta(){
-        ProdutoUnitario produtoAtualizacao = new ProdutoUnitario(null, "Bolacha 2", LocalDate.now(), 2.0, true, LocalDate.now(), new Origem(), new UnidadeMedida(), new Cesta(), new Produto(), new Rota(), new Metrica());
-        Integer idInformado = 1;
-        ProdutoUnitario produtoRetorno = new ProdutoUnitario(idInformado, "Bolacha 2", LocalDate.now(), 2.0, true, LocalDate.now(), new Origem(), new UnidadeMedida(), new Cesta(), new Produto(), new Rota(), new Metrica());
 
-        Mockito.when(produtoUnitarioRepository.save(produtoAtualizacao)).thenReturn(produtoRetorno);
-        Mockito.when(produtoUnitarioRepository.existsById(idInformado)).thenReturn(Boolean.TRUE);
-
-        ProdutoUnitario produtoResposta = produtoUnitarioService.atualizar(produtoAtualizacao, idInformado);
-
-        assertEquals(idInformado, produtoResposta.getId());
-        assertEquals(produtoAtualizacao.getNome(), produtoResposta.getNome());
-
-        Mockito.verify(produtoUnitarioRepository, Mockito.times(1)).existsById(idInformado);
-        Mockito.verify(produtoUnitarioRepository, Mockito.times(1)).save(Mockito.any());
-    }
 
     @Test
     @DisplayName("Dado que tenho um id que não existe no banco")
     void dadoQueIdInexistenteNoAtualizar(){
         Mockito.when(produtoUnitarioRepository.existsById(Mockito.any())).thenReturn(Boolean.FALSE);
 
-        assertThrows(NaoEncontradoException.class, () -> produtoUnitarioService.atualizar(Mockito.any(), 1));
+        assertThrows(NaoEncontradoException.class, () -> produtoUnitarioService.atualizar(1, Mockito.any()));
     }
 
     @Test

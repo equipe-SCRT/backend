@@ -8,13 +8,14 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import school.sptech.backend.domain.Timestamped;
 
 @Entity
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class TipoCampanha {
+public class TipoCampanha extends Timestamped {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

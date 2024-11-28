@@ -14,6 +14,7 @@ import java.util.Optional;
 public interface UsuarioRepository extends JpaRepository<Usuario, Integer> {
 
     Optional<Usuario> findByEmail(String email);
+    Optional<Usuario> findByNome(String nome);
 
     @Modifying
     @Query("UPDATE Usuario u SET u.senha = ?1 WHERE u.id = ?2")

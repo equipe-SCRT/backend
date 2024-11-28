@@ -1,17 +1,21 @@
 package school.sptech.backend.domain.metrica;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
-import school.sptech.backend.domain.BaseEntity;
 import school.sptech.backend.domain.Timestamped;
-import school.sptech.backend.domain.usuario.Usuario;
 
 @Entity
 @Getter
 @Setter
-public class Metrica extends BaseEntity {
-
+@NoArgsConstructor
+@AllArgsConstructor
+public class Metrica extends Timestamped {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id;
     private Integer qtdCasas;
     private Integer alertaVencimento;
 
