@@ -2,6 +2,8 @@ package school.sptech.backend.service.usuario;
 
 import org.apache.logging.log4j.message.SimpleMessage;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpStatusCode;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -27,6 +29,8 @@ import java.util.Base64;
 import java.util.List;
 import java.util.Optional;
 
+import static org.springframework.util.ClassUtils.isPresent;
+
 @Service
 public class UsuarioService {
     @Autowired
@@ -50,6 +54,12 @@ public class UsuarioService {
     public void criar(UsuarioCriacaoDtoJwt usuarioCriacaoDto){
 
         final Usuario novoUsuario = UsuarioMapper.of(usuarioCriacaoDto);
+        Optional<Usuario> byEmail = this.usuarioRepository.findByEmail(novoUsuario.getEmail());
+        if (byEmail.isPresent()){
+            throw new ResponseStatusException(HttpStatus.CONFLICT);
+        } else {
+            System.out.println(byEmail);
+        }
         String senhaCriptografada = passwordEncoder.encode(novoUsuario.getSenha());
         novoUsuario.setSenha(senhaCriptografada);
 
