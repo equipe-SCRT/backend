@@ -30,7 +30,6 @@ public class MetricaController implements BaseController<MetricaCriacaoDto, Metr
 
     private final MetricaService service;
     private final MetricaMapper mapper;
-    private  final UsuarioService userService;
 
     @PostMapping
     public ResponseEntity<MetricaListagemDto> criar(@RequestBody @Valid MetricaCriacaoDto metrica) {
@@ -56,6 +55,13 @@ public class MetricaController implements BaseController<MetricaCriacaoDto, Metr
         MetricaListagemDto consultaMetrica = mapper.toDto(dto);
         return ResponseEntity.ok().body(consultaMetrica);
     }
+    @GetMapping("/ultimo")
+    public ResponseEntity<MetricaListagemDto> ultimoAdicionado() {
+        Metrica dto = service.ultimoAdicionado();
+        MetricaListagemDto consultaMetrica = mapper.toDto(dto);
+        return ResponseEntity.ok().body(consultaMetrica);
+    }
+
 
     @PutMapping("/{id}")
     public ResponseEntity<MetricaListagemDto> atualizar(@PathVariable Integer id, @RequestBody @Valid MetricaAtualizacaoDto metricaAtualizacao) {

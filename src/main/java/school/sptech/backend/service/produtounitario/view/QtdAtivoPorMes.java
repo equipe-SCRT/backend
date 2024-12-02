@@ -18,7 +18,9 @@ import java.time.LocalDate;
 @Table(name = "v_produto_unitario_qtd_ativo_por_mes")
 public class QtdAtivoPorMes {
     @Id
-    private Integer qtd;
+    private Integer id;
     private LocalDate criadoEm;
     private Integer produtoId;
+    private Integer qtd;
+
 }
