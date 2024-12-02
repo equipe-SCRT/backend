@@ -22,10 +22,10 @@ public class AutenticacaoProvider implements AuthenticationProvider {
   @Override
   public Authentication authenticate(final Authentication authentication) throws AuthenticationException {
 
-    final String username = authentication.getName();
+    final String email = authentication.getName();
     final String password = authentication.getCredentials().toString();
 
-    UserDetails userDetails = this.usuarioAutorizacaoService.loadUserByUsername(username);
+    UserDetails userDetails = this.usuarioAutorizacaoService.loadByUserEmail(email);
 
     if (this.passwordEncoder.matches(password, userDetails.getPassword())) {
       return new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());

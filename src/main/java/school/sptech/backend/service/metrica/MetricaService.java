@@ -20,9 +20,6 @@ public class MetricaService implements BaseService<Metrica, Integer> {
 
     @Autowired
     private MetricaRepository repository;
-    @Autowired
-    private UsuarioService usuarioService;
-
 
     public Metrica criar(Metrica metricaCriacao){
         repository.save(metricaCriacao);
@@ -38,6 +35,10 @@ public class MetricaService implements BaseService<Metrica, Integer> {
 
     public Metrica porId(Integer id){
         return repository.findById(id).orElseThrow(() -> new NaoEncontradoException("Metrica"));
+    }
+
+    public Metrica ultimoAdicionado(){
+        return repository.findTop1ByOrderByIdDesc().orElseThrow(() -> new NaoEncontradoException("Metrica"));
     }
 
 

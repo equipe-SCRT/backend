@@ -28,4 +28,15 @@ public class AutenticacaoService implements UserDetailsService {
 
         return new UsuarioDetalhesDto(usuarioOpt.get());
     }
+
+    public UserDetails loadByUserEmail(String email) throws UsernameNotFoundException {
+
+        Optional<Usuario> usuarioOpt = usuarioRepository.findByEmail(email);
+
+        if (usuarioOpt.isEmpty()) {
+            throw new UsernameNotFoundException(String.format("usuario: %s nao encontrado", email));
+        }
+
+        return new UsuarioDetalhesDto(usuarioOpt.get());
+    }
 }

@@ -120,7 +120,6 @@ public class CondominioController implements BaseController<CondominioCriacaoDto
     public ResponseEntity<List<QtdProdutosPorNomeCondominioListagemDto>> produtosPorNomeCondominio(@PathVariable String nomeCondominio, @RequestParam LocalDate inicio, @RequestParam LocalDate fim) {
         List<QtdProdutosPorNomeCondominio> produtosPorNomeCondominio = service.listarProdutosPorNomeCondominio(nomeCondominio, inicio, fim);
         List<QtdProdutosPorNomeCondominioListagemDto> dto = qtdProdutosPorNomeCondominioMapper.toDto(produtosPorNomeCondominio);
-        dto.forEach(System.out::println);
         return ResponseEntity.ok(dto);
     }
 
