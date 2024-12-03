@@ -75,8 +75,7 @@ public class SecurityConfiguracao {
             new AntPathRequestMatcher("/historico-mudancas/**"),
             new AntPathRequestMatcher("/metricas/**"),
             new AntPathRequestMatcher("/tipo-campanhas/**"),
-            new AntPathRequestMatcher("/relatorio/**")
-    };
+            new AntPathRequestMatcher("/relatorio/**")    };
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
