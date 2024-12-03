@@ -122,6 +122,15 @@ public class ProdutoUnitarioService implements BaseService<ProdutoUnitario, Inte
         return qtdVencidoMesRepository.findByProdutoIdAndDataValidadeBetween(id, inicio, fim);
     }
 
+    public List<QtdAtivoPorMes> qtdAtivoPorMesDataEntre(LocalDate inicio, LocalDate fim){
+        return qtdAtivoMesRepository.findByCriadoEmBetween(inicio, fim);
+    }
+
+    public List<QtdVencidoPorMes> qtdVencidoPorMesDataEntre(LocalDate inicio, LocalDate fim){
+        return qtdVencidoMesRepository.findByDataValidadeBetween(inicio, fim);
+    }
+
+
     public Vencimento15E30Dias vencimento15E30Dias(){
         return vencimento15E30DiasRepository.findAll().get(0);
     }
