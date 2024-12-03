@@ -11,6 +11,7 @@ public class MetricaListagemDto {
     private Integer idMetrica;
     private LocalDate alteracao;
     private Usuario usuario;
+    private Integer qtdCasas;
 
     @Data
     public static class Usuario {
