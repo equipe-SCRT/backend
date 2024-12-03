@@ -10,6 +10,7 @@ import school.sptech.backend.domain.produtocesta.ProdutoCesta;
 import school.sptech.backend.domain.produtocesta.repository.ProdutoCestaRepository;
 import school.sptech.backend.domain.tipocesta.TipoCesta;
 import school.sptech.backend.service.BaseService;
+import school.sptech.backend.service.cesta.CestaService;
 import school.sptech.backend.service.produto.ProdutoService;
 import school.sptech.backend.service.produtocesta.dto.ProdutoCestaCriacaoDto;
 import school.sptech.backend.service.tipocesta.TipoCestaService;
@@ -22,6 +23,7 @@ import java.util.Optional;
 public class ProdutoCestaService {
     private final ProdutoCestaRepository repository;
     private final ProdutoService produtoService;
+    private final CestaService cestaService;
     private final TipoCestaService tipoCestaService;
 
     public ProdutoCesta criar(ProdutoCesta produtoCesta, Integer produtoId, Integer tipoCestaId){

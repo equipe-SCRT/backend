@@ -11,6 +11,9 @@ import java.util.List;
 public interface QtdAtivoMesRepository extends JpaRepository<QtdAtivoPorMes, Integer> {
 
     List<QtdAtivoPorMes> findByProdutoIdAndCriadoEmBetween(Integer id, LocalDate inicio, LocalDate fim);
+
+    List<QtdAtivoPorMes> findByCriadoEmBetween(LocalDate inicio, LocalDate fim);
+
     @Query(
             "SELECT SUM(q.qtd)" +
                     " FROM QtdAtivoPorMes q"
