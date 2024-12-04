@@ -51,7 +51,7 @@ SELECT
         FROM
             produto_unitario pu
         WHERE
-            pu.data_validade > CURDATE() + INTERVAL 16 DAY
+        pu.data_validade BETWEEN (CURDATE() + INTERVAL 16 DAY) AND (CURDATE() + INTERVAL 42 DAY)
     ) AS vencimento30;
 
 DROP TABLE IF EXISTS v_produto_unitario_vencido_arrecadado;
@@ -60,7 +60,7 @@ CREATE VIEW v_produto_unitario_vencido_arrecadado AS
 SELECT
     p.nome,
     SUM(CASE WHEN pu.vencido = FALSE THEN 1 ELSE 0 END) AS arrecadado,
-    SUM(CASE WHEN pu.vencido = TRUE THEN 1 ELSE 0 END) AS vencido
+    SUM(CASE WHEN pu.conforme = FALSE THEN 1 ELSE 0 END) AS vencido
 FROM
     produto_unitario pu
         JOIN produto p ON pu.produto_id = p.id
@@ -117,7 +117,7 @@ FROM
     JOIN origem ON origem.id = produto_unitario.origem_id
     JOIN condominio ON condominio.id = origem.condominio_id
 WHERE
-    produto_unitario.data_validade < CURDATE() 
+    produto_unitario.data_validade < CURDATE()
 GROUP BY
     condominio.id
 ORDER BY
@@ -229,7 +229,7 @@ DROP TABLE IF EXISTS v_qtd_produtos_vencidos_por_campanha;
 DROP VIEW IF EXISTS v_qtd_produtos_vencidos_por_campanha;
 CREATE VIEW v_qtd_produtos_vencidos_por_campanha AS
 SELECT
-    ROW_NUMBER() OVER (ORDER BY campanha.id) AS id, 
+    ROW_NUMBER() OVER (ORDER BY campanha.id) AS id,
     campanha.id AS campanha_id,
     campanha.local_campanha AS nome,
     produto_unitario.produto_id,
