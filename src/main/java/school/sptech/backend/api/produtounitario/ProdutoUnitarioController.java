@@ -128,6 +128,22 @@ public class ProdutoUnitarioController implements BaseController<ProdutoUnitario
         return ResponseEntity.ok(dto);
     }
 
+    @GetMapping("/quantidade-produtos/mes")
+    public ResponseEntity<List<QtdAtivoPorMesDto>> qtdAtivosPorMes(
+            @RequestParam LocalDate inicio, @RequestParam LocalDate fim
+    ){
+        List<QtdAtivoPorMesDto> dto = mapper.qtdAtivoPorMesToDto(service.qtdAtivoPorMesDataEntre(inicio, fim));
+        return ResponseEntity.ok(dto);
+    }
+
+    @GetMapping("/quantidade-produtos/mes/vencidos")
+    public ResponseEntity<List<QtdVencidoPorMesDto>> qtdVencidosPorMes( @RequestParam LocalDate inicio, @RequestParam LocalDate fim
+    ){
+        List<QtdVencidoPorMesDto> dto = mapper.qtdVencidoPorMesToDto(service.qtdVencidoPorMesDataEntre(inicio, fim));
+        return ResponseEntity.ok(dto);
+    }
+
+
     @GetMapping("/vencimento-em-15-e-30-dias")
     public ResponseEntity<Vencimento15E30DiasDto> alimentosVencimento15E30Dias(){
         return ResponseEntity.ok(mapper.vencimento15E30DiasToDto(service.vencimento15E30Dias()));

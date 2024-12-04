@@ -16,7 +16,6 @@ import lombok.Setter;
 @Table(name = "v_produto_unitario_vencido_arrecadado")
 public class VencidoArrecadado {
     @Id
-
     private String nome;
     private Integer vencido;
     private Integer arrecadado;
