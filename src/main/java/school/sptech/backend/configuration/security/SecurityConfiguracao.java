@@ -114,7 +114,7 @@ public class SecurityConfiguracao {
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuracao = new CorsConfiguration();
-        configuracao.applyPermitDefaultValues();
+        configuracao.setAllowedOrigins(List.of("http://54.162.206.189")); // Substitua pelo domínio do seu frontend
         configuracao.setAllowedMethods(
                 Arrays.asList(
                         HttpMethod.GET.name(),
@@ -122,11 +122,10 @@ public class SecurityConfiguracao {
                         HttpMethod.PUT.name(),
                         HttpMethod.PATCH.name(),
                         HttpMethod.DELETE.name(),
-                        HttpMethod.OPTIONS.name(),
-                        HttpMethod.HEAD.name(),
-                        HttpMethod.TRACE.name()));
-
+                        HttpMethod.OPTIONS.name()));
+        configuracao.setAllowedHeaders(List.of("*"));
         configuracao.setExposedHeaders(List.of(HttpHeaders.CONTENT_DISPOSITION));
+        configuracao.setAllowCredentials(true);
 
         UrlBasedCorsConfigurationSource origem = new UrlBasedCorsConfigurationSource();
         origem.registerCorsConfiguration("/**", configuracao);
