@@ -9,7 +9,10 @@ services:
       - "8080:8080"
     networks:
       - net-scrt
-      
+    volumes:
+      - ./data:/app/data
+
+
 networks:
   net-scrt:
     external: true
