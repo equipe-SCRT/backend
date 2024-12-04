@@ -131,6 +131,7 @@ public class SecurityConfiguracao {
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuracao = new CorsConfiguration();
         configuracao.applyPermitDefaultValues();
+        configuracao.setAllowedOrigins(List.of("*"));
         configuracao.setAllowedMethods(
                 Arrays.asList(
                         HttpMethod.GET.name(),
@@ -142,7 +143,7 @@ public class SecurityConfiguracao {
                         HttpMethod.HEAD.name(),
                         HttpMethod.TRACE.name()));
 
-        configuracao.setExposedHeaders(List.of(HttpHeaders.CONTENT_DISPOSITION));
+        configuracao.setExposedHeaders(List.of(HttpHeaders.CONTENT_DISPOSITION, "Authorization"));
 
         UrlBasedCorsConfigurationSource origem = new UrlBasedCorsConfigurationSource();
         origem.registerCorsConfiguration("/**", configuracao);
