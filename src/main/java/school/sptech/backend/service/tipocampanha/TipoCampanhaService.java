@@ -39,7 +39,7 @@ public class TipoCampanhaService implements BaseService<TipoCampanha, Integer> {
         this.tipoCampanhaRepository.findById(id).orElseThrow(
                 () -> new ResponseStatusException(HttpStatus.NOT_FOUND)
         );
-        tipoCampanhaAtualizacao.setIdTipoCampanha(id);
+        tipoCampanhaAtualizacao.setId(id);
         return this.tipoCampanhaRepository.save(tipoCampanhaAtualizacao);
     }
 

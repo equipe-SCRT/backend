@@ -19,13 +19,13 @@ public class TipoCampanha extends Timestamped {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer idTipoCampanha;
+    private Integer id;
     private String nome;
 
     @Override
     public String toString() {
         return "TipoCampanha{" +
-                "idTipoCampanha=" + idTipoCampanha +
+                "idTipoCampanha=" + id +
                 ", nome='" + nome + '\'' +
                 '}';
     }

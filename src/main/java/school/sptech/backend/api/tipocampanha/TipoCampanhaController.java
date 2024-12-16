@@ -31,7 +31,7 @@ public class TipoCampanhaController implements BaseController<TipoCampanhaCriaca
     @PostMapping
     public ResponseEntity<TipoCampanhaListagemDto> criar(@RequestBody @Valid TipoCampanhaCriacaoDto tipoCampanhaCriacaoDto) {
         TipoCampanha tipocampanhaCriada = this.tipoCampanhaService.criar(tipoCampanhaMapper.toEntity(tipoCampanhaCriacaoDto));
-        URI uri = URI.create("/tipo-campanhas/" + tipocampanhaCriada.getIdTipoCampanha());
+        URI uri = URI.create("/tipo-campanhas/" + tipocampanhaCriada.getId());
         return ResponseEntity.created(uri).body(tipoCampanhaMapper.toDto(tipocampanhaCriada));
     }
 
@@ -50,7 +50,7 @@ public class TipoCampanhaController implements BaseController<TipoCampanhaCriaca
     @PutMapping("/{id}")
     public ResponseEntity<TipoCampanhaListagemDto> atualizar(@PathVariable Integer id, @RequestBody @Valid TipoCampanhaAtualizacaoDto tipoCampanhaAtualizacaoDto) {
         TipoCampanha entity = tipoCampanhaMapper.toEntity(tipoCampanhaAtualizacaoDto);
-        TipoCampanhaListagemDto dto = tipoCampanhaMapper.toDto(this.tipoCampanhaService.atualizar(entity.getIdTipoCampanha(), entity));
+        TipoCampanhaListagemDto dto = tipoCampanhaMapper.toDto(this.tipoCampanhaService.atualizar(entity.getId(), entity));
         return ResponseEntity.ok().body(dto);
     }
 

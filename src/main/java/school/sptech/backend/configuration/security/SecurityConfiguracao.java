@@ -130,7 +130,7 @@ public class SecurityConfiguracao {
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuracao = new CorsConfiguration();
-        configuracao.setAllowedOrigins(List.of("http://54.162.206.189")); // Substitua pelo domínio do seu frontend
+        configuracao.setAllowedOrigins(List.of("http://localhost:3000")); // Substitua pelo domínio do seu frontend
         configuracao.setAllowedMethods(
                 Arrays.asList(
                         HttpMethod.GET.name(),
