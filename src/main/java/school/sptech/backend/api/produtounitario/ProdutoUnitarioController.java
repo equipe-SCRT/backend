@@ -36,7 +36,7 @@ public class ProdutoUnitarioController implements BaseController<ProdutoUnitario
     @PostMapping
     public ResponseEntity<ProdutoUnitarioListagemDto> criar(@RequestBody @Valid ProdutoUnitarioCriacaoDto novoProdutoUnitario){
         ProdutoUnitario produtoUnitarioCriado = mapper.toEntity(novoProdutoUnitario);
-        ProdutoUnitario resposta = service.criar(produtoUnitarioCriado);
+        ProdutoUnitario resposta = service.criar(produtoUnitarioCriado, novoProdutoUnitario.getProdutoId());
 
         URI uri = URI.create("/produtos-unitario/" + resposta.getId());
 
@@ -48,7 +48,7 @@ public class ProdutoUnitarioController implements BaseController<ProdutoUnitario
         List<ProdutoUnitarioListagemDto> lista = new ArrayList<>();
         for (int i = 0; i < novoProdutoUnitario.size(); i++) {
             ProdutoUnitario produtoUnitarioCriado = mapper.toEntity(novoProdutoUnitario.get(i));
-            ProdutoUnitario resposta = service.criar(produtoUnitarioCriado);
+            ProdutoUnitario resposta = service.criar(produtoUnitarioCriado, novoProdutoUnitario.get(i).getProdutoId());
 
             lista.add(mapper.toDto(resposta));
         }

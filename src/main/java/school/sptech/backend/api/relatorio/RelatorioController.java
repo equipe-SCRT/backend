@@ -146,7 +146,7 @@ public class RelatorioController {
                 novoProdutoUnitario.setQuantidade(Integer.parseInt(valores[5]));
 
                 ProdutoUnitario produtoUnitarioCriado = mapper.toEntity(novoProdutoUnitario);
-                produtoUnitarioService.criar(produtoUnitarioCriado);
+                produtoUnitarioService.criar(produtoUnitarioCriado, novoProdutoUnitario.getProdutoId());
 
             }
         }
@@ -197,7 +197,7 @@ public class RelatorioController {
                 novoProdutoUnitario.setQuantidade(Integer.parseInt(quantidade));
 
                 ProdutoUnitario produtoUnitarioCriado = mapper.toEntity(novoProdutoUnitario);
-                produtoUnitarioService.criar(produtoUnitarioCriado);
+                produtoUnitarioService.criar(produtoUnitarioCriado, novoProdutoUnitario.getProdutoId());
 
             }
         }

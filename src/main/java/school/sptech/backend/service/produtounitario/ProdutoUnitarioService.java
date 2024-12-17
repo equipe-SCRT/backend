@@ -37,7 +37,7 @@ import java.util.Date;
 
 @Service
 @RequiredArgsConstructor
-public class ProdutoUnitarioService implements BaseService<ProdutoUnitario, Integer>{
+public class ProdutoUnitarioService{
 
     private final ProdutoUnitarioRepository repository;
     private final VencidoArrecadadoRepository vencidoArrecadoRepository;
@@ -55,8 +55,8 @@ public class ProdutoUnitarioService implements BaseService<ProdutoUnitario, Inte
     private final QtdProdutosVencidosPorCampanhaRepository qtdProdutosVencidosPorCampanhaRepository;
     private final ProdutosConformeNaoConformeCampanhasRepository produtosConformeNaoConformeCampanhasRepository;
   
-    public ProdutoUnitario criar(ProdutoUnitario novoProdutoUnitario){
-        Produto produto = produtoService.porId(novoProdutoUnitario.getProduto().getId());
+    public ProdutoUnitario criar(ProdutoUnitario novoProdutoUnitario, Integer produtoId){
+        Produto produto = produtoService.porId(produtoId);
         novoProdutoUnitario.setOrigem(origemService.porId(novoProdutoUnitario.getOrigem().getId()));
         novoProdutoUnitario.setUnidadeMedida(unidadeMedidaService.porId(produto.getUnidadeMedida().getId()));
 //        novoProdutoUnitario.setCesta(cestaService.porId(novoProdutoUnitario.getCesta().getId()));
