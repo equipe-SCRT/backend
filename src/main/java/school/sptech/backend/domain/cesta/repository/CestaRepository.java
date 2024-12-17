@@ -25,4 +25,6 @@ public interface CestaRepository extends JpaRepository<Cesta, Integer> {
             "\tqtd desc\n" +
             "limit 1", nativeQuery = true)
     Integer qtdItemsCestaPrincipal();
+
+    void deleteCestaByTipoCestaId(Integer tipoCestaId);
 }
