@@ -21,7 +21,6 @@ import java.time.LocalDate;
 
 public class ProdutosArrecadadosPorMes {
     @Id
-    private Integer id;
     private LocalDate criadoEm;
     private Integer count;
 
