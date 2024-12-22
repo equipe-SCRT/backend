@@ -1,11 +1,15 @@
 package school.sptech.backend.service.usuario;
 
+import jakarta.mail.MessagingException;
+import jakarta.mail.internet.MimeMessage;
 import org.apache.logging.log4j.message.SimpleMessage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.JavaMailSenderImpl;
+import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -60,7 +64,7 @@ public class UsuarioService {
         } else {
             System.out.println(byEmail);
         }
-        String senhaCriptografada = passwordEncoder.encode(novoUsuario.getSenha());
+        String senhaCriptografada = passwordEncoder.encode("Itapora");
         novoUsuario.setSenha(senhaCriptografada);
 
         this.usuarioRepository.save(novoUsuario);
@@ -81,7 +85,9 @@ public class UsuarioService {
         SecurityContextHolder.getContext().setAuthentication(authentication);
 
         final String token = gerenciadorTokenJwt.generateToken(authentication);
-        return UsuarioMapper.of(usuarioAutenticado, token);
+
+        boolean trocarSenha = usuarioLoginDto.getSenha().equals("Itapora");
+        return UsuarioMapper.of(usuarioAutenticado, token, trocarSenha);
     }
 
 //    public UsuarioConsultaDto adicionarUsuario(UsuarioCriacaoDto usuarioCriacaoDto){
@@ -137,9 +143,7 @@ public class UsuarioService {
         return true;
     }
 
-    public Boolean alterarSenha(String code, String senha) {
-        String decode = new String(Base64.getDecoder().decode(code.getBytes()));
-        Integer id = Integer.parseInt(decode);
+    public Boolean alterarSenha(Integer id, String senha) {
         String senhaCriptografada = passwordEncoder.encode(senha);
 
         usuarioRepository.setNewPassword(senhaCriptografada, id);

@@ -30,7 +30,6 @@ public class UsuarioController {
 
     @PostMapping("/login")
     public ResponseEntity<UsuarioTokenDto> login(@RequestBody UsuarioLoginDto usuarioLoginDto){
-        System.out.println(usuarioLoginDto);
         UsuarioTokenDto usuarioToken = usuarioService.autenticar(usuarioLoginDto);
         return ResponseEntity.status(200).body(usuarioToken);
 
@@ -66,25 +65,9 @@ public class UsuarioController {
     }
 
     @PatchMapping("/trocar-senha")
-    public ResponseEntity<Void> alterarSenha(@RequestParam String code, @RequestParam String senha){
-        Boolean emailEnviado = usuarioService.alterarSenha(code, senha);
+    public ResponseEntity<Void> alterarSenha(@RequestParam String senha, @RequestParam Integer id){
+        Boolean senhaTrocada = usuarioService.alterarSenha(id,senha);
 
         return ResponseEntity.status(200).build();
     }
-
-//    @PostMapping
-//    public ResponseEntity<UsuarioConsultaDto> usuarioConsultaDtoResponseEntity(@RequestBody UsuarioCriacaoDto usuarioCriacaoDto){
-//        UsuarioConsultaDto user = usuarioService.adicionarUsuario(usuarioCriacaoDto);
-//        return ResponseEntity.status(201).body(user);
-//    }
-
-//    @GetMapping
-//    public ResponseEntity<List<UsuarioConsultaDtoJwt>> getGamer(){
-//        List<UsuarioConsultaDtoJwt> usuarios = usuarioService.getUsuarios();
-//        if (usuarios.isEmpty()){
-//            return ResponseEntity.noContent().build();
-//        }
-//
-//        return ResponseEntity.ok(usuarios);
-//    }
 }

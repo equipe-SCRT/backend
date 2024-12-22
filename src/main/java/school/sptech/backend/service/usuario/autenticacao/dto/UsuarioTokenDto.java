@@ -10,5 +10,6 @@ public class UsuarioTokenDto {
     private String email;
     private String token;
     private Integer tipoUsuario;
+    private boolean trocarSenha;
 
 }

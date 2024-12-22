@@ -21,7 +21,7 @@ public class UsuarioMapper {
         return usuario;
     }
 
-    public static UsuarioTokenDto of(Usuario usuario, String token){
+    public static UsuarioTokenDto of(Usuario usuario, String token, boolean trocarSenha){
         UsuarioTokenDto usuarioTokenDto = new UsuarioTokenDto();
 
         usuarioTokenDto.setUserId(usuario.getId());
@@ -29,6 +29,7 @@ public class UsuarioMapper {
         usuarioTokenDto.setNome(usuario.getNome());
         usuarioTokenDto.setTipoUsuario(usuario.getTipoUsuario());
         usuarioTokenDto.setToken(token);
+        usuarioTokenDto.setTrocarSenha(trocarSenha);
 
         return  usuarioTokenDto;
     }
