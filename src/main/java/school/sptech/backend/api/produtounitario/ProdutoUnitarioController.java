@@ -195,4 +195,14 @@ public class ProdutoUnitarioController implements BaseController<ProdutoUnitario
         return ResponseEntity.ok(dto);
 
     }
+    @GetMapping("/produtos-em-vencimento-hoje")
+    public ResponseEntity<Long> produtosEmVencimentoHoje(){
+        Long qtdEmVencimento = service.produtosEmVencimentoHoje();
+
+        if (qtdEmVencimento == 0){
+            return ResponseEntity.noContent().build();
+        }
+
+        return ResponseEntity.ok().body(qtdEmVencimento);
+    }
 }

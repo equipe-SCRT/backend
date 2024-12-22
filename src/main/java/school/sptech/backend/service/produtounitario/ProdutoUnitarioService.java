@@ -177,4 +177,8 @@ public class ProdutoUnitarioService{
         }
         return produtoUnitarioListagemDtos;
     }
+
+    public Long produtosEmVencimentoHoje(){
+        return repository.countProdutosEmVencimento();
+    }
 }

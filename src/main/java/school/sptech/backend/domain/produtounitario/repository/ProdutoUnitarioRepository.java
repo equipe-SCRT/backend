@@ -29,4 +29,7 @@ public interface ProdutoUnitarioRepository extends JpaRepository<ProdutoUnitario
 
     List<ProdutoUnitario> findByDataValidadeBefore(LocalDate data);
 
+    @Query("SELECT COUNT(p) FROM ProdutoUnitario p WHERE p.dataValidade = CURRENT_DATE")
+    Long countProdutosEmVencimento();
+
 }
