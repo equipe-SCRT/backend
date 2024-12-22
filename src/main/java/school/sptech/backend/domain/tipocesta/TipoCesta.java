@@ -4,7 +4,6 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 import school.sptech.backend.domain.Timestamped;
-//import school.sptech.backend.service.tipoprodutocesta.TipoProdutoCesta;
 
 
 @Entity
@@ -15,6 +14,4 @@ public class TipoCesta extends Timestamped {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     private String nome;
-//    @OneToMany(mappedBy = "tipo_cesta")
-//    private List<TipoProdutoCesta> tipoProdutoCestas;
 }

@@ -94,12 +94,6 @@ public class RelatorioController {
 
             String responseJson = res.payload().asUtf8String();
 
-            if (responseJson != null) {
-                System.out.println(responseJson);
-            } else {
-                System.out.println(responseJson);
-            }
-
         } catch (LambdaException | JsonProcessingException e) {
             System.err.println(e.getMessage());
         } finally {
@@ -133,7 +127,6 @@ public class RelatorioController {
 
                 for (int i = 0; i < valores.length; i++) {
                     valores[i] = valores[i].trim();
-                    System.out.println(valores[i]);
                 }
 
                 ProdutoUnitarioCriacaoDto novoProdutoUnitario = new ProdutoUnitarioCriacaoDto();
@@ -175,8 +168,6 @@ public class RelatorioController {
 
                 ProdutoUnitarioCriacaoDto novoProdutoUnitario = new ProdutoUnitarioCriacaoDto();
 
-                System.out.println(linha);
-
                 String data = linha.substring(0,11).trim();
 
                 String ativo = linha.substring(11,16).trim().toLowerCase();
@@ -202,7 +193,6 @@ public class RelatorioController {
             }
         }
         catch (Exception e) {
-            System.out.println(e);
             return ResponseEntity.badRequest().build();
         }
 

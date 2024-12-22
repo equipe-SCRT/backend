@@ -29,13 +29,9 @@ public class HistoricoMudancaController implements BaseController<HistoricoMudan
     @PostMapping
     public ResponseEntity<HistoricoMudancaListagemDto> criar(@RequestBody @Valid HistoricoMudancaCriacaoDto historico){
 
-        System.out.println(historico.toString());
         HistoricoMudanca historicoMudanca = mapper.toEntity(historico);
-        System.out.println(historicoMudanca.toString());
         HistoricoMudanca resposta = service.criar(historicoMudanca);
-        System.out.println(resposta);
         HistoricoMudancaListagemDto listagemDto = mapper.toDto(resposta);
-        System.out.println(listagemDto);
 
         URI uri = URI.create("/historico-mudancas/" + historicoMudanca.getId());
         return ResponseEntity.created(uri).body(listagemDto);

@@ -19,8 +19,6 @@ public class TipoCampanhaService implements BaseService<TipoCampanha, Integer> {
     private final TipoCampanhaRepository tipoCampanhaRepository;
 
     public TipoCampanha criar(TipoCampanha tipoCampanhaCriacao) {
-        System.out.println("obj" + tipoCampanhaCriacao.toString());
-
         return tipoCampanhaRepository.save(tipoCampanhaCriacao);
     }
 

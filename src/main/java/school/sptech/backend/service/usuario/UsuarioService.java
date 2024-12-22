@@ -59,11 +59,11 @@ public class UsuarioService {
 
         final Usuario novoUsuario = UsuarioMapper.of(usuarioCriacaoDto);
         Optional<Usuario> byEmail = this.usuarioRepository.findByEmail(novoUsuario.getEmail());
+
         if (byEmail.isPresent()){
             throw new ResponseStatusException(HttpStatus.CONFLICT);
-        } else {
-            System.out.println(byEmail);
         }
+
         String senhaCriptografada = passwordEncoder.encode("Itapora");
         novoUsuario.setSenha(senhaCriptografada);
 
