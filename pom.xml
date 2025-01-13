@@ -25,6 +25,14 @@
 			<version>2.27.4</version>
 		</dependency>
 
+		<dependency>
+			<groupId>com.itextpdf</groupId>
+			<artifactId>itext7-core</artifactId>
+			<version>7.2.4</version>
+			<type>pom</type>
+		</dependency>
+
+
 		<!-- aula 18/09/24 -->
 		<dependency>
 			<groupId>software.amazon.awssdk</groupId>
