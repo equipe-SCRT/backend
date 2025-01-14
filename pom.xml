@@ -175,6 +175,17 @@
 		        <scope>test</scope>
 		</dependency>
 
+		<dependency>
+			<groupId>com.itextpdf</groupId>
+			<artifactId>kernel</artifactId>
+			<version>7.2.5</version> <!-- Verifique a versão mais recente no repositório Maven -->
+		</dependency>
+		<dependency>
+			<groupId>com.itextpdf</groupId>
+			<artifactId>layout</artifactId>
+			<version>7.2.5</version> <!-- Necessária para criar layouts no PDF -->
+		</dependency>
+
 	</dependencies>
 
 	<build>
