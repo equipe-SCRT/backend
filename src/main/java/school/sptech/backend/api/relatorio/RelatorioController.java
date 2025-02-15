@@ -271,7 +271,14 @@ public class RelatorioController {
         try (FileWriter arq = new FileWriter(String.valueOf(tempFile));
              Formatter saida = new Formatter(arq)) {
             for (ProdutoUnitarioRelatorioDto produto : lista) {
-                String origem = produto.getOrigem().getItapora() == 1 ? "Itapora" : "Auto de Suuza";
+                String origem = "Auto de Souza";
+                if (produto.getOrigem().getItapora() != null && produto.getOrigem().getItapora() == 1){
+                    origem = "Itapora";
+                } else if (produto.getOrigem().getCampanha() != null) {
+                    origem = produto.getOrigem().getCampanha().getLocalCampanha();
+                } else if (produto.getOrigem().getCondominio() != null) {
+                    origem = produto.getOrigem().getCondominio().getNome();
+                }
 
                 saida.format("%30s;%10s;%4.2f;%10s;%50s\n",
                         produto.getProduto().getNome(),

@@ -8,6 +8,6 @@ import lombok.Setter;
 @Setter
 public class TipoCampanhaListagemDto {
 
-    private Integer idTipoCampanha;
+    private Integer id;
     private String nome;
 }

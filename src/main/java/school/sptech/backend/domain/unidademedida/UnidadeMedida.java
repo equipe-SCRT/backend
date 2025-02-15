@@ -20,10 +20,4 @@ public class UnidadeMedida extends Timestamped {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     private String nome;
-    private String representacao;
-
-    @Override
-    public String toString() {
-        return "%s".formatted(representacao);
-    }
 }

@@ -10,7 +10,6 @@ import school.sptech.backend.domain.cesta.Cesta;
 import school.sptech.backend.domain.metrica.Metrica;
 import school.sptech.backend.domain.origem.Origem;
 import school.sptech.backend.domain.produto.Produto;
-import school.sptech.backend.domain.rota.Rota;
 import school.sptech.backend.domain.unidademedida.UnidadeMedida;
 
 import java.time.LocalDate;
@@ -43,9 +42,6 @@ public class ProdutoUnitario extends Timestamped {
 
     @ManyToOne
     private Produto produto;
-
-    @ManyToOne
-    private Rota rota;
 
     @ManyToOne
     private Metrica metrica;

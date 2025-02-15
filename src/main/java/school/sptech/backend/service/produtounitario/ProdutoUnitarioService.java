@@ -14,16 +14,13 @@ import school.sptech.backend.domain.produtounitario.repository.QtdProdutoPorCamp
 import school.sptech.backend.domain.produtounitario.repository.QtdProdutosVencidosPorCampanhaRepository;
 import school.sptech.backend.domain.produtounitario.repository.*;
 import school.sptech.backend.exception.NaoEncontradoException;
-import school.sptech.backend.service.BaseService;
 import school.sptech.backend.service.metrica.MetricaService;
 import school.sptech.backend.service.origem.OrigemService;
 import school.sptech.backend.service.produto.ProdutoService;
 import school.sptech.backend.service.produtounitario.dto.ProdutoUnitarioListagemDto;
-import school.sptech.backend.service.produtounitario.dto.QtdProdutoPorCampanhaListagemDto;
 import school.sptech.backend.service.produtounitario.view.ProdutosConformeNaoConformeCampanhas;
 import school.sptech.backend.service.produtounitario.view.QtdProdutoPorCampanha;
 import school.sptech.backend.service.produtounitario.view.QtdProdutosVencidosPorCampanha;
-import school.sptech.backend.service.rota.RotaService;
 import school.sptech.backend.service.produtounitario.view.QtdAtivoPorMes;
 import school.sptech.backend.service.produtounitario.view.QtdVencidoPorMes;
 import school.sptech.backend.service.produtounitario.view.VencidoArrecadado;
@@ -33,7 +30,6 @@ import school.sptech.backend.service.unidademedida.UnidadeMedidaService;
 import java.util.ArrayList;
 import java.util.List;
 import java.time.LocalDate;
-import java.util.Date;
 
 @Service
 @RequiredArgsConstructor
@@ -49,7 +45,6 @@ public class ProdutoUnitarioService{
     private final OrigemService origemService;
     private final UnidadeMedidaService unidadeMedidaService;
     private final ProdutoService produtoService;
-    private final RotaService rotaService;
     private final MetricaService metricaService;
     private final QtdProdutoPorCampanhaRepository qtdProdutoPorCampanhaRepository;
     private final QtdProdutosVencidosPorCampanhaRepository qtdProdutosVencidosPorCampanhaRepository;

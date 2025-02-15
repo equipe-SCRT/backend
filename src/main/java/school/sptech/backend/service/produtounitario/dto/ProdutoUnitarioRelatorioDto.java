@@ -48,17 +48,6 @@ public class ProdutoUnitarioRelatorioDto {
     }
 
     @Data
-    public static class Rota {
-        private Integer id;
-        private String nome;
-        private String kmRodados;
-        private Integer qtdColaboradores;
-        private LocalDate dataHistorico;
-        private Time horaInicio;
-        private Time horaFim;
-    }
-
-    @Data
     public static class Metrica {
         private Integer id;
         private LocalDate alteracao;

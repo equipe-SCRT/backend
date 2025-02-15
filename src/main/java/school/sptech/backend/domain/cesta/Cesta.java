@@ -19,7 +19,6 @@ public class Cesta  extends Timestamped {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-    private String lote;
     private LocalDate dataMontagem;
 
     @ManyToOne

@@ -2,10 +2,6 @@ package school.sptech.backend.service.produtounitario.dto;
 
 import jakarta.validation.constraints.*;
 import lombok.Data;
-import school.sptech.backend.domain.cesta.Cesta;
-import school.sptech.backend.domain.metrica.Metrica;
-import school.sptech.backend.domain.produto.Produto;
-import school.sptech.backend.domain.rota.Rota;
 
 import java.time.LocalDate;
 

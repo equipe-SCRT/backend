@@ -8,7 +8,6 @@ import school.sptech.backend.domain.metrica.Metrica;
 import school.sptech.backend.domain.origem.Origem;
 import school.sptech.backend.domain.produto.Produto;
 import school.sptech.backend.domain.produtounitario.ProdutoUnitario;
-import school.sptech.backend.domain.rota.Rota;
 import school.sptech.backend.domain.unidademedida.UnidadeMedida;
 import school.sptech.backend.service.produtounitario.view.QtdAtivoPorMes;
 import school.sptech.backend.service.produtounitario.view.QtdVencidoPorMes;
@@ -88,15 +87,6 @@ public interface ProdutoUnitarioMapper {
         Produto produto = new Produto();
         produto.setId(id);
         return produto;
-    }
-    @Named("rotaFromId")
-    default Rota rotaFromId(Integer id) {
-        if (id == null) {
-            return null;
-        }
-        Rota rota = new Rota();
-        rota.setId(id);
-        return rota;
     }
     @Named("metricaFromId")
     default Metrica metricaFromId(Integer id) {
