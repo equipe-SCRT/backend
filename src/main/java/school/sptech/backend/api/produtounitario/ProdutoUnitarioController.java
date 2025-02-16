@@ -159,8 +159,8 @@ public class ProdutoUnitarioController implements BaseController<ProdutoUnitario
     }
 
     @GetMapping("/total-vencidos")
-    public ResponseEntity<Integer> totalVencidos(@RequestParam LocalDate inicio, @RequestParam LocalDate fim){
-        return ResponseEntity.ok(service.totalVencidos(inicio, fim));
+    public ResponseEntity<Integer> totalVencidos(){
+        return ResponseEntity.ok(service.totalVencidos());
     }
 
     @GetMapping("/data-vencimento")
@@ -204,5 +204,13 @@ public class ProdutoUnitarioController implements BaseController<ProdutoUnitario
         }
 
         return ResponseEntity.ok().body(qtdEmVencimento);
+    }
+
+    @PutMapping("/atualizar-vencido")
+    public ResponseEntity<Void> verificarProdutosForaDaValidade(){
+
+        service.verificarProdutosForaDaValidade();
+
+        return ResponseEntity.ok().build();
     }
 }

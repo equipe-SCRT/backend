@@ -134,14 +134,10 @@ public class ProdutoUnitarioService{
         return qtdAtivoMesRepository.sumByCriadoEmBetween();
     }
 
-    public Integer totalVencidos(LocalDate inicio, LocalDate fim){
-        return qtdVencidoMesRepository.sumByDataValidadeBetween(inicio, fim);
+    public Integer totalVencidos(){
+        return qtdVencidoMesRepository.sumByDataValidadeBetween();
     }
 
-
-
-    @Scheduled(cron = "0 0 0 * * *")
-    @EventListener(ApplicationReadyEvent.class)
     public void verificarProdutosForaDaValidade(){
         repository.verificarProdutosForaDaValidade();
     }

@@ -15,9 +15,8 @@ public interface QtdVencidoMesRepository extends JpaRepository<QtdVencidoPorMes,
 
     @Query(
             "SELECT SUM(q.qtd)" +
-                    " FROM QtdVencidoPorMes q" +
-                    " WHERE q.dataValidade between :inicio AND :fim"
+                    " FROM QtdVencidoPorMes q"
     )
-    Integer sumByDataValidadeBetween(LocalDate inicio, LocalDate fim);
+    Integer sumByDataValidadeBetween();
 
 }
