@@ -21,6 +21,5 @@ public class ProdutoListagemDto {
     public static class UnidadeMedida {
         private Integer id;
         private String nome;
-        private String representacao;
     }
 }
