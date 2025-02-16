@@ -64,7 +64,6 @@ public class ProdutoUnitarioController implements BaseController<ProdutoUnitario
         }
 
         List<ProdutoUnitarioListagemDto> dtos = mapper.toDto(produtoUnitarios);
-        List<ProdutoUnitarioListagemDto> dtosComOrigem = service.dtoComOrigem(dtos);
         return ResponseEntity.ok(dtos);
     }
 
