@@ -44,6 +44,8 @@ public class ProdutoUnitarioCriacaoDto {
     @Positive
     private Integer quantidade;
 
+    private boolean conforme;
+
 //    @NotNull
 //    @PositiveOrZero
 //    private Integer rotaId;
