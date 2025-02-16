@@ -8,6 +8,7 @@ public class CestaListagemDto {
     private Integer id;
     private String lote;
     private LocalDate dataMontagem;
+    private Integer qtdCesta;
 
     private TipoCestaDto tipoCesta;
 
