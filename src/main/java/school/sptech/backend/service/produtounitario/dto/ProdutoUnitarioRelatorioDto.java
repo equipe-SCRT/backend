@@ -14,8 +14,6 @@ public class ProdutoUnitarioRelatorioDto {
 
     private LocalDate dataValidade;
 
-    private Double peso;
-
     private ProdutoUnitarioListagemDto.UnidadeMedida unidadeMedida;
 
     private ProdutoUnitarioListagemDto.Origem origem;

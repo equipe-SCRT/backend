@@ -7,7 +7,8 @@ import lombok.Data;
 import java.time.LocalDate;
 @Data
 public class CestaCriacaoDto {
-    private String lote;
+
+    private Integer qtdCesta;
     @PastOrPresent
     private LocalDate dataMontagem;
     @NotNull

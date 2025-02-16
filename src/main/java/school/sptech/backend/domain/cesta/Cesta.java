@@ -23,4 +23,6 @@ public class Cesta  extends Timestamped {
 
     @ManyToOne
     private TipoCesta tipoCesta;
+
+    private Integer qtdCesta;
 }

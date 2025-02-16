@@ -4,11 +4,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import school.sptech.backend.domain.cesta.Cesta;
 import school.sptech.backend.domain.cesta.repository.CestaRepository;
-import school.sptech.backend.domain.tipocesta.TipoCesta;
-import school.sptech.backend.domain.tipocesta.repository.TipoCestaRepository;
 import school.sptech.backend.exception.NaoEncontradoException;
 import school.sptech.backend.service.BaseService;
-import school.sptech.backend.service.cesta.dto.CestaMapper;
 import school.sptech.backend.service.tipocesta.TipoCestaService;
 
 import java.time.LocalDate;
@@ -47,7 +44,7 @@ public class CestaService implements BaseService<Cesta, Integer> {
     }
 
     public Integer qtdMesAtual(){
-        return cestaRepository.qtdPorMesAno(LocalDate.now().getMonthValue(), LocalDate.now().getYear());
+        return cestaRepository.qtdTotalCesta();
     }
 
     public Integer qtdItemsCestaPrincipal(){
